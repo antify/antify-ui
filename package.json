@@ -7,7 +7,7 @@
     "dev": "vite",
     "preview": "vite preview",
     "sb": "start-storybook -p 6006",
-    "sb:build": "build-storybook",
+    "sb:build": "build-storybook"
   },
   "dependencies": {
     "vue": "^3.2.25"
