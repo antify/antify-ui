@@ -1,3 +1,12 @@
+<script setup>
+const tabs = [
+  { name: 'My Account', href: '#', current: false },
+  { name: 'Company', href: '#', current: false },
+  { name: 'Team Members', href: '#', current: true },
+  { name: 'Billing', href: '#', current: false },
+]
+</script>
+
 <template>
   <div>
     <div class="sm:hidden">
@@ -44,12 +53,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-const tabs = [
-  { name: 'My Account', href: '#', current: false },
-  { name: 'Company', href: '#', current: false },
-  { name: 'Team Members', href: '#', current: true },
-  { name: 'Billing', href: '#', current: false },
-]
-</script>
