@@ -8,7 +8,6 @@
     "preview": "vite preview",
     "sb": "start-storybook -p 6006",
     "sb:build": "build-storybook",
-    "chromatic": "npx chromatic --project-token=2e4f3282f5aa"
   },
   "dependencies": {
     "vue": "^3.2.25"
