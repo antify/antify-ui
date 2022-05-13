@@ -1,3 +1,22 @@
+<script>
+import './page.css';
+import MyHeader from './Header.vue';
+
+export default {
+  name: 'my-page',
+
+  components: { MyHeader },
+
+  props: {
+    user: {
+      type: Object,
+    },
+  },
+
+  emits: ['login', 'logout', 'createAccount'],
+};
+</script>
+
 <template>
   <article>
     <my-header
@@ -57,22 +76,3 @@
     </section>
   </article>
 </template>
-
-<script>
-import './page.css';
-import MyHeader from './Header.vue';
-
-export default {
-  name: 'my-page',
-
-  components: { MyHeader },
-
-  props: {
-    user: {
-      type: Object,
-    },
-  },
-
-  emits: ['login', 'logout', 'createAccount'],
-};
-</script>

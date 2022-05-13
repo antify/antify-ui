@@ -14,7 +14,7 @@ export default {
   // },
 };
 
-export const Empty = (args) => ({
+export const Primary = (args) => ({
   components: {AntTabs},
   setup() {
     return { args };

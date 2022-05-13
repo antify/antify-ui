@@ -4,7 +4,9 @@ const tabs = [
   { name: 'Company', href: '#', current: false },
   { name: 'Team Members', href: '#', current: true },
   { name: 'Billing', href: '#', current: false },
-]
+];
+
+
 </script>
 
 <template>
@@ -39,7 +41,7 @@ const tabs = [
           class="-mb-px flex space-x-8"
           aria-label="Tabs"
         >
-          <a
+          <router-link
             v-for="tab in tabs"
             :key="tab.name"
             :href="tab.href"
@@ -47,7 +49,7 @@ const tabs = [
             :aria-current="tab.current ? 'page' : undefined"
           >
             {{ tab.name }}
-          </a>
+          </router-link>
         </nav>
       </div>
     </div>
