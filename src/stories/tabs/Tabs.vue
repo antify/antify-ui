@@ -4,6 +4,7 @@ const tabs = [
   { name: 'Company', href: '#', current: false },
   { name: 'Team Members', href: '#', current: true },
   { name: 'Billing', href: '#', current: false },
+  { name: 'Testing', href: '#', current: false },
 ];
 
 
