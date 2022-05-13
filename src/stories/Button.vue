@@ -1,7 +1,3 @@
-<template>
-  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }}</button>
-</template>
-
 <script>
 import './button.css';
 import { reactive, computed } from 'vue';
@@ -35,13 +31,13 @@ export default {
     props = reactive(props);
     return {
       classes: computed(() => ({
-        'storybook-button mt-16': true,
+        'storybook-button': true,
         'storybook-button--primary': props.primary,
         'storybook-button--secondary': !props.primary,
         [`storybook-button--${props.size || 'medium'}`]: true,
       })),
       style: computed(() => ({
-        backgroundColor: '#ff0000',
+        backgroundColor: props.backgroundColor,
       })),
       onClick() {
         emit('click');
@@ -50,3 +46,7 @@ export default {
   },
 };
 </script>
+
+<template>
+  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }}</button>
+</template>

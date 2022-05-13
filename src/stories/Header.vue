@@ -1,3 +1,22 @@
+<script>
+import './header.css';
+import MyButton from './Button.vue';
+
+export default {
+  name: 'my-header',
+
+  components: { MyButton },
+
+  props: {
+    user: {
+      type: Object,
+    },
+  },
+
+  emits: ['login', 'logout', 'createAccount'],
+};
+</script>
+
 <template>
   <header>
     <div class="wrapper">
@@ -28,22 +47,3 @@
     </div>
   </header>
 </template>
-
-<script>
-import './header.css';
-import MyButton from './Button.vue';
-
-export default {
-  name: 'my-header',
-
-  components: { MyButton },
-
-  props: {
-    user: {
-      type: Object,
-    },
-  },
-
-  emits: ['login', 'logout', 'createAccount'],
-};
-</script>
