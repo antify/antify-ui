@@ -45,6 +45,6 @@ yarn chromatic
 
 ## Useful links:
 
-Chromatic docu: https://www.chromatic.com/docs/
-Storybook docu: https://storybook.js.org/docs/vue/get-started/introduction
+- Chromatic docu: https://www.chromatic.com/docs/
+- Storybook docu: https://storybook.js.org/docs/vue/get-started/introduction
 

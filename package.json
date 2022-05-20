@@ -29,5 +29,8 @@
     "vue-cli-plugin-tailwind": "~3.0.0",
     "vue-loader": "^16.8.3",
     "vue-tsc": "^0.34.7"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.25"
   }
 }
