@@ -12,9 +12,6 @@ export default {
   //     options: ['small', 'medium', 'large'],
   //   },
   // },
-  docs: {
-    page: null
-  }
 };
 
 const Template = (args) => ({
@@ -34,4 +31,11 @@ Primary.args = {
     {name: 'Team Members', href: '#', current: true},
     {name: 'Billing', href: '#', current: false}
   ]
+};
+
+
+export const Empty = Template.bind({});
+// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+Empty.args = {
+  tabs: []
 };
