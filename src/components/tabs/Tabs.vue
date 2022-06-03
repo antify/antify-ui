@@ -1,13 +1,24 @@
-<script setup>
-const tabs = [
-  { name: 'My Account', href: '#', current: false },
-  { name: 'Company', href: '#', current: false },
-  { name: 'Team Members', href: '#', current: true },
-  { name: 'Billing', href: '#', current: false },
-  { name: 'Testing', href: '#', current: false },
-];
+<script>
+export default {
+  name: 'AntButton',
 
+  props: {
+    tabs: {
+      type: Array
+    }
+  },
 
+  emits: ['click'],
+
+  setup(props, {emit}) {
+
+    return {
+      onClick() {
+        emit('click');
+      }
+    };
+  }
+};
 </script>
 
 <template>
@@ -42,15 +53,18 @@ const tabs = [
           class="-mb-px flex space-x-8"
           aria-label="Tabs"
         >
-          <router-link
+          <div
             v-for="tab in tabs"
             :key="tab.name"
-            :href="tab.href"
-            :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm']"
+            :class="[
+              tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+              'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer'
+            ]"
             :aria-current="tab.current ? 'page' : undefined"
+            @click="onClick(tab)"
           >
             {{ tab.name }}
-          </router-link>
+          </div>
         </nav>
       </div>
     </div>
