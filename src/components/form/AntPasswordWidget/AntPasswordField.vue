@@ -7,6 +7,8 @@ export default {
 <script setup lang="ts">
 import { ref } from 'vue';
 import { computed } from '@vue/reactivity';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+
 const props = defineProps({
   id: {
     type: String,
@@ -90,7 +92,7 @@ const revealPassword = () => {
     </div>
 
     <input
-      v-model="content"
+      v-model="password"
       :type="useType"
       :placeholder="placeholder || label"
       class="
@@ -122,7 +124,7 @@ const revealPassword = () => {
 
     <div
       v-if="showPassword"
-      class="absolute inseet-y-0 right-0 pr-3 flex items-center cursor-pointer"
+      class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
       @click="revealPassword()"
     >
       <fa-icon

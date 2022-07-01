@@ -18,5 +18,8 @@ Primary.args = {
   id: 'input-id-123456789',
   value: '',
   label: 'Password',
-  labelRepeat: 'Repeat password',
+  repeatLabel: 'Repeat password',
+  placeholder: 'Password placeholder',
+  repeatPlaceholder: 'Repeat password placeholder',
+  showPassword: true,
 };
