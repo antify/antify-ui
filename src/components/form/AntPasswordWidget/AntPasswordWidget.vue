@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'AntPasswordInput',
+  name: 'AntPasswordWidget',
   inheritAttrs: false,
 };
 </script>
