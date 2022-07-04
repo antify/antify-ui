@@ -32,17 +32,21 @@ const props = defineProps({
   },
   rulesPassword: {
     type: Array,
-    default: [
-      (value) => !!value || 'Password can not be empty.',
-      (value) => value.length > 8 || 'Min password length is 8 symbols',
-    ],
+    default() {
+      return [
+        (value) => !!value || 'Password can not be empty.',
+        (value) => value.length > 8 || 'Min password length is 8 symbols',
+      ];
+    },
   },
   rulesPasswordRepeat: {
     type: Array,
-    default: [
-      (value) => !!value || 'Repeat password is required',
-      (value) => value != password || 'Password needs to be the same',
-    ],
+    default() {
+      return [
+        (value) => !!value || 'Repeat password is required',
+        (value) => value != password || 'Password needs to be the same',
+      ];
+    },
   },
   description: {
     type: String,

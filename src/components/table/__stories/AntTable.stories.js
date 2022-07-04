@@ -14,7 +14,7 @@ const Template = (args) => ({
   template: `
   <AntTable v-bind="args" >
     <template #emptyState>
-      <td colspan="100" class="w-full py-2 text-center text-gray-500 text-2xl italic">Nothing to see here jet!</div>
+      <td colspan="100" class="w-full py-2 text-center text-gray-500 text-2xl italic">Nothing to see here jet!</td>
     </template>
   </AntTable>
   `,

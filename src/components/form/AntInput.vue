@@ -7,7 +7,7 @@ export default {
 
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { onMounted, ref, uid } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   id: {
@@ -48,10 +48,6 @@ const emit = defineEmits(['input']);
 const errors = ref<Array<string>>([]);
 const _id = ref<string>('');
 const content = ref<string>(props.value);
-
-onMounted(() => {
-  _id.value = uid;
-});
 
 const validate = () => {
   errors.value = [];

@@ -8,7 +8,7 @@ export default {
 <script lang="ts" setup>
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
-import NavItem from '../../types/NavItem.type.ts';
+import { NavItem } from '../../types/NavItem.type';
 
 const props = defineProps({
   navItem: {
