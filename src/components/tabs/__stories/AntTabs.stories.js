@@ -1,7 +1,7 @@
-import AntTabs from '../Tabs.vue';
+import AntTabs from '../AntTabs.vue';
 
 export default {
-  title: 'Tabs',
+  title: 'AntTabs',
   component: AntTabs,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   // argTypes: {
@@ -15,27 +15,26 @@ export default {
 };
 
 const Template = (args) => ({
-  components: {AntTabs},
+  components: { AntTabs },
   setup() {
-    return {args};
+    return { args };
   },
-  template: '<AntTabs v-bind="args"/>'
+  template: '<AntTabs v-bind="args"/>',
 });
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Primary.args = {
   tabs: [
-    {name: 'My Account', href: '#', current: false},
-    {name: 'Company', href: '#', current: false},
-    {name: 'Team Members', href: '#', current: true},
-    {name: 'Billing', href: '#', current: false}
-  ]
+    { name: 'My Account', href: '#', current: false },
+    { name: 'Company', href: '#', current: false },
+    { name: 'Team Members', href: '#', current: true },
+    { name: 'Billing', href: '#', current: false },
+  ],
 };
-
 
 export const Empty = Template.bind({});
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Empty.args = {
-  tabs: []
+  tabs: [],
 };
