@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'AntButton',
+  name: 'AntTabs',
 
   props: {
     tabs: {

@@ -99,7 +99,11 @@ const { navItems, profileHref, userName } = defineProps({
                     />
                   </td>
 
-                  <slot name="lastCell"></slot>
+                  <slot name="lastCell" />
+                </tr>
+
+                <tr v-if="data.length <= 0">
+                  <slot name="emptyState" />
                 </tr>
               </tbody>
             </table>
