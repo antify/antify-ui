@@ -53,7 +53,6 @@ const { navItems, profileHref, userName } = defineProps({
       "
       :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }"
     >
-      {{ isOpen }}
       <button
         type="button"
         class="
