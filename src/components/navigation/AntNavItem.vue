@@ -8,11 +8,12 @@ export default {
 <script lang="ts" setup>
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
-import { NavItem } from '../../types/NavItem.type';
+import NavItem from '../../types/NavItem.type';
 
 const props = defineProps({
   navItem: {
     type: NavItem,
+    required: true,
   },
 });
 
@@ -25,9 +26,9 @@ const openSubItemMenu = () => {
 
 <template>
   <!-- TODO:: Find better solution, DRY -->
-  <a
+  <router-link
     v-if="navItem.route"
-    :href="navItem.route"
+    :to="navItem.route"
     class="group grid px-2 py-2 text-base font-medium rounded-md"
     :class="{
       'text-gray-600 hover:bg-gray-50 hover:text-gray-900': !navItem.active,
@@ -62,7 +63,7 @@ const openSubItemMenu = () => {
         :navItem="subNavItem"
       />
     </div>
-  </a>
+  </router-link>
 
   <div
     v-else

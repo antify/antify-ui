@@ -19,21 +19,24 @@ const { navItems, profileHref, userName } = defineProps({
 </script>
 
 <template>
-  <div class="px-4 sm:px-6 lg:px-8">
-    <div class="mt-8 flex flex-col">
-      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+  <div class="h-full">
+    <div class="flex flex-col h-full">
+      <div class="h-full">
+        <div class="inline-block min-w-full align-middle h-full">
           <div
             class="
               overflow-hidden
               shadow
               ring-1 ring-black ring-opacity-5
-              md:rounded-lg
+              h-full
+              overflow-x-auto overflow-y-auto
             "
           >
-            <table class="min-w-full divide-y divide-gray-300">
-              <thead class="bg-gray-50">
-                <tr>
+            <table
+              class="min-w-full divide-y divide-gray-300 h-full max-h-full"
+            >
+              <thead class="bg-gray-50 sticky top-0 border-b">
+                <tr class="">
                   <th
                     v-for="(header, index) in headers"
                     :key="`table-header-${header.identifier}-${index}`"
@@ -97,6 +100,28 @@ const { navItems, profileHref, userName } = defineProps({
                       :class="header.rowClassList"
                       v-html="elem[header.identifier]"
                     />
+
+                    <div
+                      v-else-if="header.type === ROW_TYPES.TEXT_WITH_LINKS"
+                      :class="header.rowClassList"
+                    >
+                      <div>{{ elem[header.identifier] }}</div>
+
+                      <div
+                        v-for="(link, index) in header.links"
+                        :key="`links-${header.identifier}-${index}`"
+                        class="text-xs inline-block"
+                      >
+                        <span v-if="index !== 0">&nbsp;|&nbsp;</span>
+
+                        <a
+                          :href="link.href"
+                          class="text-blue-600 hover:text-blue-800"
+                        >
+                          {{ link.label }}
+                        </a>
+                      </div>
+                    </div>
                   </td>
 
                   <slot name="lastCell" />

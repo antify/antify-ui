@@ -1,7 +1,7 @@
 import AntPasswordWidget from '../AntPasswordWidget.vue';
 
 export default {
-  title: 'Ant Password Widget',
+  title: 'Components/Froms/Ant Password Widget',
   component: AntPasswordWidget,
 };
 

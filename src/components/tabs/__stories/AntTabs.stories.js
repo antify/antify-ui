@@ -1,7 +1,7 @@
 import AntTabs from '../AntTabs.vue';
 
 export default {
-  title: 'AntTabs',
+  title: 'Ant Tabs',
   component: AntTabs,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   // argTypes: {

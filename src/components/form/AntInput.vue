@@ -73,7 +73,7 @@ const handleInput = () => {
 
 <template>
   <div>
-    <div class="mt-1 relative">
+    <div class="relative">
       <label
         :for="_id"
         v-if="label"
@@ -154,7 +154,7 @@ const handleInput = () => {
     </div>
 
     <p
-      v-if="description || errors"
+      v-if="description || (errors && errors.length > 0)"
       class="mt-2 text-sm text-gray-500"
       :id="`${_id}-description`"
     >

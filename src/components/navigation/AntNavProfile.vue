@@ -6,22 +6,25 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const props = defineProps({
-  profileHref: {
+import { RouteLocationRaw } from 'vue-router';
+
+const { to, userName } = defineProps({
+  to: {
+    type: RouteLocationRaw,
+    default: '#',
+  },
+  userName: {
     type: String,
   },
-	userName: {
-		type: String,
-	},
 });
 </script>
 
 <template>
   <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-    <a :href="profileHref" class="flex-shrink-0 group block">
+    <router-link :to="to" class="flex-shrink-0 group block cursor-pointer">
       <div class="flex items-center">
         <div>
-					<slot name="profilePicture" />
+          <slot name="profilePicture" />
         </div>
 
         <div class="ml-3">
@@ -33,7 +36,7 @@ const props = defineProps({
               group-hover:text-gray-900
             "
           >
-            {{userName}}
+            {{ userName }}
           </p>
 
           <p
@@ -43,6 +46,6 @@ const props = defineProps({
           </p>
         </div>
       </div>
-    </a>
+    </router-link>
   </div>
 </template>

@@ -7,21 +7,22 @@ export default {
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { computed } from '@vue/reactivity';
+import { RouteLocationRaw } from 'vue-router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import AntNavigation from '../navigation/AntNavigation.vue';
 
-const props = defineProps({
+const { navItems, profileHref, userName } = defineProps({
   navItems: {
     type: Array,
   },
   profileHref: {
-    type: String,
+    type: RouteLocationRaw,
   },
   userName: {
     type: String,
   },
 });
+
 const sidebarDisplayed = ref<Boolean>(false);
 </script>
 
@@ -82,8 +83,8 @@ const sidebarDisplayed = ref<Boolean>(false);
     </div>
 
     <!-- Content -->
-    <div class="md:pl-64 flex flex-col flex-1">
-      <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+    <div class="md:pl-64 flex-1">
+      <div class="absolute top-0 z-10 md:hidden pl-1 py-1.5">
         <!-- Open nav on mobile-->
         <button
           type="button"
@@ -109,7 +110,7 @@ const sidebarDisplayed = ref<Boolean>(false);
         </button>
       </div>
 
-      <main class="flex-1">
+      <main class="">
         <slot default />
       </main>
     </div>

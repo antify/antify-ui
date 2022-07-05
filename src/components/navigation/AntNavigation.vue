@@ -7,16 +7,17 @@ export default {
 
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
+import { RouteLocationRaw } from 'vue-router';
 import AntNavItem from './AntNavItem.vue';
 import AntNavProfile from './AntNavProfile.vue';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-const { navItems, profileHref, userName } = defineProps({
+const { navItems, profileHref, userName, isOpen } = defineProps({
   navItems: {
     type: Array,
   },
   profileHref: {
-    type: String,
+    type: RouteLocationRaw,
   },
   userName: {
     type: String,
@@ -37,6 +38,7 @@ const { navItems, profileHref, userName } = defineProps({
       w-full
       bg-white
       border-r border-gray-200
+      h-screen
     "
   >
     <div
@@ -75,11 +77,11 @@ const { navItems, profileHref, userName } = defineProps({
       </button>
     </div>
 
-    <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-      <div class="flex-shrink-0 flex items-center px-4">
-        <slot name="logo" />
-      </div>
+    <div class="flex-shrink-0 flex items-center px-4 py-3 border-b w-full">
+      <slot name="logo" />
+    </div>
 
+    <div class="flex-1 h-0 pb-4 overflow-y-auto">
       <nav class="mt-5 px-2 space-y-1">
         <AntNavItem
           v-for="(navItem, index) in navItems"
@@ -89,7 +91,7 @@ const { navItems, profileHref, userName } = defineProps({
       </nav>
     </div>
 
-    <AntNavProfile :profile-href="profileHref" :user-name="userName">
+    <AntNavProfile :to="profileHref" :user-name="userName">
       <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
         <slot :name="slot" v-bind="scope" />
       </template>

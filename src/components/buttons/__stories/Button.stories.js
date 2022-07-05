@@ -1,8 +1,9 @@
 import AntButton from '../AntButton.vue';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Ant Button',
+  title: 'Components/Buttons/Ant Button',
   component: AntButton,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
@@ -49,4 +50,10 @@ export const Small = Template.bind({});
 Small.args = {
   size: 'small',
   label: 'Button',
+};
+
+export const WithIcon = Template.bind({});
+WithIcon.args = {
+  label: 'Button',
+  icon: faCaretRight,
 };

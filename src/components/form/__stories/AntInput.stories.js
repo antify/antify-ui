@@ -2,7 +2,7 @@ import AntInput from '../AntInput.vue';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 export default {
-  title: 'Ant Input',
+  title: 'Components/Froms/Ant Input',
   component: AntInput,
 };
 
