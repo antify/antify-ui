@@ -27,9 +27,9 @@ const { logoUrl, alt, size } = defineProps({
 
 const classes = computed(() => ({
   'block overflow-hidden': true,
-  'w-6': size === 'small',
+  'h-6': size === 'small',
   'h-8': size === 'medium',
-  'w-12': size === 'large',
+  'h-12': size === 'large',
 }));
 </script>
 

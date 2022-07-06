@@ -3,6 +3,12 @@ import AntLogo from '../AntLogo.vue';
 export default {
   title: 'Components/Images/Ant Logo',
   component: AntLogo,
+  argTypes: {
+    size: {
+      control: { type: 'select' },
+      options: ['small', 'medium', 'large'],
+    },
+  },
 };
 
 const Template = (args) => ({
