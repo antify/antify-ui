@@ -10,7 +10,7 @@ export type TableHeader = {
   headerClassList?: string;
   rowClassList?: string;
   title: string;
-  type: string;
+  type: ROW_TYPES;
   links?: {
     href: string;
     label: string;
