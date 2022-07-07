@@ -11,7 +11,7 @@ const Template = (args: any) => ({
   setup() {
     return { args };
   },
-  template: '<AntInput v-bind="args"/>',
+  template: '<div class="m-2"><AntInput v-bind="args"/></div>',
 });
 
 /**

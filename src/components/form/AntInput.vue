@@ -7,12 +7,12 @@ export default {
 
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import { uuid } from 'vue3-uuid';
 
 const props = defineProps({
   id: {
     type: String,
-    default: '',
   },
   value: {
     required: true,
@@ -46,8 +46,11 @@ const props = defineProps({
 const emit = defineEmits(['input']);
 
 const errors = ref<Array<string>>([]);
-const _id = ref<string>('');
 const content = ref<string>(props.value);
+
+const _id = computed(() => {
+  return props.id ? props.id : uuid.v4();
+});
 
 const validate = () => {
   errors.value = [];
@@ -62,10 +65,6 @@ const validate = () => {
   }
 };
 
-const getId = () => {
-  return `${_id.value} ${props.id}`.trim();
-};
-
 const handleInput = () => {
   emit('input', content.value);
 };
@@ -75,12 +74,12 @@ const handleInput = () => {
   <div>
     <div class="relative">
       <label
-        :for="_id"
         v-if="label"
-        class="block text-sm font-medium text-gray-700"
+        :for="_id"
         :class="{
           'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
         }"
+        class="block text-sm font-medium text-gray-700"
       >
         {{ label }}
       </label>
@@ -103,8 +102,16 @@ const handleInput = () => {
 
         <input
           v-model="content"
+          :id="_id"
           :type="type"
           :placeholder="placeholder || label"
+          :aria-describedby="`${_id}-description`"
+          :aria-invalid="errors.length > 0"
+          :class="{
+            'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
+              errors.length > 0,
+            'pl-10': leadingIcon,
+          }"
           class="
             appearance-none
             block
@@ -120,13 +127,6 @@ const handleInput = () => {
             focus:border-primary-light
             sm:text-sm
           "
-          :class="{
-            'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
-              errors.length > 0,
-            'pl-10': leadingIcon,
-          }"
-          :aria-describedby="`${_id}-description`"
-          :aria-invalid="errors.length > 0"
           v-bind="$attrs"
           @blur="validate"
           @input="handleInput"

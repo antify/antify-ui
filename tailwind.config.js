@@ -9,8 +9,12 @@ module.exports = {
 				secondary: "",
 			},
 			minHeight: {
+				16: "4rem;",
 				32: "8rem;",
 				48: "12rem;",
+			},
+			maxWidth: {
+				16: "4rem;",
 			},
 		},
 	},
