@@ -1,11 +1,11 @@
 import AntPasswordWidget from '../AntPasswordWidget.vue';
 
 export default {
-  title: 'Components/Froms/Ant Password Widget',
+  title: 'Components/Forms/Ant Password Widget',
   component: AntPasswordWidget,
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntPasswordWidget },
   setup() {
     return { args };
@@ -14,6 +14,7 @@ const Template = (args) => ({
 });
 
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
   id: 'input-id-123456789',
   value: '',

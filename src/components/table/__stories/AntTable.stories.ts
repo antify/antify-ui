@@ -2,7 +2,7 @@ import AntTable from '../AntTable.vue';
 import { ROW_TYPES } from '../../../types/TableHeader.type';
 
 export default {
-  title: 'Ant Table',
+  title: 'Components/Table/Ant Table',
   component: AntTable,
 };
 

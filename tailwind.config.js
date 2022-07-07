@@ -8,6 +8,10 @@ module.exports = {
 				"primary-dark": "#aa4a05",
 				secondary: "",
 			},
+			minHeight: {
+				32: "8rem;",
+				48: "12rem;",
+			},
 		},
 	},
 	plugins: [require("@tailwindcss/forms")],

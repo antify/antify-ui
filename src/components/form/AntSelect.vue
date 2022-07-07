@@ -23,6 +23,10 @@ const {} = defineProps({
     type: Boolean,
     default: true,
   },
+  value: {
+    type: String,
+    required: true,
+  },
 });
 </script>
 
@@ -39,6 +43,7 @@ const {} = defineProps({
     <select
       :id="id"
       :placeholder="placeholder"
+      v-model="value"
       class="
         mt-1
         block
@@ -54,6 +59,8 @@ const {} = defineProps({
         sm:text-sm
         rounded-md
       "
+      v-bind="$attrs"
+      @change="() => $emit('update:value', value)"
     >
       <option
         v-for="(option, index) in options"

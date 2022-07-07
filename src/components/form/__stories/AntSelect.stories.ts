@@ -1,11 +1,11 @@
 import AntSelect from '../AntSelect.vue';
 
 export default {
-  title: 'Components/Froms/Ant Select',
+  title: 'Components/Forms/Ant Select',
   component: AntSelect,
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntSelect },
   setup() {
     return { args };
@@ -17,6 +17,7 @@ const Template = (args) => ({
  * Primary use of input field.
  */
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
   id: 'select-id-123456789',
   label: 'Select',
@@ -45,6 +46,7 @@ Primary.args = {
  * Primary use of input field.
  */
 export const NoLabel = Template.bind({});
+// @ts-ignore
 NoLabel.args = {
   id: 'select-id-1234567891',
   label: 'Select',

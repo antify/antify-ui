@@ -2,11 +2,11 @@ import AntInput from '../AntInput.vue';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 export default {
-  title: 'Components/Froms/Ant Input',
+  title: 'Components/Forms/Ant Input',
   component: AntInput,
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntInput },
   setup() {
     return { args };
@@ -18,6 +18,7 @@ const Template = (args) => ({
  * Primary use of input field.
  */
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
   id: 'input-id-123456789',
   value: '',
@@ -28,6 +29,7 @@ Primary.args = {
  * use with description.
  */
 export const WithDescription = Template.bind({});
+// @ts-ignore
 WithDescription.args = {
   id: 'input-id-123456789',
   value: '',
@@ -39,6 +41,7 @@ WithDescription.args = {
  * use without label.
  */
 export const NoLabel = Template.bind({});
+// @ts-ignore
 NoLabel.args = {
   id: 'input-id-123456789',
   value: '',
@@ -49,6 +52,7 @@ NoLabel.args = {
  * use with leading icon.
  */
 export const LeadingIcon = Template.bind({});
+// @ts-ignore
 LeadingIcon.args = {
   id: 'email-123456789',
   value: '',
@@ -61,6 +65,7 @@ LeadingIcon.args = {
  * use with overlapping label.
  */
 export const OverlappingLabel = Template.bind({});
+// @ts-ignore
 OverlappingLabel.args = {
   id: 'email-123456789',
   value: '',
@@ -73,6 +78,7 @@ OverlappingLabel.args = {
  * use with leading Icon and overlapping label.
  */
 export const LeadingIconAndOverlappingLabel = Template.bind({});
+// @ts-ignore
 LeadingIconAndOverlappingLabel.args = {
   id: 'email-123456789',
   value: '',
@@ -86,12 +92,13 @@ LeadingIconAndOverlappingLabel.args = {
  * Validation Icon.
  */
 export const Validated = Template.bind({});
+// @ts-ignore
 Validated.args = {
   id: 'input-id-987654321',
   value: 'test@test.de',
   label: 'Validated',
   rules: [
-    (value) => !!value || 'value can not be empty',
-    (value) => value.length > 3 || 'value is to short',
+    (value: any) => !!value || 'value can not be empty',
+    (value: any) => value.length > 3 || 'value is to short',
   ],
 };

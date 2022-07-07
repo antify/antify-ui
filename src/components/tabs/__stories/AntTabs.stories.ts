@@ -3,18 +3,9 @@ import AntTabs from '../AntTabs.vue';
 export default {
   title: 'Ant Tabs',
   component: AntTabs,
-  // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
-  // argTypes: {
-  //   backgroundColor: { control: 'color' },
-  //   onClick: {},
-  //   size: {
-  //     control: { type: 'select' },
-  //     options: ['small', 'medium', 'large'],
-  //   },
-  // },
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntTabs },
   setup() {
     return { args };
@@ -23,7 +14,7 @@ const Template = (args) => ({
 });
 
 export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+// @ts-ignore
 Primary.args = {
   tabs: [
     { name: 'My Account', href: '#', current: false },
@@ -34,7 +25,7 @@ Primary.args = {
 };
 
 export const Empty = Template.bind({});
-// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+// @ts-ignore
 Empty.args = {
   tabs: [],
 };
