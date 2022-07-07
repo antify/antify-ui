@@ -40,6 +40,7 @@ const dragstartEvent = (event, elem, index) => {
     ...elem,
     id: 'ghost',
   };
+  addGhost(index);
 };
 
 const dragoverEvent = (event, index) => {
@@ -124,7 +125,7 @@ const _data = computed(() => {
               <thead class="bg-gray-50 sticky top-0 border-b">
                 <tr class="">
                   <!-- TODO:: make translateable -->
-                  <th class="sr-only">Dragger</th>
+                  <th class="sr-only w-1">Dragger</th>
 
                   <th
                     v-for="(header, index) in headers"
@@ -153,83 +154,92 @@ const _data = computed(() => {
                 class="divide-y divide-gray-200 bg-white"
                 @drop="onDrop"
               >
-                <tr
-                  v-for="(elem, index) in _data"
-                  :key="`table-row-${index}`"
-                  draggable="true"
-                  class="cursor-pointer select-none transition-all"
-                  :class="{ 'opacity-30': elem.id === 'ghost' }"
-                  @dragstart="dragstartEvent($event, elem, index)"
-                  @dragover="dragoverEvent($event, index)"
-                  @dragleave="dragleaveEvent($event, index)"
-                >
-                  <td class="cursor-pointer">
-                    <fa-icon :icon="grabberIcon" />
-                  </td>
-
-                  <td
-                    v-for="(header, index) in headers"
-                    :key="`table-cell-${header.identifier}-${index}`"
-                    class="
-                      whitespace-nowrap
-                      py-2
-                      pl-4
-                      pr-3
-                      text-sm
-                      font-medium
-                      text-gray-900
-                      sm:pl-6
-                    "
+                <transition-group name="drag-list">
+                  <tr
+                    v-for="(elem, index) in _data"
+                    :key="`table-row-${index}`"
+                    draggable="true"
+                    class="cursor-pointer select-none transition-all"
+                    :class="{ 'opacity-30': elem.id === 'ghost' }"
+                    @dragstart="dragstartEvent($event, elem, index)"
+                    @dragover="dragoverEvent($event, index)"
+                    @dragleave="dragleaveEvent($event, index)"
                   >
-                    <div
-                      v-if="header.type === ROW_TYPES.TEXT"
-                      :class="header.rowClassList"
-                    >
-                      {{ elem[header.identifier] }}
-                    </div>
-
-                    <div
-                      v-else-if="header.type === ROW_TYPES.IMAGE"
-                      :class="header.rowClassList"
-                    >
-                      <img
-                        :src="elem[header.identifier]"
-                        :alt="elem[header.identifier]"
+                    <td class="cursor-pointer w-0">
+                      <fa-icon
+                        :icon="grabberIcon"
+                        class="
+                          px-4
+                          transition-all
+                          text-gray-400
+                          hover:text-gray-800
+                        "
                       />
-                    </div>
+                    </td>
 
-                    <div
-                      v-else-if="header.type === ROW_TYPES.HTML"
-                      :class="header.rowClassList"
-                      v-html="elem[header.identifier]"
-                    />
-
-                    <div
-                      v-else-if="header.type === ROW_TYPES.TEXT_WITH_LINKS"
-                      :class="header.rowClassList"
+                    <td
+                      v-for="(header, index) in headers"
+                      :key="`table-cell-${header.identifier}-${index}`"
+                      class="
+                        whitespace-nowrap
+                        py-2
+                        pl-4
+                        pr-3
+                        text-sm
+                        font-medium
+                        text-gray-900
+                        sm:pl-6
+                      "
                     >
-                      <div>{{ elem[header.identifier] }}</div>
+                      <div
+                        v-if="header.type === ROW_TYPES.TEXT"
+                        :class="header.rowClassList"
+                      >
+                        {{ elem[header.identifier] }}
+                      </div>
 
                       <div
-                        v-for="(link, index) in header.links"
-                        :key="`links-${header.identifier}-${index}`"
-                        class="text-xs inline-block"
+                        v-else-if="header.type === ROW_TYPES.IMAGE"
+                        :class="header.rowClassList"
                       >
-                        <span v-if="index !== 0">&nbsp;|&nbsp;</span>
-
-                        <a
-                          :href="link.href"
-                          class="text-blue-600 hover:text-blue-800"
-                        >
-                          {{ link.label }}
-                        </a>
+                        <img
+                          :src="elem[header.identifier]"
+                          :alt="elem[header.identifier]"
+                        />
                       </div>
-                    </div>
-                  </td>
 
-                  <slot name="lastCell" />
-                </tr>
+                      <div
+                        v-else-if="header.type === ROW_TYPES.HTML"
+                        :class="header.rowClassList"
+                        v-html="elem[header.identifier]"
+                      />
 
+                      <div
+                        v-else-if="header.type === ROW_TYPES.TEXT_WITH_LINKS"
+                        :class="header.rowClassList"
+                      >
+                        <div>{{ elem[header.identifier] }}</div>
+
+                        <div
+                          v-for="(link, index) in header.links"
+                          :key="`links-${header.identifier}-${index}`"
+                          class="text-xs inline-block"
+                        >
+                          <span v-if="index !== 0">&nbsp;|&nbsp;</span>
+
+                          <a
+                            :href="link.href"
+                            class="text-blue-600 hover:text-blue-800"
+                          >
+                            {{ link.label }}
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+
+                    <slot name="lastCell" />
+                  </tr>
+                </transition-group>
                 <tr v-if="_data.length <= 0">
                   <slot name="emptyState" />
                 </tr>
@@ -241,3 +251,19 @@ const _data = computed(() => {
     </div>
   </div>
 </template>
+
+<style>
+.drag-list-move,
+.drag-list-enter-active,
+.drag-list-leave-active {
+  transition: transform 1s;
+}
+.drag-list-enter,
+.drag-list-leave-active {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.drag-list-leave-active {
+  position: absolute;
+}
+</style>

@@ -7,7 +7,7 @@ export default {
   component: AntPagination,
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntPagination, AntButton },
   setup() {
     return { args, faAngleRight };
@@ -40,4 +40,3 @@ const Template = (args) => ({
  * Primary use of Table.
  */
 export const Primary = Template.bind({});
-Primary.args = {};

@@ -11,7 +11,7 @@ export default {
   },
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntLogo },
   setup() {
     return { args };
@@ -20,6 +20,7 @@ const Template = (args) => ({
 });
 
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
   logoUrl:
     'https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg',

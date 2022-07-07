@@ -1,8 +1,8 @@
-import CreateButton from '../CreateButton.vue';
+import DeleteButton from '../DeleteButton.vue';
 
 export default {
-  title: 'Components/Buttons/Create Button',
-  component: CreateButton,
+  title: 'Components/Buttons/Delete Button',
+  component: DeleteButton,
   argTypes: {
     backgroundColor: { control: 'color' },
     onClick: {},
@@ -13,16 +13,17 @@ export default {
   },
 };
 
-const Template = (args) => ({
-  components: { CreateButton },
+const Template = (args: any) => ({
+  components: { DeleteButton },
   setup() {
     return { args };
   },
-  template: '<CreateButton v-bind="args" />',
+  template: '<DeleteButton v-bind="args" />',
 });
 
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
-  id: 'create-button-123490',
-  label: 'Create',
+  id: 'delete-button-123490',
+  label: 'Delete',
 };

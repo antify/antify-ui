@@ -5,7 +5,7 @@ export default {
   component: AntSidebar,
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntSidebar },
   setup() {
     return { args };
@@ -19,6 +19,7 @@ const Template = (args) => ({
  * Primary use of Table.
  */
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
   open: true,
 };

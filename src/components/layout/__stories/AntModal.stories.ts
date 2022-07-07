@@ -5,7 +5,7 @@ export default {
   component: AntModal,
 };
 
-const Template = (args) => ({
+const Template = (args: any) => ({
   components: { AntModal },
   setup() {
     return { args };
@@ -14,11 +14,13 @@ const Template = (args) => ({
 });
 
 export const Primary = Template.bind({});
+// @ts-ignore
 Primary.args = {
   active: true,
 };
 
 export const Fullscreen = Template.bind({});
+// @ts-ignore
 Fullscreen.args = {
   active: true,
   fullscreen: true,

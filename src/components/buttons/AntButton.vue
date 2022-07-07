@@ -7,7 +7,6 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
     },
     primary: {
       type: Boolean,
@@ -34,7 +33,7 @@ export default {
 
     return {
       classes: computed(() => ({
-        'inline-flex items-center px-2.5 py-1.5 border border-transparent font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2': true,
+        'inline-flex items-center px-2.5 py-1.5 border border-transparent font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all': true,
         'text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500':
           props.primary,
         'border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500':
@@ -55,7 +54,7 @@ export default {
 
 <template>
   <button type="button" :class="classes" @click="onClick" :style="style">
-    {{ label }}
+    <slot name="label">{{ label }}</slot>
 
     <fa-icon v-if="icon" class="pl-2" :icon="icon" />
   </button>
