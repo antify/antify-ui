@@ -1,3 +1,4 @@
+import { onMounted } from 'vue';
 <script lang="ts">
 export default {
   name: 'AntDropzone',
@@ -6,22 +7,25 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const { dropzoneType } = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  dropzoneType: {
-    type: String,
-    validator: function (value) {
-      return ['copy', 'move', 'link'].indexOf(value) !== -1;
-    },
-    default: 'copy',
-  },
-});
+import { onMounted } from 'vue';
 
-const onDrop = (event) => {
-  $emit('dropped', event.dataTransfer.getData(`${id}-data`));
+const emit = defineEmits(['dropped']);
+
+const { id, dropzoneType = 'copy' } = defineProps<{
+  id: string,
+  dropzoneType?: string
+}>();
+
+onMounted(() => {
+  if (dropzoneType && ['copy', 'move', 'link'].indexOf(dropzoneType) === -1) {
+    throw Error(`Dropzone type ${dropzoneType} is not allowed`);
+  }
+})
+
+const onDrop = (event: DragEvent) => {
+  if (event && event.dataTransfer) {
+    emit('dropped', event.dataTransfer.getData(`${id}-data`));
+  }
 };
 </script>
 

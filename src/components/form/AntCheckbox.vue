@@ -11,25 +11,19 @@ import { uuid } from 'vue3-uuid';
 
 const emit = defineEmits(['update:value']);
 
-const props = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  value: {
-    type: String,
-  },
-});
-
-const _id = computed(() => {
-  return props.id ? props.id : uuid.v4();
-});
+const {
+  id = uuid.v4(),
+  label,
+  value,
+} = defineProps<{
+  id: string;
+  label: string;
+  value: boolean;
+}>();
 
 const _value = computed({
   get: () => {
-    return props.value;
+    return value;
   },
   set: (val) => {
     emit('update:value', val);
@@ -39,8 +33,8 @@ const _value = computed({
 
 <template>
   <div class="flex items-center space-x-3">
-    <input type="checkbox" :id="_id" v-model="_value" />
+    <input type="checkbox" :id="id" v-model="_value" />
 
-    <label :for="_id">{{ label }}</label>
+    <label :for="id">{{ label }}</label>
   </div>
 </template>

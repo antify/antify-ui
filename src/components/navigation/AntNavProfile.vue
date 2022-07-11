@@ -6,17 +6,13 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { RouteLocationRaw } from 'vue-router';
+import type { RouteLocationRaw } from 'vue-router';
 
-const { to, userName } = defineProps({
-  to: {
-    type: RouteLocationRaw,
-    default: '#',
-  },
-  userName: {
-    type: String,
-  },
-});
+const { to = '#', userName } =
+  defineProps<{
+    to?: RouteLocationRaw;
+    userName?: string;
+  }>();
 </script>
 
 <template>

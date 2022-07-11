@@ -7,22 +7,20 @@ export default {
 
 <script lang="ts" setup>
 import AntRadio from './AntRadio.vue';
+import type { RadioButton } from '../../../types/RadioButton.type';
 
-const props = defineProps({
-  label: {
-    type: String,
-  },
-  radioButtons: {
-    type: Array,
-  },
-  radioGroupName: {
-    type: String,
-  },
-});
+const { label, radioButtons, radioGroupName } =
+  defineProps<{
+    label?: string;
+    radioButtons: RadioButton[];
+    radioGroupName: string;
+  }>();
 </script>
 
 <template>
   <div class="flex space-x-6">
+    <label>{{ label }}</label>
+
     <AntRadio
       v-for="(radio, index) in radioButtons"
       :key="`radio-button-${radio.id}-${index}`"

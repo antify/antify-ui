@@ -6,24 +6,20 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import type { RouteLocationRaw } from 'vue-router';
 import { ref } from 'vue';
-import { RouteLocationRaw } from 'vue-router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import AntNavigation from '../navigation/AntNavigation.vue';
+import { NavItem } from '../../types/NavItem.type';
 
-const { navItems, profileHref, userName } = defineProps({
-  navItems: {
-    type: Array,
-  },
-  profileHref: {
-    type: RouteLocationRaw,
-  },
-  userName: {
-    type: String,
-  },
-});
+const props =
+  defineProps<{
+    navItems?: NavItem[];
+    profileHref?: RouteLocationRaw;
+    userName?: string;
+  }>();
 
-const sidebarDisplayed = ref<Boolean>(false);
+const sidebarDisplayed = ref<boolean>(false);
 </script>
 
 <template>
@@ -54,7 +50,7 @@ const sidebarDisplayed = ref<Boolean>(false);
           ease-linear
           duration-300
         "
-      />
+      ></div>
 
       <AntNavigation
         :nav-items="navItems"
@@ -75,6 +71,7 @@ const sidebarDisplayed = ref<Boolean>(false);
         :nav-items="navItems"
         :profile-href="profileHref"
         :user-name="userName"
+        :is-open="false"
       >
         <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
           <slot :name="slot" v-bind="scope" />

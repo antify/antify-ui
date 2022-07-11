@@ -7,32 +7,40 @@ export default {
 
 <script lang="ts" setup>
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { onMounted } from 'vue';
 
-const { id, data, showGrabber, dragType } = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  data: {
-    type: String,
-    required: true,
-  },
-  showGrabber: {
-    type: Boolean,
-  },
-  dragType: {
-    type: String,
-    validator: function (value) {
-      return ['copy', 'move', 'link'].indexOf(value) !== -1;
-    },
-    default: 'copy',
-  },
+const {
+  id,
+  data,
+  showGrabber,
+  dragType = 'copy',
+} = defineProps<{
+  id: string;
+  data: string;
+  showGrabber?: boolean;
+  dragType?: string;
+}>();
+
+onMounted(() => {
+  if (dragType && ['copy', 'move', 'link', 'none'].indexOf(dragType) === -1) {
+    throw Error(`Drag type ${dragType} is not allowed`);
+  }
 });
 
-const dragstartEvent = (event) => {
-  event.dataTransfer.dropEffect = dragType;
-  event.dataTransfer.effectAllowed = dragType;
-  event.dataTransfer.setData(`${id}-data`, data);
+const dragstartEvent = (event: DragEvent) => {
+  if (event && event.dataTransfer) {
+    event.dataTransfer.dropEffect = dragType as
+      | 'copy'
+      | 'move'
+      | 'link'
+      | 'none';
+    event.dataTransfer.effectAllowed = dragType as
+      | 'copy'
+      | 'move'
+      | 'link'
+      | 'none';
+    event.dataTransfer.setData(`${id}-data`, data);
+  }
 };
 </script>
 

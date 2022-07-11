@@ -5,51 +5,41 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { computed } from '@vue/reactivity';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { ref, computed } from 'vue';
+import { faEye, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { uuid } from 'vue3-uuid';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: '',
-  },
-  password: {
-    required: true,
-  },
-  label: {
-    type: String,
-  },
-  rules: {
-    type: Array,
-    default: [],
-  },
-  description: {
-    type: String,
-  },
-  placeholder: {
-    type: String,
-  },
-  leadingIcon: {
-    type: Object,
-  },
-  overlappingLabel: {
-    type: Boolean,
-    default: false,
-  },
-  showPassword: {
-    type: Boolean,
-    default: true,
-  },
-});
+const {
+  id = uuid.v4(),
+  password,
+  label,
+  rules = [],
+  description,
+  placeholder,
+  leadingIcon,
+  overlappingLabel = false,
+  showPassword = true,
+} = defineProps<{
+  id?: string;
+  password: string;
+  label?: string;
+  rules: [];
+  description?: string;
+  placeholder?: string;
+  leadingIcon?: Object;
+  overlappingLabel?: boolean;
+  showPassword?: boolean;
+}>();
+
+const emit = defineEmits(['input']);
 
 const defaultType = ref<String>('password');
 
 const useType = computed({
-  get() {
-    return defaultType.value;
+  get(): string {
+    return defaultType.value.toString();
   },
-  set(value) {
+  set(value: string) {
     defaultType.value = value;
   },
 });
@@ -61,11 +51,32 @@ const revealPassword = () => {
     useType.value = 'password';
   }
 };
+
+const errors = ref<Array<string>>([]);
+const content = ref<string>(password as string);
+
+const validate = () => {
+  errors.value = [];
+
+  if (rules && rules.length > 0) {
+    rules.forEach((validator: Function) => {
+      const isValid = validator(content.value);
+
+      if (!isValid || typeof isValid === 'string') {
+        errors.value.push(isValid);
+      }
+    });
+  }
+};
+
+const handleInput = () => {
+  emit('input', content.value);
+};
 </script>
 
 <template>
   <label
-    :for="_id"
+    :for="id"
     v-if="label"
     class="block text-sm font-medium text-gray-700"
     :class="{
@@ -93,6 +104,7 @@ const revealPassword = () => {
 
     <input
       v-model="password"
+      :id="id"
       :type="useType"
       :placeholder="placeholder || label"
       class="
@@ -112,11 +124,11 @@ const revealPassword = () => {
       "
       :class="{
         'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
-          error,
+          errors && errors.length > 0,
         'pl-10': leadingIcon,
       }"
-      :aria-describedby="`${_id}-description`"
-      :aria-invalid="error"
+      :aria-describedby="`${id}-description`"
+      :aria-invalid="errors && errors.length > 0"
       v-bind="$attrs"
       @blur="validate"
       @input="handleInput"
@@ -135,7 +147,7 @@ const revealPassword = () => {
     </div>
 
     <div
-      v-if="error"
+      v-if="errors && errors.length > 0"
       class="
         absolute
         inset-y-0
@@ -152,5 +164,19 @@ const revealPassword = () => {
         aria-hidden="true"
       />
     </div>
+
+    <p
+      v-if="description || (errors && errors.length > 0)"
+      class="mt-2 text-sm text-gray-500"
+      :id="`${id}-description`"
+    >
+      <template v-if="errors">
+        <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+      </template>
+
+      <template v-else>
+        {{ description }}
+      </template>
+    </p>
   </div>
 </template>

@@ -6,30 +6,23 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { uuid } from 'vue3-uuid';
 
-const props = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  name: {
-    type: String,
-  },
-});
-
-const _id = computed<String>(() => {
-  return props.id ? props.id : uuid.v4();
-});
+const {
+  id = uuid.v4(),
+  label,
+  name,
+} = defineProps<{
+  id?: string;
+  label?: string;
+  name?: string;
+}>();
 </script>
 
 <template>
   <div class="flex items-center space-x-3">
-    <input :id="_id" :name="name" type="radio" />
+    <input :id="id" :name="name" type="radio" />
 
-    <label :for="_id">{{ label }}</label>
+    <label :for="id">{{ label }}</label>
   </div>
 </template>

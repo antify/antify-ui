@@ -1,3 +1,4 @@
+import { uuid } from 'vue3-uuid'; import { ref } from 'vue';
 <script lang="ts">
 export default {
   name: 'AntProgress',
@@ -6,38 +7,36 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const { id, value, fullValue, label } = defineProps({
-  id: {
-    type: String,
-    default: '',
-  },
-  value: {
-    type: Number,
-    default: 0,
-  },
-  fullValue: {
-    type: Number,
-    default: 100,
-  },
-  label: {
-    type: String,
-  },
-});
+import { ref } from 'vue';
+import { uuid } from 'vue3-uuid';
 
-const current = (value * 100) / fullValue;
+const {
+  id = uuid.v4(),
+  value = 0,
+  fullValue = 100,
+  label,
+} = defineProps<{
+  id?: string;
+  value?: number;
+  fullValue?: number;
+  label?: string;
+}>();
+
+const current = ref<number>((value * 100) / fullValue);
 </script>
 
 <template>
   <div class="text-xs text-gray-500 flex justify-between">
     <span>{{ label }}</span>
-    <span
-      >{{ value.toLocaleString(undefined, {}) }}/{{
+    <span>
+      {{ value.toLocaleString(undefined, {}) }}/{{
         fullValue.toLocaleString(undefined, {})
       }}
     </span>
   </div>
 
   <div
+    :id="id"
     class="
       w-full
       bg-gray-400

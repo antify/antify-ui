@@ -9,28 +9,16 @@ export default {
 import { reactive, computed } from 'vue';
 import AntButton from './AntButton.vue';
 
-const { id, label, size, backgroundColor, icon } = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  size: {
-    type: String,
-    validator: function (value) {
-      return ['small', 'medium', 'large'].indexOf(value) !== -1;
-    },
-  },
-  backgroundColor: {
-    type: String,
-  },
-  icon: {
-    type: Object,
-  },
-});
+const { id, label, size, backgroundColor, icon } =
+  defineProps<{
+    id?: string;
+    label?: string;
+    size?: string;
+    backgroundColor?: string;
+    icon?: Object;
+  }>();
 
-defineEmits('click');
+const emit = defineEmits(['click']);
 
 const onClick = () => {
   emit('click');
@@ -46,6 +34,7 @@ const onClick = () => {
       @click="onClick"
       :backgroundColor="backgroundColor"
       :size="size"
+      :icon="icon"
     />
   </div>
 </template>
