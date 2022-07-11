@@ -6,16 +6,13 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ROW_TYPES } from '../../types/TableHeader.type';
+import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
 
-const { navItems, profileHref, userName } = defineProps({
-  headers: {
-    type: Array,
-  },
-  data: {
-    type: Array,
-  },
-});
+const { headers, data } =
+  defineProps<{
+    headers: TableHeader[];
+    data: any[];
+  }>();
 </script>
 
 <template>

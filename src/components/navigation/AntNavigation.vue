@@ -6,27 +6,24 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
-import { RouteLocationRaw } from 'vue-router';
+import type { RouteLocationRaw } from 'vue-router';
 import AntNavItem from './AntNavItem.vue';
 import AntNavProfile from './AntNavProfile.vue';
 import { faX } from '@fortawesome/free-solid-svg-icons';
+import { NavItem } from '../../types/NavItem.type';
 
-const { navItems, profileHref, userName, isOpen } = defineProps({
-  navItems: {
-    type: Array,
-  },
-  profileHref: {
-    type: RouteLocationRaw,
-  },
-  userName: {
-    type: String,
-  },
+const {
+  navItems,
+  profileHref,
+  userName,
+  isOpen = false,
+} = defineProps<{
+  navItems?: NavItem[];
+  profileHref?: RouteLocationRaw;
+  userName?: string;
   // only relevant on mobile
-  isOpen: {
-    type: Boolean,
-  },
-});
+  isOpen?: boolean;
+}>();
 </script>
 
 <template>

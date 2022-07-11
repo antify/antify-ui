@@ -11,35 +11,24 @@ import { uuid } from 'vue3-uuid';
 
 const emit = defineEmits(['update:value']);
 
-const props = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  acceptType: {
-    type: String,
-    default: '*',
-  },
-  icon: {
-    type: Object,
-  },
-  iconClass: {
-    type: String,
-  },
-  value: {
-    type: Object,
-  },
-  showPreview: {
-    type: Boolean,
-    default: false,
-  },
-});
-
-const _id = computed(() => {
-  return props.id ? props.id : uuid.v4();
-});
+const {
+  id = uuid.v4(),
+  label,
+  acceptType = '*',
+  icon,
+  iconClass,
+  value,
+  showPreview = false,
+} = defineProps<{
+  id?: string;
+  label?: string;
+  acceptType?: string;
+  icon?: Object;
+  iconClass?: string;
+  // Upload does not have its own event type so it's any
+  value: any;
+  showPreview?: boolean;
+}>();
 
 const uploaded = ref({
   src: '',
@@ -48,13 +37,12 @@ const uploaded = ref({
 
 const _value = computed({
   get: () => {
-    return props.value;
+    return value;
   },
   set: (val) => {
-    console.log('uploaded', val.target.files);
     emit('update:value', val);
-    uploaded.value.src = URL.createObjectURL(val.target.files[0]);
-    uploaded.value.fileName = val.target.files[0].name;
+    uploaded.value.src = URL.createObjectURL(val.target?.files[0]);
+    uploaded.value.fileName = val.target?.files[0].name;
   },
 });
 </script>
@@ -79,7 +67,7 @@ const _value = computed({
     </slot>
 
     <label
-      :for="_id"
+      :for="id"
       class="
         py-3
         border-2 border-dashed
@@ -112,7 +100,7 @@ const _value = computed({
 
     <input
       @change="(val) => (_value = val)"
-      :id="_id"
+      :id="id"
       :accept="acceptType"
       class="hidden"
       type="file"

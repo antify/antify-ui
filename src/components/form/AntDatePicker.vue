@@ -6,32 +6,26 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { uuid } from 'vue3-uuid';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
 const emit = defineEmits(['update:value']);
 
-const props = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  value: {
-    type: String,
-  },
-});
-
-const _id = computed(() => {
-  return props.id ? props.id : uuid.v4();
-});
+const {
+  id = uuid.v4(),
+  label,
+  value,
+} = defineProps<{
+  id: string;
+  label: string;
+  value: string;
+}>();
 
 const _value = computed({
   get: () => {
-    return props.value;
+    return value;
   },
   set: (val) => {
     emit('update:value', val);
@@ -41,8 +35,8 @@ const _value = computed({
 
 <template>
   <div>
-    <label :for="_id">{{ label }}</label>
+    <label :for="id">{{ label }}</label>
 
-    <Datepicker v-model="_value"></Datepicker>
+    <Datepicker :id="id" v-model="_value"></Datepicker>
   </div>
 </template>

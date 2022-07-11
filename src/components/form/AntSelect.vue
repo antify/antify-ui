@@ -6,28 +6,24 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const {} = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  placeholder: {
-    type: String,
-  },
-  options: {
-    type: Array,
-  },
-  showLabel: {
-    type: Boolean,
-    default: true,
-  },
-  value: {
-    type: String,
-    required: true,
-  },
-});
+import { uuid } from 'vue3-uuid';
+import { SelectOption } from '../../types/SelectOption.type';
+
+const {
+  id = uuid.v4(),
+  label,
+  placeholder,
+  options,
+  showLabel = true,
+  value,
+} = defineProps<{
+  id?: string;
+  label?: string;
+  placeholder?: string;
+  options?: SelectOption[];
+  showLabel?: boolean;
+  value: string;
+}>();
 </script>
 
 <template>

@@ -7,57 +7,43 @@ export default {
 
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { uuid } from 'vue3-uuid';
 
-const props = defineProps({
-  id: {
-    type: String,
-  },
-  value: {
-    required: true,
-  },
-  label: {
-    type: String,
-  },
-  rules: {
-    type: Array,
-    default: [],
-  },
-  type: {
-    type: String,
-    default: 'text',
-  },
-  description: {
-    type: String,
-  },
-  placeholder: {
-    type: String,
-  },
-  leadingIcon: {
-    type: Object,
-  },
-  overlappingLabel: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  id = uuid.v4(),
+  value,
+  label,
+  rules = [],
+  type = 'text',
+  description,
+  placeholder,
+  leadingIcon,
+  overlappingLabel = false,
+} = defineProps<{
+  id?: string;
+  value: string;
+  label?: string;
+  rules?: [];
+  type?: string;
+  description?: string;
+  placeholder?: string;
+  leadingIcon?: Object;
+  overlappingLabel?: boolean;
+}>();
 
 const emit = defineEmits(['input']);
 
 const errors = ref<Array<string>>([]);
-const content = ref<string>(props.value);
-
-const _id = computed(() => {
-  return props.id ? props.id : uuid.v4();
-});
+const content = ref<string>(value as string);
 
 const validate = () => {
   errors.value = [];
 
-  if (props.rules && props.rules.length > 0) {
-    props.rules.forEach((validator) => {
+  if (rules && rules.length > 0) {
+    rules.forEach((validator: Function) => {
       const isValid = validator(content.value);
+
       if (!isValid || typeof isValid === 'string') {
         errors.value.push(isValid);
       }
@@ -75,7 +61,7 @@ const handleInput = () => {
     <div class="relative">
       <label
         v-if="label"
-        :for="_id"
+        :for="id"
         :class="{
           'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
         }"
@@ -102,10 +88,10 @@ const handleInput = () => {
 
         <input
           v-model="content"
-          :id="_id"
+          :id="id"
           :type="type"
           :placeholder="placeholder || label"
-          :aria-describedby="`${_id}-description`"
+          :aria-describedby="`${id}-description`"
           :aria-invalid="errors.length > 0"
           :class="{
             'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
@@ -156,7 +142,7 @@ const handleInput = () => {
     <p
       v-if="description || (errors && errors.length > 0)"
       class="mt-2 text-sm text-gray-500"
-      :id="`${_id}-description`"
+      :id="`${id}-description`"
     >
       <template v-if="errors">
         <div v-for="error in errors" class="text-red-600">{{ error }}</div>

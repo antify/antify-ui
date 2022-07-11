@@ -17,10 +17,10 @@ export const Primary = Template.bind({});
 // @ts-ignore
 Primary.args = {
   tabs: [
-    { name: 'My Account', href: '#', current: false },
-    { name: 'Company', href: '#', current: false },
-    { name: 'Team Members', href: '#', current: true },
-    { name: 'Billing', href: '#', current: false },
+    { name: 'My Account', to: '#', current: false },
+    { name: 'Company', to: '#', current: false },
+    { name: 'Team Members', to: '#', current: true },
+    { name: 'Billing', to: '#', current: false },
   ],
 };
 

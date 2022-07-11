@@ -6,19 +6,14 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import AntButton from '../buttons/AntButton.vue';
 
-const { active, fullscreen } = defineProps({
-  active: {
-    type: Boolean,
-    required: true,
-  },
-  fullscreen: {
-    type: Boolean,
-    default: false,
-  },
-});
+const { active, fullscreen = false } =
+  defineProps<{
+    active: boolean;
+    fullscreen: boolean;
+  }>();
 </script>
 
 <template>

@@ -7,34 +7,33 @@ export default {
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import { ROW_TYPES } from '../../types/TableHeader.type';
+import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:data']);
 
-const props = defineProps({
-  headers: {
-    type: Array,
-  },
-  data: {
-    type: Array,
-  },
-  grabberIcon: {
-    type: Object,
-    default: faEllipsisVertical,
-  },
-});
+const {
+  headers,
+  data,
+  grabberIcon = faEllipsisVertical,
+} = defineProps<{
+  headers: TableHeader[];
+  data: any[];
+  grabberIcon: Object;
+}>();
 
 const isDragging = ref<Boolean>(false);
 const ghost = ref({});
-const onDraggingData = ref([]);
+const onDraggingData = ref<any>([]);
 
-const dragstartEvent = (event, elem, index) => {
-  event.dataTransfer.dropEffect = 'move';
-  event.dataTransfer.effectAllowed = 'move';
-  event.dataTransfer.setData(`dragIndex`, index);
+const dragstartEvent = (event: DragEvent, elem: any, index: number) => {
+  if (event && event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData(`dragIndex`, index + '');
+  }
 
-  onDraggingData.value = props.data;
+  onDraggingData.value = data;
   isDragging.value = true;
   ghost.value = {
     ...elem,
@@ -43,7 +42,7 @@ const dragstartEvent = (event, elem, index) => {
   addGhost(index);
 };
 
-const dragoverEvent = (event, index) => {
+const dragoverEvent = (event: DragEvent, index: number) => {
   event.preventDefault();
 
   if (isDragging.value) {
@@ -51,20 +50,20 @@ const dragoverEvent = (event, index) => {
   }
 };
 
-const dragleaveEvent = (event, index) => {
+const dragleaveEvent = (event: DragEvent, index: number) => {
   event.preventDefault();
 
   removeGhost();
 };
 
-const onDrop = (event) => {
+const onDrop = (event: DragEvent) => {
   event.preventDefault();
 
   const index = getGhostIndex();
 
   removeGhost();
 
-  const oldIndex = event.dataTransfer.getData('dragIndex');
+  const oldIndex = event?.dataTransfer?.getData('dragIndex') || 0;
   const toMove = onDraggingData.value[oldIndex];
 
   onDraggingData.value.splice(oldIndex, 1);
@@ -72,12 +71,12 @@ const onDrop = (event) => {
 
   emit('update:data', onDraggingData.value);
 
-  isDragging.value = '';
+  isDragging.value = false;
   onDraggingData.value = [];
   ghost.value = {};
 };
 
-const addGhost = (index) => {
+const addGhost = (index: number) => {
   // Remove all ghosts before adding any new ones:
   removeGhost();
 
@@ -85,7 +84,7 @@ const addGhost = (index) => {
 };
 
 const getGhostIndex = () => {
-  return onDraggingData.value.findIndex((elem) => elem.id === 'ghost');
+  return onDraggingData.value.findIndex((elem: any) => elem.id === 'ghost');
 };
 
 const removeGhost = () => {
@@ -100,7 +99,7 @@ const _data = computed(() => {
   if (isDragging.value) {
     return onDraggingData.value;
   } else {
-    return props.data;
+    return data;
   }
 });
 </script>

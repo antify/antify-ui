@@ -6,23 +6,19 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const props = defineProps({
-  id: {
-    type: String,
-  },
-  label: {
-    type: String,
-  },
-  placeholder: {
-    type: String,
-  },
-  showLabel: {
-    type: Boolean,
-    default: true,
-  },
-});
+import { uuid } from 'vue3-uuid';
 
-console.log('label', props.label);
+const {
+  id = uuid.v4(),
+  label,
+  placeholder,
+  showLabel = true,
+} = defineProps<{
+  id?: string;
+  label?: string;
+  placeholder?: string;
+  showLabel?: boolean;
+}>();
 </script>
 
 <template>

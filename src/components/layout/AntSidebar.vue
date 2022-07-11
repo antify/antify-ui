@@ -8,12 +8,7 @@ export default {
 <script lang="ts" setup>
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-const { open } = defineProps({
-  open: {
-    type: Boolean,
-    required: true,
-  },
-});
+const { open } = defineProps<{ open: boolean }>();
 </script>
 
 <template>

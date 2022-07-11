@@ -6,24 +6,17 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
-const { logoUrl, alt, size } = defineProps({
-  logoUrl: {
-    type: String,
-  },
-  alt: {
-    type: String,
-    default: 'Logo',
-  },
-  size: {
-    type: String,
-    validator: function (value) {
-      return ['small', 'medium', 'large'].indexOf(value) !== -1;
-    },
-    default: 'medium',
-  },
-});
+const {
+  logoUrl,
+  alt = 'logo',
+  size = 'medium',
+} = defineProps<{
+  logoUrl: string;
+  alt: string;
+  size: string;
+}>();
 
 const classes = computed(() => ({
   'block overflow-hidden': true,
@@ -31,6 +24,12 @@ const classes = computed(() => ({
   'h-8': size === 'medium',
   'h-12': size === 'large',
 }));
+
+onMounted(() => {
+  if (size && ['small', 'medium', 'large'].indexOf(size) === -1) {
+    throw Error(`Size ${size} is not defined`);
+  }
+});
 </script>
 
 <template>

@@ -6,17 +6,21 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const { label, headerType } = defineProps({
-  label: {
-    type: String,
-  },
-  headerType: {
-    type: String,
-    validator: function (value) {
-      return ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].indexOf(value) !== -1;
-    },
-    required: true,
-  },
+import { onMounted } from 'vue';
+
+const { label, headerType } =
+  defineProps<{
+    label?: string;
+    headerType: string;
+  }>();
+
+onMounted(() => {
+  if (
+    headerType &&
+    ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].indexOf(headerType) === -1
+  ) {
+    throw Error(`Header type ${headerType} is not defined.`);
+  }
 });
 
 const classes = () => ({

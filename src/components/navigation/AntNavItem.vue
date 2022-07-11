@@ -8,14 +8,12 @@ export default {
 <script lang="ts" setup>
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
-import NavItem from '../../types/NavItem.type';
+import type { NavItem } from '../../types/NavItem.type';
 
-const props = defineProps({
-  navItem: {
-    type: NavItem,
-    required: true,
-  },
-});
+const { navItem } =
+  defineProps<{
+    navItem: NavItem;
+  }>();
 
 const showSubNavigation = ref<Boolean>(false);
 

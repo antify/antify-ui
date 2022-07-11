@@ -35,7 +35,42 @@ import AntTable from 'components/table/AntTable.vue';
 
 import AntTabs from 'components/tabs/Tabs.vue';
 
-module.exports({
+const Plugin = {
+  install(vue: any) {
+    vue.component(AntButton.name, AntButton);
+    vue.component(CloseButton.name, CloseButton);
+    vue.component(CreateButton.name, CreateButton);
+    vue.component(DeleteButton.name, DeleteButton);props
+    vue.component(AntDraggable.name, AntDraggable);
+    vue.component(AntDropzone.name, AntDropzone);
+    vue.component(AntCheckbox.name, AntCheckbox);
+    vue.component(AntDatePicker.name, AntDatePicker);
+    vue.component(AntInput.name, AntInput);
+    vue.component(AntProgress.name, AntProgress);
+    vue.component(AntRichTextEditor.name, AntRichTextEditor);
+    vue.component(AntSelect.name, AntSelect);
+    vue.component(AntTextarea.name, AntTextarea);
+    vue.component(AntUpload.name, AntUpload);
+    vue.component(AntLogo.name, AntLogo);
+    vue.component(AntProfilePicture.name, AntProfilePicture);
+    vue.component(AntContent.name, AntContent);
+    vue.component(AntDualContent.name, AntDualContent);
+    vue.component(AntHeader.name, AntHeader);
+    vue.component(AntLayout.name, AntLayout);
+    vue.component(AntModal.name, AntModal);
+    vue.component(AntSidebar.name, AntSidebar);
+    vue.component(AntNavigation.name, AntNavigation);
+    vue.component(AntNavItem.name, AntNavItem);
+    vue.component(AntNavProfile.name, AntNavProfile);
+    vue.component(AntDragDropTable.name, AntDragDropTable);
+    vue.component(AntPagination.name, AntPagination);
+    vue.component(AntTable.name, AntTable);
+    vue.component(AntTabs.name, AntTabs);
+  },
+};
+
+export default Plugin;
+export {
   AntButton,
   CloseButton,
   CreateButton,
@@ -65,4 +100,4 @@ module.exports({
   AntPagination,
   AntTable,
   AntTabs,
-});
+};

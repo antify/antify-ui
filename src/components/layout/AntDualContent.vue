@@ -5,8 +5,6 @@ export default {
 };
 </script>
 
-<script lang="ts" setup></script>
-
 <template>
   <div class="h-full flex">
     <main
@@ -46,7 +44,7 @@ export default {
         border-r border-gray-200
         h-screen
         max-h-screen
-        flex flex-col
+        flex-col
       "
     >
       <div class="border-b grow-0 shrink-0 basis-auto pl-10 md:pl-0">
