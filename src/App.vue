@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import AntDragDropTable from './components/table/AntDragDropTable.vue';
 
 import { TableHeader, ROW_TYPES } from './types/TableHeader.type';
+import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordField.vue';
 
 const password = ref<string>('');
 
@@ -84,5 +85,6 @@ const simpleHeaders: TableHeader[] = [
 
 <template>
   <div>HI</div>
-  <AntDragDropTable :headers="simpleHeaders" v-model:data="testData" />
+  <!-- <AntDragDropTable :headers="simpleHeaders" v-model:data="testData" /> -->
+  <AntPasswordField :password="password" :rules="[]" />
 </template>

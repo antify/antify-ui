@@ -23,7 +23,7 @@ const {
   id?: string;
   password: string;
   label?: string;
-  rules: [];
+  rules?: [];
   description?: string;
   placeholder?: string;
   leadingIcon?: Object;
