@@ -62,7 +62,7 @@ const onClick = () => {
               'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer',
             ]"
             :aria-current="tab.current ? 'page' : undefined"
-            @click="onClick(tab)"
+            @click="onClick()"
           >
             {{ tab.name }}
           </div>

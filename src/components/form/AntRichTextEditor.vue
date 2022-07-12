@@ -6,11 +6,11 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import { ref, computed, onUnmounted } from 'vue';
 import { useEditor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Heading from '@tiptap/extension-heading';
-import { ref, computed, onUnmounted } from 'vue';
 import AntButton from '../buttons/AntButton.vue';
 
 const emit = defineEmits(['update:data']);
@@ -61,71 +61,89 @@ onUnmounted(() => editor?.value?.destroy());
       <div class="space-x-1 mb-2 flex">
         <slot name="headers-dropdown" v-bind="editor">
           <AntButton
-            @click="editor?.chain().focus().toggleHeading({ level: 1 }).run()"
+            @click="
+              editor
+                ? editor.chain().focus().toggleHeading({ level: 1 }).run()
+                : false
+            "
             :class="{ 'bg-gray-200': editor.isActive('heading', { level: 1 }) }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="">H1</span></template>
+            <span class="">H1</span>
           </AntButton>
 
           <AntButton
-            @click="editor?.chain().focus().toggleHeading({ level: 2 }).run()"
+            @click="
+              editor
+                ? editor.chain().focus().toggleHeading({ level: 2 }).run()
+                : false
+            "
             :class="{ 'bg-gray-200': editor.isActive('heading', { level: 2 }) }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="">H2</span></template>
+            <span class="">H2</span>
           </AntButton>
 
           <AntButton
-            @click="editor?.chain().focus().toggleHeading({ level: 3 }).run()"
+            @click="
+              editor
+                ? editor.chain().focus().toggleHeading({ level: 3 }).run()
+                : false
+            "
             :class="{ 'bg-gray-200': editor.isActive('heading', { level: 3 }) }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="">H3</span></template>
+            <span class="">H3</span>
           </AntButton>
         </slot>
 
         <slot name="bold-button" v-bind="editor">
           <AntButton
-            @click="editor?.chain().focus().toggleBold().run()"
+            @click="editor ? editor.chain().focus().toggleBold().run() : false"
             :class="{ 'bg-gray-200': editor.isActive('bold') }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="font-bold">B</span></template>
+            <span class="font-bold">B</span>
           </AntButton>
         </slot>
 
         <slot name="italic-button" v-bind="editor">
           <AntButton
-            @click="editor?.chain().focus().toggleItalic().run()"
+            @click="
+              editor ? editor.chain().focus().toggleItalic().run() : false
+            "
             :class="{ 'bg-gray-200': editor.isActive('italic') }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="italic">I</span></template>
+            <span class="italic">I</span>
           </AntButton>
         </slot>
 
         <slot name="underline-button" v-bind="editor">
           <AntButton
-            @click="editor?.chain().focus().toggleUnderline().run()"
+            @click="
+              editor ? editor.chain().focus().toggleUnderline().run() : false
+            "
             :class="{ 'bg-gray-200': editor.isActive('underline') }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="underline">U</span></template>
+            <span class="underline">U</span>
           </AntButton>
         </slot>
 
         <slot name="strike-button" v-bind="editor">
           <AntButton
-            @click="editor?.chain().focus().toggleStrike().run()"
+            @click="
+              editor ? editor.chain().focus().toggleStrike().run() : false
+            "
             :class="{ 'bg-gray-200': editor.isActive('strike') }"
             class="hover:bg-gray-200 border-none"
           >
-            <template #label><span class="line-through">S</span></template>
+            <span class="line-through">S</span>
           </AntButton>
         </slot>
 
-        <slot name="custom-buttons" v-bind="editor" />
+        <slot name="custom-buttons" v-bind="editor"></slot>
       </div>
     </slot>
 
