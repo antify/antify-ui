@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'AntTable',
+  name: 'AntDragDropTable',
   inheritAttrs: false,
 };
 </script>
@@ -30,7 +30,7 @@ const dragstartEvent = (event: DragEvent, elem: any, index: number) => {
   if (event && event.dataTransfer) {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData(`dragIndex`, index + '');
+    event.dataTransfer.setData(`dragIndex`, index.toString());
   }
 
   onDraggingData.value = data;
@@ -50,7 +50,7 @@ const dragoverEvent = (event: DragEvent, index: number) => {
   }
 };
 
-const dragleaveEvent = (event: DragEvent, index: number) => {
+const dragleaveEvent = (event: DragEvent) => {
   event.preventDefault();
 
   removeGhost();
@@ -63,10 +63,10 @@ const onDrop = (event: DragEvent) => {
 
   removeGhost();
 
-  const oldIndex = event?.dataTransfer?.getData('dragIndex') || 0;
+  const oldIndex = event?.dataTransfer?.getData('dragIndex') || '0';
   const toMove = onDraggingData.value[oldIndex];
 
-  onDraggingData.value.splice(oldIndex, 1);
+  onDraggingData.value.splice(parseInt(oldIndex, 10), 1);
   onDraggingData.value.splice(index, 0, toMove);
 
   emit('update:data', onDraggingData.value);
@@ -83,7 +83,7 @@ const addGhost = (index: number) => {
   onDraggingData.value.splice(index, 0, ghost.value);
 };
 
-const getGhostIndex = () => {
+const getGhostIndex = (): number => {
   return onDraggingData.value.findIndex((elem: any) => elem.id === 'ghost');
 };
 
@@ -160,9 +160,9 @@ const _data = computed(() => {
                     draggable="true"
                     class="cursor-pointer select-none transition-all"
                     :class="{ 'opacity-30': elem.id === 'ghost' }"
-                    @dragstart="dragstartEvent($event, elem, index)"
-                    @dragover="dragoverEvent($event, index)"
-                    @dragleave="dragleaveEvent($event, index)"
+                    @dragstart="dragstartEvent($event, elem, index as number)"
+                    @dragover="dragoverEvent($event, index as number)"
+                    @dragleave="dragleaveEvent($event)"
                   >
                     <td class="cursor-pointer w-0">
                       <fa-icon
@@ -239,6 +239,7 @@ const _data = computed(() => {
                     <slot name="lastCell" />
                   </tr>
                 </transition-group>
+
                 <tr v-if="_data.length <= 0">
                   <slot name="emptyState" />
                 </tr>
@@ -250,19 +251,3 @@ const _data = computed(() => {
     </div>
   </div>
 </template>
-
-<style>
-.drag-list-move,
-.drag-list-enter-active,
-.drag-list-leave-active {
-  transition: transform 1s;
-}
-.drag-list-enter,
-.drag-list-leave-active {
-  opacity: 0;
-  transform: translateX(30px);
-}
-.drag-list-leave-active {
-  position: absolute;
-}
-</style>

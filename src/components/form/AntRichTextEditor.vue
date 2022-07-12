@@ -125,7 +125,7 @@ onUnmounted(() => editor?.value?.destroy());
           </AntButton>
         </slot>
 
-        <slot name="custom-buttons" v-bind="editor" />
+        <slot name="custom-buttons" v-bind="editor"></slot>
       </div>
     </slot>
 

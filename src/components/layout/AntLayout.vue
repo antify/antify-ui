@@ -59,8 +59,8 @@ const sidebarDisplayed = ref<boolean>(false);
         :is-open="sidebarDisplayed"
         @close="() => (sidebarDisplayed = false)"
       >
-        <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-          <slot :name="slot" v-bind="scope" />
+        <template v-for="(_, slot) of $slots" v-slot:[slot.toString()]="scope">
+          <slot :name="slot.toString()" v-bind="scope"></slot>
         </template>
       </AntNavigation>
     </div>
@@ -73,8 +73,8 @@ const sidebarDisplayed = ref<boolean>(false);
         :user-name="userName"
         :is-open="false"
       >
-        <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-          <slot :name="slot" v-bind="scope" />
+        <template v-for="(_, slot) of $slots" v-slot:[slot.toString()]="scope">
+          <slot :name="slot.toString()" v-bind="scope"></slot>
         </template>
       </AntNavigation>
     </div>

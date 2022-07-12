@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'AntContext',
+  name: 'AntContent',
   inheritAttrs: false,
 };
 </script>

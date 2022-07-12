@@ -14,8 +14,8 @@ const {
   size = 'medium',
 } = defineProps<{
   logoUrl: string;
-  alt: string;
-  size: string;
+  alt?: string;
+  size?: string;
 }>();
 
 const classes = computed(() => ({

@@ -89,8 +89,8 @@ const {
     </div>
 
     <AntNavProfile :to="profileHref" :user-name="userName">
-      <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-        <slot :name="slot" v-bind="scope" />
+      <template v-for="(_, slot) of $slots">
+        <slot :name="slot.toString()" />
       </template>
     </AntNavProfile>
 

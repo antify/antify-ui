@@ -1,21 +1,32 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "esnext",
+    "module": "ESNext",
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "moduleResolution": "node",
     "types": [
-      "vite/client", // if using vite
-      // ...
+      "vite/client",
     ],
-    "jsx": "preserve"
+    "jsx": "preserve",
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts",
+    "src/**/*.tsx", 
+    "src/**/*.vue"
+  ],
+  "exclude": ["**/node_modules", "./vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

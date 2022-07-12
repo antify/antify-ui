@@ -52,7 +52,7 @@ const onClick = () => {
 
 <template>
   <button type="button" :class="classes" @click="onClick" :style="style">
-    <slot name="label">{{ label }}</slot>
+    <slot>{{ label }}</slot>
 
     <fa-icon v-if="icon" class="pl-2" :icon="icon" />
   </button>

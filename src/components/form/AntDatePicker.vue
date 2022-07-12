@@ -18,8 +18,8 @@ const {
   label,
   value,
 } = defineProps<{
-  id: string;
-  label: string;
+  id?: string;
+  label?: string;
   value: string;
 }>();
 
@@ -35,7 +35,7 @@ const _value = computed({
 
 <template>
   <div>
-    <label :for="id">{{ label }}</label>
+    <label :for="id" v-if="label">{{ label }}</label>
 
     <Datepicker :id="id" v-model="_value"></Datepicker>
   </div>

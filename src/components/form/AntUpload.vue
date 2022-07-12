@@ -9,6 +9,9 @@ export default {
 import { computed, ref } from 'vue';
 import { uuid } from 'vue3-uuid';
 
+type UploadTarget = { target: any };
+type FileInfo = { src: string; fileName: string };
+
 const emit = defineEmits(['update:value']);
 
 const {
@@ -26,11 +29,11 @@ const {
   icon?: Object;
   iconClass?: string;
   // Upload does not have its own event type so it's any
-  value: any;
+  value: UploadTarget;
   showPreview?: boolean;
 }>();
 
-const uploaded = ref({
+const uploaded = ref<FileInfo>({
   src: '',
   fileName: '',
 });
@@ -39,7 +42,7 @@ const _value = computed({
   get: () => {
     return value;
   },
-  set: (val) => {
+  set: (val: UploadTarget) => {
     emit('update:value', val);
     uploaded.value.src = URL.createObjectURL(val.target?.files[0]);
     uploaded.value.fileName = val.target?.files[0].name;
@@ -58,11 +61,9 @@ const _value = computed({
           class="w-16 h-16"
         />
 
-        <slot name="filename" v-bind="uploaded">
-          <p class="text-ellipsis overflow-hidden whitespace-nowrap max-w-16">
-            {{ uploaded.fileName }}
-          </p>
-        </slot>
+        <p class="text-ellipsis overflow-hidden whitespace-nowrap max-w-16">
+          {{ uploaded.fileName }}
+        </p>
       </div>
     </slot>
 
