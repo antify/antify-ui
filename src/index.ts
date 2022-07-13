@@ -36,6 +36,9 @@ import AntDragDropTable from './components/table/AntDragDropTable.vue';
 import AntPagination from './components/table/AntPagination.vue';
 import AntTable from './components/table/AntTable.vue';
 
+import AntBadge from './components/elements/AntBadge.vue';
+import AntBanner from './components/elements/AntBanner.vue';
+
 export const Plugin = {
   install(vue: any) {
     vue.use(UUID);
@@ -68,6 +71,8 @@ export const Plugin = {
     vue.component(AntPagination.name, AntPagination);
     vue.component(AntTable.name, AntTable);
     vue.component(AntTabs.name, AntTabs);
+    vue.component(AntBadge.name, AntBadge);
+    vue.component(AntBanner.name, AntBanner);
 
     vue.component('fa-icon', FontAwesomeIcon);
   },
@@ -103,4 +108,6 @@ export {
   AntPagination,
   AntTable,
   AntTabs,
+  AntBadge,
+  AntBanner,
 };
