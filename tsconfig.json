@@ -27,6 +27,6 @@
     "src/**/*.tsx", 
     "src/**/*.vue"
   ],
-  "exclude": ["**/node_modules", "./vite.config.ts"],
+  "exclude": ["**/node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

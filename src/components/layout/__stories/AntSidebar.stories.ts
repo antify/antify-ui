@@ -1,25 +1,22 @@
 import AntSidebar from '../AntSidebar.vue';
+import AntButton from '../../buttons/AntButton.vue';
+import { ref } from 'vue';
 
 export default {
   title: 'Components/Layout/Ant Sidebar',
   component: AntSidebar,
 };
 
-const Template = (args: any) => ({
-  components: { AntSidebar },
+export const Primary = (args: any) => ({
+  components: { AntSidebar, AntButton },
   setup() {
-    return { args };
+    const open = ref<boolean>(true);
+
+    return { args, open };
   },
   template: `
-  <AntSidebar v-bind="args" >
-  </AntSidebar>
+  <AntButton @click="(open = true)" class="m-2">Open Sidebar</AntButton>
+
+  <AntSidebar v-bind="args" v-model:open="open" ></AntSidebar>
   `,
 });
-/**
- * Primary use of Table.
- */
-export const Primary = Template.bind({});
-// @ts-ignore
-Primary.args = {
-  open: true,
-};

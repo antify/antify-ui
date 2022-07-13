@@ -1,7 +1,7 @@
 import AntTabs from '../AntTabs.vue';
 
 export default {
-  title: 'Ant Tabs',
+  title: 'Components/Layout/Ant Tabs',
   component: AntTabs,
 };
 

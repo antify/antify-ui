@@ -9,7 +9,9 @@ export default {
 import AntButton from './AntButton.vue';
 import { onMounted } from 'vue';
 
-const { id, label, size, backgroundColor, icon } =
+const emit = defineEmits(['click']);
+
+const props =
   defineProps<{
     id?: string;
     label?: string;
@@ -19,14 +21,12 @@ const { id, label, size, backgroundColor, icon } =
   }>();
 
 onMounted(() => {
-  if (size) {
-    if (['small', 'medium', 'large'].indexOf(size) === -1) {
-      throw Error(`Size ${size} not allowed`);
+  if (props.size) {
+    if (['small', 'medium', 'large'].indexOf(props.size) === -1) {
+      throw Error(`Size ${props.size} not allowed`);
     }
   }
 });
-
-const emit = defineEmits(['click']);
 
 const onClick = () => {
   emit('click');
@@ -36,13 +36,14 @@ const onClick = () => {
 <template>
   <div>
     <AntButton
+      v-bind="$attrs"
       :id="id"
       :label="label"
-      class="text-green-500 border-green-500"
-      @click="onClick"
       :backgroundColor="backgroundColor"
       :size="size"
       :icon="icon"
+      class="text-green-500 border-green-500"
+      @click="onClick"
     />
   </div>
 </template>

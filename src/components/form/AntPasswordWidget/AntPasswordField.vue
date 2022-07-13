@@ -9,29 +9,31 @@ import { ref, computed } from 'vue';
 import { faEye, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { uuid } from 'vue3-uuid';
 
-const {
-  id = uuid.v4(),
-  password,
-  label,
-  rules = [],
-  description,
-  placeholder,
-  leadingIcon,
-  overlappingLabel = false,
-  showPassword = true,
-} = defineProps<{
-  id?: string;
-  password: string;
-  label?: string;
-  rules?: [];
-  description?: string;
-  placeholder?: string;
-  leadingIcon?: Object;
-  overlappingLabel?: boolean;
-  showPassword?: boolean;
-}>();
+const emit = defineEmits(['update:password']);
 
-const emit = defineEmits(['input']);
+const props =
+  defineProps<{
+    id?: string;
+    password: string;
+    label?: string;
+    rules?: Function[];
+    description?: string;
+    placeholder?: string;
+    leadingIcon?: Object;
+    overlappingLabel?: boolean;
+    showPassword: boolean;
+  }>();
+
+const _id = ref(props.id || uuid.v4());
+
+const _password = computed({
+  get: () => {
+    return props.password;
+  },
+  set: (val) => {
+    emit('update:password', val);
+  },
+});
 
 const defaultType = ref<String>('password');
 
@@ -53,38 +55,35 @@ const revealPassword = () => {
 };
 
 const errors = ref<Array<string>>([]);
-const content = ref<string>(password as string);
 
 const validate = () => {
   errors.value = [];
 
-  if (rules && rules.length > 0) {
-    rules.forEach((validator: Function) => {
-      const isValid = validator(content.value);
+  if (props.rules && props.rules.length > 0) {
+    props.rules.forEach((validator: Function) => {
+      const validationError = validator(_password.value);
 
-      if (!isValid || typeof isValid === 'string') {
-        errors.value.push(isValid);
+      if (!validationError || typeof validationError === 'string') {
+        errors.value.push(validationError);
       }
     });
   }
 };
-
-const handleInput = () => {
-  emit('input', content.value);
-};
 </script>
 
 <template>
-  <label
-    :for="id"
-    v-if="label"
-    class="block text-sm font-medium text-gray-700"
-    :class="{
-      'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
-    }"
-  >
-    {{ label }}
-  </label>
+  <slot name="passwordLabel" v-bind="{ id: _id }">
+    <label
+      :for="_id"
+      v-if="label"
+      class="block text-sm font-medium text-gray-700"
+      :class="{
+        'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
+      }"
+    >
+      {{ label }}
+    </label>
+  </slot>
 
   <div class="relative">
     <div
@@ -103,8 +102,8 @@ const handleInput = () => {
     </div>
 
     <input
-      v-model="password"
-      :id="id"
+      v-model="_password"
+      :id="_id"
       :type="useType"
       :placeholder="placeholder || label"
       class="
@@ -131,52 +130,49 @@ const handleInput = () => {
       :aria-invalid="errors && errors.length > 0"
       v-bind="$attrs"
       @blur="validate"
-      @input="handleInput"
     />
 
-    <div
-      v-if="showPassword"
-      class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-      @click="revealPassword()"
-    >
-      <fa-icon
-        :icon="faEye"
-        class="h-5 w-5 text-gray-400 hover:text-gray-700"
-        aria-hidden="true"
-      />
+    <div class="absolute inset-y-0 h-full right-0 pr-3 space-x-3 flex">
+      <div
+        v-if="showPassword"
+        class="cursor-pointer h-full flex items-center"
+        @click="revealPassword()"
+      >
+        <slot name="showPasswordIcon">
+          <fa-icon
+            :icon="faEye"
+            class="h-5 w-5 text-gray-400 hover:text-gray-700"
+            aria-hidden="true"
+          />
+        </slot>
+      </div>
+
+      <div
+        v-if="errors && errors.length > 0"
+        class="pointer-events-none h-full flex items-center"
+      >
+        <slot name="passwordErrorIcon">
+          <fa-icon
+            :icon="faCircleExclamation"
+            class="h-5 w-5 text-red-500"
+            aria-hidden="true"
+          />
+        </slot>
+      </div>
     </div>
-
-    <div
-      v-if="errors && errors.length > 0"
-      class="
-        absolute
-        inset-y-0
-        right-0
-        pr-3
-        flex
-        items-center
-        pointer-events-none
-      "
-    >
-      <fa-icon
-        :icon="faCircleExclamation"
-        class="h-5 w-5 text-red-500"
-        aria-hidden="true"
-      />
-    </div>
-
-    <p
-      v-if="description || (errors && errors.length > 0)"
-      class="mt-2 text-sm text-gray-500"
-      :id="`${id}-description`"
-    >
-      <template v-if="errors">
-        <div v-for="error in errors" class="text-red-600">{{ error }}</div>
-      </template>
-
-      <template v-else>
-        {{ description }}
-      </template>
-    </p>
   </div>
+
+  <p
+    v-if="description || (errors && errors.length > 0)"
+    class="mt-2 text-sm text-gray-500"
+    :id="`${id}-description`"
+  >
+    <template v-if="errors">
+      <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+    </template>
+
+    <template v-else>
+      {{ description }}
+    </template>
+  </p>
 </template>

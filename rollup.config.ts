@@ -25,6 +25,15 @@ export default async function config() {
 			vue(),
 			commonjs(),
 			typescript({
+				tsconfigOverride: {
+					exclude: [
+						'**/__tests__',
+						'**/*.test.ts',
+						'**/__stories',
+						'**/*.stories.ts',
+						'**/*.stories.mdx',
+					],
+				},
 				check: false,
 			}),
 		],

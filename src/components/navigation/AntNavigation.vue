@@ -12,14 +12,9 @@ import AntNavProfile from './AntNavProfile.vue';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { NavItem } from '../../types/NavItem.type';
 
-const {
-  navItems,
-  profileHref,
-  userName,
-  isOpen = false,
-} = defineProps<{
+defineProps<{
   navItems?: NavItem[];
-  profileHref?: RouteLocationRaw;
+  profileHref: RouteLocationRaw;
   userName?: string;
   // only relevant on mobile
   isOpen?: boolean;
@@ -52,26 +47,28 @@ const {
       "
       :class="{ 'opacity-100': isOpen, 'opacity-0': !isOpen }"
     >
-      <button
-        type="button"
-        class="
-          ml-1
-          flex
-          items-center
-          justify-center
-          h-10
-          w-10
-          rounded-full
-          focus:outline-none
-          focus:ring-2 focus:ring-inset focus:ring-white
-        "
-        @click="() => $emit('close')"
-      >
-        <!-- TODO: Translate -->
-        <span class="sr-only">Close sidebar</span>
+      <slot name="mobileCloseButton">
+        <button
+          type="button"
+          class="
+            ml-1
+            flex
+            items-center
+            justify-center
+            h-10
+            w-10
+            rounded-full
+            focus:outline-none
+            focus:ring-2 focus:ring-inset focus:ring-white
+          "
+          @click="() => $emit('close')"
+        >
+          <!-- TODO: Translate -->
+          <span class="sr-only">Close sidebar</span>
 
-        <fa-icon :icon="faX" class="h-5 w-5 text-gray-400" />
-      </button>
+          <fa-icon :icon="faX" class="h-5 w-5 text-gray-400" />
+        </button>
+      </slot>
     </div>
 
     <div class="flex-shrink-0 flex items-center px-4 py-3 border-b w-full">
@@ -89,8 +86,8 @@ const {
     </div>
 
     <AntNavProfile :to="profileHref" :user-name="userName">
-      <template v-for="(_, slot) of $slots">
-        <slot :name="slot.toString()" />
+      <template v-for="(_, slot) of $slots" v-slot:[slot.toString()]="scope">
+        <slot :name="slot.toString()" v-bind="scope"></slot>
       </template>
     </AntNavProfile>
 

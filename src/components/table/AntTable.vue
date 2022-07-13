@@ -8,11 +8,10 @@ export default {
 <script lang="ts" setup>
 import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
 
-const { headers, data } =
-  defineProps<{
-    headers: TableHeader[];
-    data: any[];
-  }>();
+defineProps<{
+  headers: TableHeader[];
+  data: any[];
+}>();
 </script>
 
 <template>
@@ -49,10 +48,12 @@ const { headers, data } =
                     "
                     :class="header.headerClassList"
                   >
-                    {{ header.title }}
+                    <slot name="headerContent" v-bind="header">
+                      {{ header.title }}
+                    </slot>
                   </th>
 
-                  <slot name="lastHeader"></slot>
+                  <slot name="headerLastCell"></slot>
                 </tr>
               </thead>
 
@@ -75,6 +76,11 @@ const { headers, data } =
                       sm:pl-6
                     "
                   >
+                    <slot
+                      name="beforeRowContent"
+                      v-bind="{ elem: elem, header: header }"
+                    />
+
                     <div
                       v-if="header.type === ROW_TYPES.TEXT"
                       :class="header.rowClassList"
@@ -119,9 +125,14 @@ const { headers, data } =
                         </a>
                       </div>
                     </div>
+
+                    <slot
+                      name="afterRowContent"
+                      v-bind="{ elem: elem, header: header }"
+                    />
                   </td>
 
-                  <slot name="lastCell" />
+                  <slot name="rowLastCell" />
                 </tr>
 
                 <tr v-if="data.length <= 0">

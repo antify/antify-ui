@@ -1,4 +1,4 @@
-import { uuid } from 'vue3-uuid'; import { ref } from 'vue';
+import { uuid } from 'vue3-uuid'; import { ref, computed } from 'vue';
 <script lang="ts">
 export default {
   name: 'AntProgress',
@@ -7,53 +7,57 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { uuid } from 'vue3-uuid';
 
-const {
-  id = uuid.v4(),
-  value = 0,
-  fullValue = 100,
-  label,
-} = defineProps<{
-  id?: string;
-  value?: number;
-  fullValue?: number;
-  label?: string;
-}>();
+const props =
+  defineProps<{
+    id?: string;
+    value?: number;
+    fullValue?: number;
+    label?: string;
+    color?: string;
+  }>();
 
-const current = ref<number>((value * 100) / fullValue);
+const _id = ref<string>(props.id ? props.id : uuid.v4());
+const _value = ref<number>(props.value || 0);
+const _fullValue = ref<number>(props.fullValue || 100);
+const _color = ref<string>(props.color || 'primary');
+const current = computed<number>(() => (_value.value * 100) / _fullValue.value);
 </script>
 
 <template>
   <div class="text-xs text-gray-500 flex justify-between">
-    <span>{{ label }}</span>
+    <slot name="label">
+      <span>{{ label }}</span>
+    </slot>
+
     <span>
-      {{ value.toLocaleString(undefined, {}) }}/{{
-        fullValue.toLocaleString(undefined, {})
+      {{ _value.toLocaleString(undefined, {}) }}/{{
+        _fullValue.toLocaleString(undefined, {})
       }}
     </span>
   </div>
 
   <div
-    :id="id"
+    :id="_id"
     class="
       w-full
       bg-gray-400
-      h-2
+      min-h-2
       flex
       justify-center
       items-center
       relative
       overflow-hidden
-      rounded
+      rounded-full
     "
   >
     <div
       :style="`width: ${current}%`"
-      class="bg-blue-600 h-full absolute left-0 transition-all rounded"
+      :class="`bg-${_color} h-full absolute left-0 transition-all rounded-full`"
     />
 
-    <slot />
+    <div class="z-10 flex items-center"><slot></slot></div>
   </div>
 </template>

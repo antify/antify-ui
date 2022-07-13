@@ -11,13 +11,13 @@ import { ref } from 'vue';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import AntNavigation from '../navigation/AntNavigation.vue';
 import { NavItem } from '../../types/NavItem.type';
+import AntButton from '../buttons/AntButton.vue';
 
-const props =
-  defineProps<{
-    navItems?: NavItem[];
-    profileHref?: RouteLocationRaw;
-    userName?: string;
-  }>();
+defineProps<{
+  navItems?: NavItem[];
+  profileHref: RouteLocationRaw;
+  userName?: string;
+}>();
 
 const sidebarDisplayed = ref<boolean>(false);
 </script>
@@ -50,7 +50,7 @@ const sidebarDisplayed = ref<boolean>(false);
           ease-linear
           duration-300
         "
-      ></div>
+      />
 
       <AntNavigation
         :nav-items="navItems"
@@ -83,32 +83,21 @@ const sidebarDisplayed = ref<boolean>(false);
     <div class="md:pl-64 flex-1">
       <div class="absolute top-0 z-10 md:hidden pl-1 py-1.5">
         <!-- Open nav on mobile-->
-        <button
-          type="button"
-          class="
-            -ml-0.5
-            -mt-0.5
-            h-12
-            w-12
-            inline-flex
-            items-center
-            justify-center
-            rounded-md
-            text-gray-500
-            hover:text-gray-900
-            focus:outline-none
-            focus:ring-2 focus:ring-inset focus:ring-indigo-500
-          "
-          @click="() => (sidebarDisplayed = true)"
-        >
-          <span class="sr-only">Open sidebar</span>
+        <slot name="mobileSidebarButton" v-bind="{ isOpen: sidebarDisplayed }">
+          <AntButton
+            type="button"
+            class="ml-0.5 -mt-0.5 h-12 w-12 border-none"
+            @click="() => (sidebarDisplayed = true)"
+          >
+            <span class="sr-only">Open sidebar</span>
 
-          <fa-icon :icon="faBars" class="h-6 w-6" />
-        </button>
+            <fa-icon :icon="faBars" class="h-6 w-6" />
+          </AntButton>
+        </slot>
       </div>
 
-      <main class="">
-        <slot default />
+      <main>
+        <slot />
       </main>
     </div>
   </div>

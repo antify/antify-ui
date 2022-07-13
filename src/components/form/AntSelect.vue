@@ -8,38 +8,41 @@ export default {
 <script lang="ts" setup>
 import { uuid } from 'vue3-uuid';
 import { SelectOption } from '../../types/SelectOption.type';
+import { ref, computed } from 'vue';
 
-const {
-  id = uuid.v4(),
-  label,
-  placeholder,
-  options,
-  showLabel = true,
-  value,
-} = defineProps<{
-  id?: string;
-  label?: string;
-  placeholder?: string;
-  options?: SelectOption[];
-  showLabel?: boolean;
-  value: string;
-}>();
+const emit = defineEmits(['update:value']);
+const props =
+  defineProps<{
+    id?: string;
+    label?: string;
+    placeholder?: string;
+    options?: SelectOption[];
+    value: string;
+  }>();
+
+const _id = ref(props.id || uuid.v4());
+const _value = computed({
+  get: () => {
+    return props.value;
+  },
+  set: (val: string) => {
+    emit('update:value', val);
+  },
+});
 </script>
 
 <template>
   <div>
-    <label
-      v-if="showLabel"
-      :for="id"
-      class="block text-sm font-medium text-gray-700"
-    >
-      <span>{{ label }}</span>
-    </label>
+    <slot v-bind="{ id: _id }">
+      <label :for="_id" class="block text-sm font-medium text-gray-700">
+        <span>{{ label }}</span>
+      </label>
+    </slot>
 
     <select
-      :id="id"
+      :id="_id"
       :placeholder="placeholder"
-      v-model="value"
+      v-model="_value"
       class="
         mt-1
         block
@@ -56,7 +59,6 @@ const {
         rounded-md
       "
       v-bind="$attrs"
-      @change="() => $emit('update:value', value)"
     >
       <option
         v-for="(option, index) in options"

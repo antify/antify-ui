@@ -1,5 +1,5 @@
 import AntContent from '../AntContent.vue';
-import AntTabs from '../../tabs/AntTabs.vue';
+import AntTabs from '../tabs/AntTabs.vue';
 import AntTable from '../../table/AntTable.vue';
 import AntButton from '../../buttons/AntButton.vue';
 import { WithImage } from '../../table/__stories/AntTable.stories';

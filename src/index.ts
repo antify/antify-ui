@@ -26,6 +26,7 @@ import AntHeader from './components/layout/AntHeader.vue';
 import AntLayout from './components/layout/AntLayout.vue';
 import AntModal from './components/layout/AntModal.vue';
 import AntSidebar from './components/layout/AntSidebar.vue';
+import AntTabs from './components/layout/tabs/AntTabs.vue';
 
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
@@ -34,8 +35,6 @@ import AntNavProfile from './components/navigation/AntNavProfile.vue';
 import AntDragDropTable from './components/table/AntDragDropTable.vue';
 import AntPagination from './components/table/AntPagination.vue';
 import AntTable from './components/table/AntTable.vue';
-
-import AntTabs from './components/tabs/AntTabs.vue';
 
 export const Plugin = {
   install(vue: any) {
