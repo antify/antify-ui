@@ -1,4 +1,4 @@
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 <script lang="ts">
 export default {
   name: 'AntDropzone',
@@ -11,27 +11,31 @@ import { onMounted } from 'vue';
 
 const emit = defineEmits(['dropped']);
 
-const { id, dropzoneType = 'copy' } = defineProps<{
-  id: string,
-  dropzoneType?: string
-}>();
+const props =
+  defineProps<{
+    id: string;
+    dropzoneType?: string;
+  }>();
 
 onMounted(() => {
-  if (dropzoneType && ['copy', 'move', 'link'].indexOf(dropzoneType) === -1) {
-    throw Error(`Dropzone type ${dropzoneType} is not allowed`);
+  if (
+    props.dropzoneType &&
+    ['copy', 'move', 'link'].indexOf(props.dropzoneType) === -1
+  ) {
+    throw Error(`Dropzone type ${props.dropzoneType} is not allowed`);
   }
-})
+});
 
 const onDrop = (event: DragEvent) => {
   if (event && event.dataTransfer) {
-    emit('dropped', event.dataTransfer.getData(`${id}-data`));
+    emit('dropped', event.dataTransfer.getData(`${props.id}-data`));
   }
 };
 </script>
 
 <template>
   <div
-    :dropzone="dropzoneType"
+    :dropzone="dropzoneType || 'copy'"
     class="
       w-full
       h-48
@@ -50,6 +54,6 @@ const onDrop = (event: DragEvent) => {
     "
     @drop="onDrop"
   >
-    <slot name="dropzoneText">Dropzone</slot>
+    <slot>Dropzone</slot>
   </div>
 </template>

@@ -1,4 +1,5 @@
 import AntSelect from '../AntSelect.vue';
+import { ref } from 'vue';
 
 export default {
   title: 'Components/Forms/Ant Select',
@@ -8,9 +9,14 @@ export default {
 const Template = (args: any) => ({
   components: { AntSelect },
   setup() {
-    return { args };
+    const value = ref<string>('2');
+
+    return { args, value };
   },
-  template: '<AntSelect v-bind="args"/>',
+  template: `<div class="m-2">
+    <AntSelect v-bind="args" v-model:value="value"/>
+    <span class="text-xs text-gray-400">Selected: {{value}}</span>
+    </div>`,
 });
 
 /**
@@ -49,7 +55,6 @@ export const NoLabel = Template.bind({});
 // @ts-ignore
 NoLabel.args = {
   id: 'select-id-1234567891',
-  label: 'Select',
   placeholder: 'Select placeholder',
   options: [
     {
@@ -69,5 +74,4 @@ NoLabel.args = {
       value: '4',
     },
   ],
-  showLabel: false,
 };

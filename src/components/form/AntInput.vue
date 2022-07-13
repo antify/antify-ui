@@ -7,41 +7,45 @@ export default {
 
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { uuid } from 'vue3-uuid';
 
-const {
-  id = uuid.v4(),
-  value,
-  label,
-  rules = [],
-  type = 'text',
-  description,
-  placeholder,
-  leadingIcon,
-  overlappingLabel = false,
-} = defineProps<{
-  id?: string;
-  value: string;
-  label?: string;
-  rules?: [];
-  type?: string;
-  description?: string;
-  placeholder?: string;
-  leadingIcon?: Object;
-  overlappingLabel?: boolean;
-}>();
+const emit = defineEmits(['update:value']);
 
-const emit = defineEmits(['input']);
+const props =
+  defineProps<{
+    id?: string;
+    value: string;
+    label?: string;
+    rules?: [];
+    type?: string;
+    description?: string;
+    placeholder?: string;
+    leadingIcon?: Object;
+    overlappingLabel?: boolean;
+  }>();
+
+const _id = ref(props.id ? props.id : uuid.v4());
+const _type = ref(props.type ? props.type : 'text');
+const _overlappingLabel = ref(
+  props.overlappingLabel ? props.overlappingLabel : false
+);
 
 const errors = ref<Array<string>>([]);
-const content = ref<string>(value as string);
+const content = computed<string>({
+  get: () => {
+    return props.value as string;
+  },
+  set: (val: string) => {
+    emit('update:value', val);
+  },
+});
 
 const validate = () => {
   errors.value = [];
 
-  if (rules && rules.length > 0) {
-    rules.forEach((validator: Function) => {
+  if (props.rules && props.rules.length > 0) {
+    props.rules.forEach((validator: Function) => {
       const isValid = validator(content.value);
 
       if (!isValid || typeof isValid === 'string') {
@@ -50,46 +54,46 @@ const validate = () => {
     });
   }
 };
-
-const handleInput = () => {
-  emit('input', content.value);
-};
 </script>
 
 <template>
   <div>
     <div class="relative">
-      <label
-        v-if="label"
-        :for="id"
-        :class="{
-          'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
-        }"
-        class="block text-sm font-medium text-gray-700"
-      >
-        {{ label }}
-      </label>
+      <slot name="label">
+        <label
+          v-if="label"
+          :for="_id"
+          :class="{
+            'absolute -top-2 left-2 -mt-px bg-white z-50': _overlappingLabel,
+          }"
+          class="block text-sm font-medium text-gray-700"
+        >
+          {{ label }}
+        </label>
+      </slot>
 
       <div class="relative">
-        <div
-          v-if="leadingIcon"
-          class="
-            absolute
-            inset-y-0
-            left-0
-            pl-3
-            flex
-            items-center
-            pointer-events-none
-          "
-        >
-          <fa-icon :icon="leadingIcon" class="h-5 w-5 text-gray-400" />
-        </div>
+        <slot name="leadingIcon">
+          <div
+            v-if="leadingIcon"
+            class="
+              absolute
+              inset-y-0
+              left-0
+              pl-3
+              flex
+              items-center
+              pointer-events-none
+            "
+          >
+            <fa-icon :icon="leadingIcon" class="h-5 w-5 text-gray-400" />
+          </div>
+        </slot>
 
         <input
           v-model="content"
-          :id="id"
-          :type="type"
+          :id="_id"
+          :type="_type"
           :placeholder="placeholder || label"
           :aria-describedby="`${id}-description`"
           :aria-invalid="errors.length > 0"
@@ -115,27 +119,28 @@ const handleInput = () => {
           "
           v-bind="$attrs"
           @blur="validate"
-          @input="handleInput"
         />
 
-        <div
-          v-if="errors.length > 0"
-          class="
-            absolute
-            inset-y-0
-            right-0
-            pr-3
-            flex
-            items-center
-            pointer-events-none
-          "
-        >
-          <fa-icon
-            :icon="faCircleExclamation"
-            class="h-5 w-5 text-red-500"
-            aria-hidden="true"
-          />
-        </div>
+        <slot name="errorIcon">
+          <div
+            v-if="errors.length > 0"
+            class="
+              absolute
+              inset-y-0
+              right-0
+              pr-3
+              flex
+              items-center
+              pointer-events-none
+            "
+          >
+            <fa-icon
+              :icon="faCircleExclamation"
+              class="h-5 w-5 text-red-500"
+              aria-hidden="true"
+            />
+          </div>
+        </slot>
       </div>
     </div>
 

@@ -6,27 +6,25 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { reactive, computed, onMounted } from 'vue';
-const {
-  imageUrl,
-  alt = '',
-  size = 'medium',
-} = defineProps<{
-  imageUrl: string;
-  alt?: string;
-  size?: string;
-}>();
+import { computed, onMounted } from 'vue';
+
+const props =
+  defineProps<{
+    imageUrl: string;
+    alt?: string;
+    size?: string;
+  }>();
 
 const classes = computed(() => ({
   'rounded-full block overflow-hidden': true,
-  'w-8': size === 'small',
-  'w-12': !size || size === 'medium',
-  'w-16': size === 'large',
+  'w-8': props.size === 'small',
+  'w-12': !props.size || props.size === 'medium',
+  'w-16': props.size === 'large',
 }));
 
 onMounted(() => {
-  if (size && ['small', 'medium', 'large'].indexOf(size) === -1) {
-    throw Error(`Size ${size} is not defined.`);
+  if (props.size && ['small', 'medium', 'large'].indexOf(props.size) === -1) {
+    throw Error(`Size ${props.size} is not defined.`);
   }
 });
 </script>

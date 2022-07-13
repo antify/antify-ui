@@ -8,26 +8,23 @@ export default {
 <script lang="ts" setup>
 import { computed, onMounted } from 'vue';
 
-const {
-  logoUrl,
-  alt = 'logo',
-  size = 'medium',
-} = defineProps<{
-  logoUrl: string;
-  alt?: string;
-  size?: string;
-}>();
+const props =
+  defineProps<{
+    logoUrl: string;
+    alt?: string;
+    size?: string;
+  }>();
 
 const classes = computed(() => ({
   'block overflow-hidden': true,
-  'h-6': size === 'small',
-  'h-8': size === 'medium',
-  'h-12': size === 'large',
+  'h-6': props.size === 'small',
+  'h-8': !props.size || props.size === 'medium',
+  'h-12': props.size === 'large',
 }));
 
 onMounted(() => {
-  if (size && ['small', 'medium', 'large'].indexOf(size) === -1) {
-    throw Error(`Size ${size} is not defined`);
+  if (props.size && ['small', 'medium', 'large'].indexOf(props.size) === -1) {
+    throw Error(`Size ${props.size} is not defined`);
   }
 });
 </script>

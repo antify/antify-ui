@@ -6,34 +6,34 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
-const { label, headerType } =
+const props =
   defineProps<{
     label?: string;
-    headerType: string;
+    headerType?: string;
   }>();
 
+const _headerType = ref<string>(props.headerType || 'h1');
+
 onMounted(() => {
-  if (
-    headerType &&
-    ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].indexOf(headerType) === -1
-  ) {
-    throw Error(`Header type ${headerType} is not defined.`);
+  if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].indexOf(_headerType.value) === -1) {
+    throw Error(`Header type ${_headerType.value} is not defined.`);
   }
 });
 
 const classes = () => ({
-  '': true,
-  'text-xl font-medium': headerType === 'h1',
-  'text-lg font-bold': headerType === 'h2',
-  'text-lg font-semibold': headerType === 'h3',
-  'text-lg font-medium': headerType === 'h4',
-  'text-md font-bold': headerType === 'h5',
-  'text-md font-semibold': headerType === 'h6',
+  'text-xl font-medium': _headerType.value === 'h1',
+  'text-lg font-bold': _headerType.value === 'h2',
+  'text-lg font-semibold': _headerType.value === 'h3',
+  'text-lg font-medium': _headerType.value === 'h4',
+  'text-md font-bold': _headerType.value === 'h5',
+  'text-md font-semibold': _headerType.value === 'h6',
 });
 </script>
 
 <template>
-  <component :is="headerType" :class="classes()">{{ label }}</component>
+  <component :is="_headerType" :class="classes()" v-bind="$attrs">
+    <slot>{{ label }}</slot>
+  </component>
 </template>

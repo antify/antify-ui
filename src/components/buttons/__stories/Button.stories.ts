@@ -25,7 +25,7 @@ const Template = (args: any) => ({
     return { args };
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<AntButton v-bind="args" />',
+  template: '<div class="m-2"><AntButton v-bind="args" /></div>',
 });
 
 export const Primary = Template.bind({});

@@ -8,12 +8,14 @@ export default {
 <script lang="ts" setup>
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import AntButton from '../buttons/AntButton.vue';
+import AntHeader from './AntHeader.vue';
 
-const { active, fullscreen = false } =
-  defineProps<{
-    active: boolean;
-    fullscreen: boolean;
-  }>();
+defineEmits(['update:active']);
+defineProps<{
+  active: boolean;
+  fullscreen?: boolean;
+  title?: string;
+}>();
 </script>
 
 <template>
@@ -24,17 +26,14 @@ const { active, fullscreen = false } =
       text-center
       sm:block
       sm:p-0
-      absolute
-      top-0
-      left-0
-      w-full
-      z-50
+      fixed
+      inset-0
       transform
-      bg-gray-50
+      cursor-pointers
     "
     :class="{
-      '-translate-y-full max-h-0 min-h-0 overflow-hidden': !active,
-      'translate-y-0 h-full': active,
+      'h-0 overflow-hidden': !active,
+      'h-full': active,
     }"
     role="dialog"
     aria-modal="true"
@@ -43,86 +42,113 @@ const { active, fullscreen = false } =
       class="
         fixed
         inset-0
-        bg-gray-500 bg-opacity-50
+        bg-gray-500 bg-opacity-20
         transition-all
         duration-500
       "
-      :class="{ 'opacity-0': !active, 'opacity-20': active }"
+      :class="{ 'opacity-0': !active, 'opacity-100': active }"
       aria-hidden="true"
-      @click="$emit('close')"
+      @click="$emit('update:active', false)"
     />
 
-    <!-- This element is to trick the browser into centering the modal contents. -->
-    <span
-      class="hidden sm:inline-block sm:h-screen sm:align-middle"
-      aria-hidden="true"
-    >
-      &#8203;
-    </span>
-
     <!-- Modal panel, show/hide based on modal state. -->
-    <div
-      class="
-        absolute
-        bg-gray-50
-        overflow-auto
-        shadow-xl
-        transform
-        transition-all
-        duration-500
-        sm:align-middle
-      "
-      :class="{
-        'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95': !active,
-        'opacity-100 translate-y-0 sm:scale-100': active,
-        'w-full h-full top-0 left-0 sm:min-w-full': fullscreen,
-        'top-12': !fullscreen,
-      }"
-    >
-      <div>
-        <div class="text-left">
-          <div class="relative border-b w-full py-4 pl-3">
-            <fa-icon
-              :icon="faX"
-              class="
-                absolute
-                right-0
-                opacity-50
-                hover:opacity-100
-                transition-all
-                duration-500
-                w-5
-                h-full
-                pr-3
-                top-0
-                font-thin
-              "
-              @click="$emit('close')"
-            />
+    <div class="fixed z-10 inset-0 overflow-y-auto pointer-events-none">
+      <div
+        class="flex items-end sm:items-center justify-center text-center sm:p-0"
+      >
+        <div
+          class="
+            relative
+            bg-white
+            text-left
+            shadow-xl
+            sm:max-w-sm
+            sm:w-full
+            transform
+            transition-all
+            duration-500
+            flex flex-col
+            max-h-screen
+            pointer-events-auto
+          "
+          :class="{
+            'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95': !active,
+            'opacity-100 translate-y-0 sm:scale-100': active,
+            'h-screen top-0 left-0 min-w-full': fullscreen,
+            'top-12 min-w-full sm:min-w-96 focus-within:sm:my-8': !fullscreen,
+          }"
+        >
+          <div
+            class="
+              relative
+              border-b
+              w-full
+              py-4
+              pl-3
+              grow-0
+              shrink-0
+              basis-auto
+            "
+          >
+            <slot name="header">
+              <slot name="closeIcon">
+                <fa-icon
+                  :icon="faX"
+                  class="
+                    absolute
+                    right-0
+                    opacity-50
+                    hover:opacity-100
+                    transition-all
+                    duration-500
+                    w-5
+                    h-full
+                    pr-3
+                    top-0
+                    font-thin
+                    cursor-pointer
+                  "
+                  @click="$emit('update:active', false)"
+                />
+              </slot>
 
-            <h3
-              class="text-xl leading-6 font-medium text-gray-900"
-              id="modal-title"
-            >
-              <slot name="title"> Lorem ipsum </slot>
-            </h3>
+              <AntHeader header-type="h3" class="block mr-16">
+                <slot name="title"> {{ title }} </slot>
+              </AntHeader>
+            </slot>
           </div>
 
-          <div class="mt-2 px-3">
-            <slot name="content">
-              <p class="text-sm text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consequatur amet labore.
-              </p>
+          <div
+            class="p-3 grow shrink-0 overflow-y-auto basis-auto"
+            :class="{ 'h-screen': fullscreen }"
+          >
+            <slot>
+              <p class="text-sm text-gray-500">Fill me</p>
+            </slot>
+          </div>
+
+          <div
+            class="
+              mt-5
+              sm:mt-6
+              text-right
+              px-3
+              py-4
+              border-t
+              grow-0
+              shrink-0
+              basis-auto
+            "
+          >
+            <slot name="buttons">
+              <AntButton
+                label="Close"
+                :primary="true"
+                @click="$emit('update:active', false)"
+              />
             </slot>
           </div>
         </div>
-      </div>
-
-      <div class="mt-5 sm:mt-6 text-right px-3 py-4 border-t">
-        <slot name="buttons">
-          <AntButton label="Close" :primary="true" />
-        </slot>
       </div>
     </div>
   </div>

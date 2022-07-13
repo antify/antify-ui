@@ -15,19 +15,15 @@ import AntButton from '../buttons/AntButton.vue';
 
 const emit = defineEmits(['update:data']);
 
-const {
-  data,
-  label,
-  showLabel = true,
-} = defineProps<{
-  data?: string;
-  label?: string;
-  showLabel?: string;
-}>();
+const props =
+  defineProps<{
+    data?: string;
+    label?: string;
+  }>();
 
 const editor = ref(
   useEditor({
-    content: data,
+    content: props.data,
     extensions: [
       StarterKit,
       Underline,
@@ -40,7 +36,7 @@ const editor = ref(
 
 const _data = computed({
   get: () => {
-    return data || '';
+    return props.data || '';
   },
   set: (val) => {
     emit('update:data', val);
@@ -51,7 +47,9 @@ onUnmounted(() => editor?.value?.destroy());
 </script>
 
 <template>
-  <div v-if="label && showLabel" class="mb-2">{{ label }}</div>
+  <slot>
+    <div v-if="label" class="mb-2">{{ label }}</div>
+  </slot>
 
   <div
     v-if="editor"

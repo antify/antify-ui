@@ -5,22 +5,38 @@ export default {
   component: AntProgress,
 };
 
-const Template = (args: any) => ({
+export const Simple = (args: any) => ({
   components: { AntProgress },
   setup() {
-    return { args };
+    return {
+      id: 'progress-id-123456789',
+      value: 3700,
+      fullValue: 15000,
+      label: 'EUR',
+      color: 'blue-500',
+    };
   },
-  template: '<AntProgress v-bind="args"/>',
+  template: `
+  <div class="m-2">
+    <AntProgress :id="id" :value="value" :fullValue="fullValue" :label="label" :color="color"/>
+  </div>
+  `,
 });
 
-/**
- * Primary use of input field.
- */
-export const Primary = Template.bind({});
-// @ts-ignore
-Primary.args = {
-  id: 'progress-id-123456789',
-  value: 3700,
-  fullValue: 15000,
-  label: 'EUR',
-};
+export const WithDefaultContent = (args: any) => ({
+  components: { AntProgress },
+  setup() {
+    return { args, value: 50 };
+  },
+  template: `
+  <div class="m-2">
+    <AntProgress :value="value">
+      <template #label>
+        <span class="text-primary font-bold">Label in template</span>
+      </template>
+
+      <span class="text-xs my-0.5">Almost there</span>
+    </AntProgress>
+  </div>
+  `,
+});

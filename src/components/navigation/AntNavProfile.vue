@@ -8,11 +8,10 @@ export default {
 <script lang="ts" setup>
 import type { RouteLocationRaw } from 'vue-router';
 
-const { to = '#', userName } =
-  defineProps<{
-    to?: RouteLocationRaw;
-    userName?: string;
-  }>();
+defineProps<{
+  to: RouteLocationRaw;
+  userName?: string;
+}>();
 </script>
 
 <template>
@@ -24,22 +23,29 @@ const { to = '#', userName } =
         </div>
 
         <div class="ml-3">
-          <p
-            class="
-              text-base
-              font-medium
-              text-gray-700
-              group-hover:text-gray-900
-            "
-          >
-            {{ userName }}
-          </p>
+          <slot name="profileContent">
+            <p
+              class="
+                text-base
+                font-medium
+                text-gray-700
+                group-hover:text-gray-900
+              "
+            >
+              {{ userName }}
+            </p>
 
-          <p
-            class="text-sm font-medium text-gray-500 group-hover:text-gray-700"
-          >
-            <slot name="viewProfile" />
-          </p>
+            <p
+              class="
+                text-sm
+                font-medium
+                text-gray-500
+                group-hover:text-gray-700
+              "
+            >
+              <slot name="viewProfile" />
+            </p>
+          </slot>
         </div>
       </div>
     </router-link>

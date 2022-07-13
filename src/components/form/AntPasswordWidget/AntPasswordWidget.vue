@@ -10,40 +10,37 @@ import { ref } from 'vue';
 import AntPasswordField from './AntPasswordField.vue';
 import { uuid } from 'vue3-uuid';
 
-const {
-  id = uuid.v4(),
-  password,
-  label,
-  repeatLabel,
-  placeholder,
-  repeatPlaceholder,
-  rulesPassword = [
+const props =
+  defineProps<{
+    id?: string;
+    password: string;
+    label?: string;
+    repeatLabel?: string;
+    placeholder?: string;
+    repeatPlaceholder?: string;
+    rulesPassword?: Function[];
+    rulesPasswordRepeat?: Function[];
+    description?: string;
+    leadingIcon?: Object;
+    overlappingLabel?: boolean;
+    showPassword: boolean;
+  }>();
+
+const _id = ref(props.id || uuid.v4());
+
+const _rulesPassword = ref(
+  props.rulesPassword || [
     (value: any) => !!value || 'Password can not be empty.',
-    (value: any) => value.length > 8 || 'Min password length is 8 symbols',
-  ],
-  rulesPasswordRepeat = [
+    (value: any) => value?.length >= 8 || 'Min password length is 8 symbols',
+  ]
+);
+
+const _rulesPasswordRepeat = ref(
+  props.rulesPasswordRepeat || [
     (value: any) => !!value || 'Repeat password is required',
-    // @ts-ignore
-    (value: any) => value != password || 'Password needs to be the same',
-  ],
-  description,
-  leadingIcon,
-  overlappingLabel = false,
-  showPassword = true,
-} = defineProps<{
-  id?: string;
-  password: string;
-  label?: string;
-  repeatLabel?: string;
-  placeholder?: string;
-  repeatPlaceholder?: string;
-  rulesPassword?: [];
-  rulesPasswordRepeat?: [];
-  description?: string;
-  leadingIcon?: Object;
-  overlappingLabel?: boolean;
-  showPassword?: boolean;
-}>();
+    (value: any) => value === props.password || 'Password needs to be the same',
+  ]
+);
 
 const repeatPassword = ref<string>('');
 </script>
@@ -52,10 +49,10 @@ const repeatPassword = ref<string>('');
   <div>
     <div class="mt-1 relative">
       <AntPasswordField
-        :id="id"
-        :password.sync="password"
+        v-model:password="password"
+        :id="_id"
         :label="label"
-        :rules="rulesPassword"
+        :rules="_rulesPassword"
         :placeholder="placeholder"
         :leading-icon="leadingIcon"
         :overlapping-label="overlappingLabel"
@@ -64,10 +61,10 @@ const repeatPassword = ref<string>('');
       />
 
       <AntPasswordField
-        :id="id"
-        :password.sync="repeatPassword"
+        v-model:password="repeatPassword"
+        :id="`${_id}-password-repeat`"
         :label="repeatLabel"
-        :rules="rulesPasswordRepeat"
+        :rules="_rulesPasswordRepeat"
         :placeholder="repeatPlaceholder"
         :leading-icon="leadingIcon"
         :overlapping-label="overlappingLabel"

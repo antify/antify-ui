@@ -3,7 +3,7 @@ import AntButton from '../../buttons/AntButton.vue';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 export default {
-  title: 'Ant Pagination',
+  title: 'Components/Table/Ant Pagination',
   component: AntPagination,
 };
 

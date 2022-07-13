@@ -1,4 +1,5 @@
 import AntTextarea from '../AntTextarea.vue';
+import { ref } from 'vue';
 
 export default {
   title: 'Components/Forms/Ant Text area',
@@ -8,9 +9,14 @@ export default {
 const Template = (args: any) => ({
   components: { AntTextarea },
   setup() {
-    return { args };
+    const value = ref<string>('');
+
+    return { args, value };
   },
-  template: `<AntTextarea v-bind="args" />`,
+  template: `<div class="m-2">
+    <AntTextarea v-bind="args" v-model:value="value"/>
+    <span class="text-xs text-gray-500">Reactive value: {{value}}</span>
+  </div>`,
 });
 
 export const Simple = Template.bind({});

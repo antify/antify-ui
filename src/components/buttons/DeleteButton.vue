@@ -6,19 +6,17 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { reactive, computed } from 'vue';
 import AntButton from './AntButton.vue';
 
-const { id, label, size, backgroundColor, icon } =
-  defineProps<{
-    id?: string;
-    label?: string;
-    size?: string;
-    backgroundColor?: string;
-    icon?: Object;
-  }>();
-
 const emit = defineEmits(['click']);
+
+defineProps<{
+  id?: string;
+  label?: string;
+  size?: string;
+  backgroundColor?: string;
+  icon?: Object;
+}>();
 
 const onClick = () => {
   emit('click');
@@ -28,13 +26,14 @@ const onClick = () => {
 <template>
   <div>
     <AntButton
+      v-bind="$attrs"
       :id="id"
       :label="label"
-      class="text-red-500 border-red-500"
-      @click="onClick"
       :backgroundColor="backgroundColor"
       :size="size"
       :icon="icon"
+      class="text-red-500 border-red-500"
+      @click="onClick"
     />
   </div>
 </template>

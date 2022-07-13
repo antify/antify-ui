@@ -6,24 +6,27 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { uuid } from 'vue3-uuid';
 
 const emit = defineEmits(['update:value']);
 
-const {
-  id = uuid.v4(),
-  label,
-  value,
-} = defineProps<{
-  id: string;
-  label: string;
-  value: boolean;
-}>();
+const props =
+  defineProps<{
+    value: boolean;
+    id?: string;
+    label?: string;
+    description?: string;
+    legend?: string;
+    color?: string;
+  }>();
+
+const _id = ref(props.id ? props.id : uuid.v4());
+const _color = ref(props.color ? props.color : 'primary');
 
 const _value = computed({
   get: () => {
-    return value;
+    return props.value;
   },
   set: (val) => {
     emit('update:value', val);
@@ -32,9 +35,41 @@ const _value = computed({
 </script>
 
 <template>
-  <div class="flex items-center space-x-3">
-    <input type="checkbox" :id="id" v-model="_value" />
+  <fieldset class="space-y-5">
+    <slot name="legend">
+      <legend class="sr-only">{{ legend }}</legend>
+    </slot>
 
-    <label :for="id">{{ label }}</label>
-  </div>
+    <div class="relative flex items-start">
+      <div class="flex items-center h-5">
+        <input
+          type="checkbox"
+          :id="_id"
+          :aria-describedby="`${_id}-description`"
+          v-model="_value"
+          :class="`focus:ring-${_color} h-4 w-4 text-${_color} border-gray-300 rounded transition-all duration-500`"
+        />
+      </div>
+
+      <slot v-bind="{ id: _id }">
+        <div class="ml-3 text-sm">
+          <slot name="label" v-bind="{ id: _id }">
+            <label class="font-medium text-gray-700 select-none" :for="_id">
+              {{ label }}
+            </label>
+          </slot>
+
+          <slot name="description" v-bind="{ id: `${_id}-description` }">
+            <p
+              v-if="description"
+              :id="`${_id}-description`"
+              class="text-gray-500"
+            >
+              {{ description }}
+            </p>
+          </slot>
+        </div>
+      </slot>
+    </div>
+  </fieldset>
 </template>

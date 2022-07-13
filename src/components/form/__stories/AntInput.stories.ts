@@ -1,5 +1,6 @@
 import AntInput from '../AntInput.vue';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { ref } from 'vue';
 
 export default {
   title: 'Components/Forms/Ant Input',
@@ -9,9 +10,14 @@ export default {
 const Template = (args: any) => ({
   components: { AntInput },
   setup() {
-    return { args };
+    const value = ref<string>('');
+
+    return { args, value };
   },
-  template: '<div class="m-2"><AntInput v-bind="args"/></div>',
+  template: `<div class="m-2">
+    <AntInput v-bind="args" v-model:value="value"/>
+    <span class="text-xs text-gray-500">Reactive value: {{value}}</span>
+  </div>`,
 });
 
 /**

@@ -6,28 +6,27 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { uuid } from 'vue3-uuid';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
 const emit = defineEmits(['update:value']);
 
-const {
-  id = uuid.v4(),
-  label,
-  value,
-} = defineProps<{
-  id?: string;
-  label?: string;
-  value: string;
-}>();
+const props =
+  defineProps<{
+    id?: string;
+    label?: string;
+    value: Date;
+  }>();
+
+const _id = ref(props.id ? props.id : uuid.v4());
 
 const _value = computed({
   get: () => {
-    return value;
+    return props.value;
   },
-  set: (val) => {
+  set: (val: Date) => {
     emit('update:value', val);
   },
 });
@@ -35,8 +34,14 @@ const _value = computed({
 
 <template>
   <div>
-    <label :for="id" v-if="label">{{ label }}</label>
+    <slot v-bind="{ id: _id }">
+      <label :for="_id" v-if="label">{{ label }}</label>
+    </slot>
 
-    <Datepicker :id="id" v-model="_value"></Datepicker>
+    <Datepicker :id="_id" v-model="_value" v-bind="$attrs">
+      <template v-for="(_, slot) of $slots" v-slot:[slot.toString()]="scope">
+        <slot :name="slot.toString()" v-bind="scope"></slot>
+      </template>
+    </Datepicker>
   </div>
 </template>

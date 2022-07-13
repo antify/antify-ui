@@ -14,24 +14,19 @@ type FileInfo = { src: string; fileName: string };
 
 const emit = defineEmits(['update:value']);
 
-const {
-  id = uuid.v4(),
-  label,
-  acceptType = '*',
-  icon,
-  iconClass,
-  value,
-  showPreview = false,
-} = defineProps<{
-  id?: string;
-  label?: string;
-  acceptType?: string;
-  icon?: Object;
-  iconClass?: string;
-  // Upload does not have its own event type so it's any
-  value: UploadTarget;
-  showPreview?: boolean;
-}>();
+const props =
+  defineProps<{
+    id?: string;
+    label?: string;
+    acceptType?: string;
+    icon?: Object;
+    iconClass?: string;
+    value: UploadTarget;
+    showPreview?: boolean;
+  }>();
+
+const _id = ref(props.id || uuid.v4());
+const _acceptType = ref(props.acceptType || '*');
 
 const uploaded = ref<FileInfo>({
   src: '',
@@ -40,7 +35,7 @@ const uploaded = ref<FileInfo>({
 
 const _value = computed({
   get: () => {
-    return value;
+    return props.value;
   },
   set: (val: UploadTarget) => {
     emit('update:value', val);
@@ -68,7 +63,7 @@ const _value = computed({
     </slot>
 
     <label
-      :for="id"
+      :for="_id"
       class="
         py-3
         border-2 border-dashed
@@ -101,8 +96,8 @@ const _value = computed({
 
     <input
       @change="(val) => (_value = val)"
-      :id="id"
-      :accept="acceptType"
+      :id="_id"
+      :accept="_acceptType"
       class="hidden"
       type="file"
       v-bind="$attrs"

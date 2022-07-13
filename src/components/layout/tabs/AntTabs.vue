@@ -5,23 +5,22 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { TabsType } from '../../types/Tabs.type';
+import type { TabsType } from '../../../types/Tabs.type';
 
-const { tabs } =
-  defineProps<{
-    tabs: TabsType[];
-  }>();
+defineProps<{
+  tabs: TabsType[];
+}>();
 
 const emit = defineEmits(['click']);
 
-const onClick = () => {
-  emit('click');
+const onClick = (event: Event) => {
+  emit('click', event);
 };
 </script>
 
 <template>
   <div>
-    <div class="sm:hidden">
+    <div class="sm:hidden m-2">
       <label for="tabs" class="sr-only"> Select a tab </label>
 
       <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
@@ -37,8 +36,8 @@ const onClick = () => {
           text-base
           border-gray-300
           focus:outline-none
-          focus:ring-indigo-500
-          focus:border-indigo-500
+          focus:ring-primary
+          focus:border-primary
           sm:text-sm
           rounded-md
         "
@@ -57,14 +56,14 @@ const onClick = () => {
             :key="tab.name"
             :class="[
               tab.current
-                ? 'border-indigo-500 text-indigo-600'
+                ? 'border-primary text-primary'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
               'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer',
             ]"
             :aria-current="tab.current ? 'page' : undefined"
-            @click="onClick()"
+            @click="onClick"
           >
-            {{ tab.name }}
+            <slot name="tabItem" v-bind="tab">{{ tab.name }}</slot>
           </div>
         </nav>
       </div>
