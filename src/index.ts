@@ -40,7 +40,6 @@ import AntTable from './components/table/AntTable.vue';
 
 import AntBadge from './components/elements/AntBadge.vue';
 import AntBanner from './components/elements/AntBanner.vue';
-import component from './env';
 
 export const Plugin = {
   install(vue: any) {
