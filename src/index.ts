@@ -41,6 +41,8 @@ import AntTable from './components/table/AntTable.vue';
 import AntBadge from './components/elements/AntBadge.vue';
 import AntBanner from './components/elements/AntBanner.vue';
 
+import AntNotFound from './components/pages/AntNotFound.vue';
+
 export const Plugin = {
   install(vue: any) {
     vue.use(UUID);
@@ -77,6 +79,7 @@ export const Plugin = {
     vue.component(AntBanner.name, AntBanner);
     vue.component(AntAccordionWidget.name, AntAccordionWidget);
     vue.component(AntAccordionItem.name, AntAccordionItem);
+    vue.component(AntNotFound.name, AntNotFound);
 
     vue.component('fa-icon', FontAwesomeIcon);
   },
@@ -116,4 +119,5 @@ export {
   AntBanner,
   AntAccordionWidget,
   AntAccordionItem,
+  AntNotFound,
 };

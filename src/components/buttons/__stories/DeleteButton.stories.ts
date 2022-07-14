@@ -18,7 +18,7 @@ const Template = (args: any) => ({
   setup() {
     return { args };
   },
-  template: '<DeleteButton v-bind="args" />',
+  template: '<div class="m-2"><DeleteButton v-bind="args" /></div>',
 });
 
 export const Primary = Template.bind({});
