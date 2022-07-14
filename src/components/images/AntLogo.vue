@@ -10,7 +10,7 @@ import { computed, onMounted } from 'vue';
 
 const props =
   defineProps<{
-    logoUrl: string;
+    logoUrl?: string;
     alt?: string;
     size?: string;
   }>();
@@ -31,6 +31,6 @@ onMounted(() => {
 
 <template>
   <div :class="classes">
-    <img class="h-full" :src="logoUrl" :alt="alt" />
+    <slot><img class="h-full" :src="logoUrl" :alt="alt" /></slot>
   </div>
 </template>
