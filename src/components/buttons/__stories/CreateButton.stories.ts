@@ -1,3 +1,4 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import CreateButton from '../CreateButton.vue';
 
 export default {
@@ -18,7 +19,7 @@ const Template = (args: any) => ({
   setup() {
     return { args };
   },
-  template: '<CreateButton v-bind="args" />',
+  template: '<div class="m-2"><CreateButton v-bind="args" /></div>',
 });
 
 export const Primary = Template.bind({});
@@ -27,3 +28,19 @@ Primary.args = {
   id: 'create-button-123490',
   label: 'Create',
 };
+
+export const UseSlots = (args: any) => ({
+  components: { CreateButton },
+  setup() {
+    return { args, faPlus };
+  },
+  template: `
+  <div class="m-2">
+    <CreateButton v-bind="args">
+      <fa-icon :icon="faPlus" class="mr-2 font-bold" />
+
+      <span class="text-xl font-bold">Create</span>
+    </CreateButton>
+  </div>
+  `,
+});

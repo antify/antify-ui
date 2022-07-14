@@ -9,7 +9,7 @@ export default {
 export const Simple = (args: any) => ({
   components: { AntDatePicker },
   setup() {
-    const value = ref(new Date());
+    const value = ref(new Date(0));
 
     return { value };
   },
@@ -22,7 +22,7 @@ export const Simple = (args: any) => ({
 export const Localized = (args: any) => ({
   components: { AntDatePicker },
   setup() {
-    const value = ref(new Date());
+    const value = ref(new Date(0));
 
     return { value };
   },

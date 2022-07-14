@@ -7,6 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import AntButton from './AntButton.vue';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 const emit = defineEmits(['click']);
 
@@ -15,7 +16,7 @@ defineProps<{
   label?: string;
   size?: string;
   backgroundColor?: string;
-  icon?: Object;
+  icon?: IconDefinition;
 }>();
 
 const onClick = () => {
@@ -32,8 +33,10 @@ const onClick = () => {
       :backgroundColor="backgroundColor"
       :size="size"
       :icon="icon"
-      class="text-red-500 border-red-500"
+      class="text-red-500 border-red-500 focus:ring-red-500"
       @click="onClick"
-    />
+    >
+      <slot></slot>
+    </AntButton>
   </div>
 </template>
