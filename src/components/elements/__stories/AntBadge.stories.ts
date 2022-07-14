@@ -5,9 +5,9 @@ export default {
   title: 'Components/Elements/Ant Badge',
   component: AntBadge,
   argTypes: {
-    mainBgColor: { type: 'text' },
-    secondaryBgColor: { type: 'text' },
-    textColor: { type: 'text' },
+    mainBgColor: { control: 'text' },
+    secondaryBgColor: { control: 'text' },
+    textColor: { control: 'text' },
     size: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
@@ -32,15 +32,14 @@ export const Simple = (args: any) => ({
   </div>`,
 });
 
-export const WithDefault = (args: any) => ({
+const WithDefaultTemplate = (args: any) => ({
   components: { AntBadge },
   setup() {
-    args.mainBgColor = args.mainBgColor || 'indigo-100';
-    args.secondaryBgColor = args.secondaryBgColor || 'indigo-200';
-    args.textColor = args.textColor || 'indigo-700';
-    args.size = args.size || 'small';
-
-    return { args, faBullhorn };
+    console.log('args', args);
+    return {
+      args,
+      faBullhorn,
+    };
   },
   template: `
   <div class="m-2">
@@ -51,3 +50,12 @@ export const WithDefault = (args: any) => ({
     </AntBadge>
   </div>`,
 });
+
+export const WithDefault = WithDefaultTemplate.bind({});
+// @ts-ignore
+WithDefault.args = {
+  mainBgColor: 'indigo-100',
+  secondaryBgColor: 'indigo-200',
+  textColor: 'indigo-700',
+  size: 'small',
+};
