@@ -27,6 +27,8 @@ import AntLayout from './components/layout/AntLayout.vue';
 import AntModal from './components/layout/AntModal.vue';
 import AntSidebar from './components/layout/AntSidebar.vue';
 import AntTabs from './components/layout/tabs/AntTabs.vue';
+import AntAccordionWidget from './components/layout/AntAccordionWidget/AntAccordionWidget.vue';
+import AntAccordionItem from './components/layout/AntAccordionWidget/AntAccordionItem.vue';
 
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
@@ -38,6 +40,7 @@ import AntTable from './components/table/AntTable.vue';
 
 import AntBadge from './components/elements/AntBadge.vue';
 import AntBanner from './components/elements/AntBanner.vue';
+import component from './env';
 
 export const Plugin = {
   install(vue: any) {
@@ -73,6 +76,8 @@ export const Plugin = {
     vue.component(AntTabs.name, AntTabs);
     vue.component(AntBadge.name, AntBadge);
     vue.component(AntBanner.name, AntBanner);
+    vue.component(AntAccordionWidget.name, AntAccordionWidget);
+    vue.component(AntAccordionItem.name, AntAccordionItem);
 
     vue.component('fa-icon', FontAwesomeIcon);
   },
@@ -110,4 +115,6 @@ export {
   AntTabs,
   AntBadge,
   AntBanner,
+  AntAccordionWidget,
+  AntAccordionItem,
 };
