@@ -7,6 +7,7 @@ export default {
 
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { is } from 'date-fns/locale';
 import { ref, computed } from 'vue';
 import { uuid } from 'vue3-uuid';
 
@@ -17,12 +18,12 @@ const props =
     id?: string;
     value: string;
     label?: string;
-    rules?: Function[];
     type?: string;
     description?: string;
     placeholder?: string;
     leadingIcon?: Object;
     overlappingLabel?: boolean;
+    validator?: Function;
   }>();
 
 const _id = ref(props.id ? props.id : uuid.v4());
@@ -44,14 +45,14 @@ const content = computed<string>({
 const validate = () => {
   errors.value = [];
 
-  if (props.rules && props.rules.length > 0) {
-    props.rules.forEach((validator: Function) => {
-      const isValid = validator(content.value);
+  if (props.validator) {
+    const messages = props.validator(content.value);
 
-      if (!isValid || typeof isValid === 'string') {
-        errors.value.push(isValid);
-      }
-    });
+    if (Array.isArray(messages)) {
+      messages.forEach((message) => {
+        errors.value.push(message);
+      });
+    }
   }
 };
 </script>

@@ -46,9 +46,9 @@ export default {
       description:
         'Placeholder for the password field, "label" will be used if not provieded',
     },
-    rules: {
+    validator: {
       description:
-        'Array of rule functions that will be called on blur, they should return an error message to be displayed',
+        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
     },
     passwordErrorIcon: {
       description:
@@ -111,8 +111,8 @@ Rules.args = {
   showPassword: true,
   label: 'Password with rules',
   placeholder: 'Enter password',
-  rules: [
-    (value: any) => !!value || 'Password can not be empty.',
-    (value: any) => value?.length >= 8 || 'Min password length is 8 symbols',
-  ],
+  validator: (value: any) => {
+    if (!value) return ['Password can not be empty.'];
+    if (value.length < 8) return ['Min password length is 8 symbols'];
+  },
 };

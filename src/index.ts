@@ -45,7 +45,7 @@ import AntNotFound from './components/pages/AntNotFound.vue';
 
 export const Plugin = {
   install(vue: any) {
-    vue.use(UUID);
+    // vue.use(UUID);
 
     vue.component(AntButton.name, AntButton);
     vue.component(CreateButton.name, CreateButton);

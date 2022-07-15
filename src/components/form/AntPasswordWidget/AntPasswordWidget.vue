@@ -6,10 +6,13 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AntPasswordField from './AntPasswordField.vue';
 import { uuid } from 'vue3-uuid';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { EventEmitter } from '@tiptap/core/dist/packages/core/src/EventEmitter';
+
+const emit = defineEmits(['update:password']);
 
 const props =
   defineProps<{
@@ -19,8 +22,8 @@ const props =
     repeatLabel?: string;
     placeholder?: string;
     repeatPlaceholder?: string;
-    rulesPassword?: Function[];
-    rulesPasswordRepeat?: Function[];
+    passwordValidator?: Function;
+    passwordRepeatValidator?: Function;
     description?: string;
     leadingIcon?: IconDefinition;
     overlappingLabel?: boolean;
@@ -29,31 +32,44 @@ const props =
 
 const _id = ref(props.id || uuid.v4());
 
-const _rulesPassword = ref(
-  props.rulesPassword || [
-    (value: any) => !!value || 'Password can not be empty.',
-    (value: any) => value?.length >= 8 || 'Min password length is 8 symbols',
-  ]
+const defaultPasswordValidator = (value: any) => {
+  if (!value) return ['Password can not be empty.'];
+  if (value?.length < 8) return ['Min password length is 8 symbols'];
+};
+
+const _passwordValidator = ref(
+  props.passwordValidator || defaultPasswordValidator
 );
 
-const _rulesPasswordRepeat = ref(
-  props.rulesPasswordRepeat || [
-    (value: any) => !!value || 'Repeat password is required',
-    (value: any) => value === props.password || 'Passwords need to be equal',
-  ]
+const defaultPasswordRepeatValidator = (value: any) => {
+  console.log('BLUB', _password.value);
+  if (!value) return ['Repeat password is required.'];
+  if (value !== _password.value) return ['Passwords need to be equal'];
+};
+const _passwordRepeatValidator = ref(
+  props.passwordRepeatValidator || defaultPasswordRepeatValidator
 );
 
 const repeatPassword = ref<string>('');
+
+const _password = computed<string>({
+  get: () => {
+    return props.password;
+  },
+  set: (val) => {
+    emit('update:password', val);
+  },
+});
 </script>
 
 <template>
   <div>
     <div class="mt-1 relative">
       <AntPasswordField
-        v-model:password="password"
+        v-model:password="_password"
         :id="_id"
         :label="label"
-        :rules="_rulesPassword"
+        :validator="_passwordValidator"
         :placeholder="placeholder"
         :leading-icon="leadingIcon"
         :overlapping-label="overlappingLabel"
@@ -65,7 +81,7 @@ const repeatPassword = ref<string>('');
         v-model:password="repeatPassword"
         :id="`${_id}-password-repeat`"
         :label="repeatLabel"
-        :rules="_rulesPasswordRepeat"
+        :validator="_passwordRepeatValidator"
         :placeholder="repeatPlaceholder"
         :leading-icon="leadingIcon"
         :overlapping-label="overlappingLabel"

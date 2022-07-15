@@ -52,27 +52,27 @@ export default {
       description:
         'Placeholder for the repeat password field, "repeatLabel" will be used if not provieded',
     },
-    rulesPassword: {
+    passwordValidator: {
       description:
-        'Array of rule functions that will be called on blur, they should return an error message to be displayed',
+        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
       table: {
         defaultValue: {
-          summary: '[]',
+          summary: 'Function',
           detail:
             'Default rules contain a "must not be empty"-Rule and a "Min password length is 8 symbols"-Rule',
         },
       },
     },
-    rulesPasswordRepeat: {
+    passwordRepeatValidator: {
       description:
-        'Array of rule functions that will be called on blur, they should return an error message to be displayed',
-        table: {
-          defaultValue: {
-            summary: '[]',
-            detail:
-              'Default rules contain a "must not be empty"-Rule and a "Passwords need to be equal"-Rule',
-          },
+        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
+      table: {
+        defaultValue: {
+          summary: 'Function',
+          detail:
+            'Default rules contain a "must not be empty"-Rule and a "Passwords need to be equal"-Rule',
         },
+      },
     },
   },
 };
