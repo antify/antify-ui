@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import UUID from 'vue3-uuid';
 
 import AntButton from './components/buttons/AntButton.vue';
 import CreateButton from './components/buttons/CreateButton.vue';
@@ -8,6 +7,10 @@ import DeleteButton from './components/buttons/DeleteButton.vue';
 import AntDraggable from './components/dragDrop/AntDraggable.vue';
 import AntDropzone from './components/dragDrop/AntDropzone.vue';
 
+import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordField.vue';
+import AntPasswordWidget from './components/form/AntPasswordWidget/AntPasswordWidget.vue';
+import AntRadio from './components/form/AntRadioWidget/AntRadio.vue';
+import AntRadioWidget from './components/form/AntRadioWidget/AntRadioWidget.vue';
 import AntCheckbox from './components/form/AntCheckbox.vue';
 import AntDatePicker from './components/form/AntDatePicker.vue';
 import AntInput from './components/form/AntInput.vue';
@@ -45,8 +48,6 @@ import AntNotFound from './components/pages/AntNotFound.vue';
 
 export const Plugin = {
   install(vue: any) {
-    // vue.use(UUID);
-
     vue.component(AntButton.name, AntButton);
     vue.component(CreateButton.name, CreateButton);
     vue.component(DeleteButton.name, DeleteButton);
@@ -80,6 +81,10 @@ export const Plugin = {
     vue.component(AntAccordionWidget.name, AntAccordionWidget);
     vue.component(AntAccordionItem.name, AntAccordionItem);
     vue.component(AntNotFound.name, AntNotFound);
+    vue.component(AntPasswordField.name, AntPasswordField);
+    vue.component(AntPasswordWidget.name, AntPasswordWidget);
+    vue.component(AntRadio.name, AntRadio);
+    vue.component(AntRadioWidget.name, AntRadioWidget);
 
     vue.component('fa-icon', FontAwesomeIcon);
   },
@@ -120,4 +125,8 @@ export {
   AntAccordionWidget,
   AntAccordionItem,
   AntNotFound,
+  AntPasswordField,
+  AntPasswordWidget,
+  AntRadio,
+  AntRadioWidget,
 };
