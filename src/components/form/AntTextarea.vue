@@ -35,7 +35,7 @@ const _value = computed({
     class="block text-sm font-medium text-gray-700"
   >
     <slot>
-      <span v-if="label" class="mb-1">{{ label }}</span>
+      <span v-if="label" class="block mb-1">{{ label }}</span>
     </slot>
   </label>
 
