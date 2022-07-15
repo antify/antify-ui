@@ -14,6 +14,30 @@ import { NavItem } from '../../../types/NavItem.type';
 export default {
   title: 'Components/Layout/Ant Layout',
   component: AntLayout,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    profileHref: {
+      description: 'Used for AntNavProfile Component',
+    },
+    userName: {
+      description: 'Used for AntNavProfile Component',
+    },
+    navItems: {
+      description: 'Used fro AntNavigation Component',
+    },
+    default: {
+      description: 'Sets the main content of the page',
+      table: { type: { summary: 'HTML' } },
+    },
+    mobileSidebarButton: {
+      description:
+        'Override for the mobile sidebar button<br><a href="https://fontawesome.com/icons/bars?s=solid" target="_blank">Link to default</a>',
+      table: {
+        type: { summary: 'HTML' },
+        defaultValue: { summary: 'faBars' },
+      },
+    },
+  },
 };
 
 const Template = (args: any) => ({
@@ -117,6 +141,6 @@ export const Primary = Template.bind({});
 // @ts-ignore
 Primary.args = {
   navItems,
-  userName: 'Horst Mustermann',
+  userName: 'Some Name',
   profileHref: '/profile',
 };

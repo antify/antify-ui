@@ -5,6 +5,68 @@ import { ref } from 'vue';
 export default {
   title: 'Components/Table/Ant DragDrop Table',
   component: AntDragDropTable,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    headers: {
+      description: 'List of header definitions',
+      table: {
+        type: {
+          summary: 'TableHeader',
+          detail: `type TableHeader = {
+        identifier: string;
+        headerClassList?: string;
+        rowClassList?: string;
+        title: string;
+        type: ROW_TYPES;
+        links?: {
+          href: string;
+          label: string;
+        }[];
+      }`,
+        },
+      },
+    },
+    data: {
+      description:
+        'List of rows to be displayed in the table. The properties of the elements need to be equal to the identifier of a table row for it to be displayed<br>They will be updated as they are beeing moved inside the table.',
+    },
+    grabberIcon: {
+      description:
+        'Override for the default grabber icon<br><a href="https://fontawesome.com/icons/ellipsis-vertical?s=solid">Link to default</a>',
+      table: {
+        type: { detail: 'A fontAwesome icon' },
+        defaultValue: { summary: 'faEllipsisVertical' },
+      },
+    },
+    afterRowContent: {
+      description:
+        'Slot to add custom elements to all cells. Gets {elem, header} as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+    beforeRowContent: {
+      description:
+        'Slot to add custom elements to all cells. Gets {elem, header} as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+    emptyState: {
+      description: 'Place for custom empty states.',
+      table: { type: { summary: 'HTML' } },
+    },
+    headerContent: {
+      description:
+        'Overwrite for the default header items. Gets header as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+    headerLastCell: {
+      description: 'Space to add cells to the header.',
+      table: { type: { summary: 'HTML' } },
+    },
+    rowLastCell: {
+      description:
+        'Space to add cells to all rows. Gets the current element as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+  },
 };
 
 export const Simple = (args: any) => ({
@@ -87,8 +149,10 @@ export const Simple = (args: any) => ({
 
     return { testData, simpleHeaders };
   },
-  template: `<AntDragDropTable
+  template: `
+  <AntDragDropTable
     :headers="simpleHeaders"
     v-model:data="testData"
-   />`,
+  >
+  </AntDragDropTable>`,
 });

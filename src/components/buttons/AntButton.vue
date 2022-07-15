@@ -8,6 +8,7 @@ export default {
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { computed, onMounted } from 'vue';
 
+const emit = defineEmits(['click']);
 const props =
   defineProps<{
     label?: string;
@@ -24,8 +25,6 @@ onMounted(() => {
     }
   }
 });
-
-const emit = defineEmits(['click']);
 
 const classes = computed(() => ({
   'inline-flex items-center px-2.5 py-1.5 border border-transparent font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all':

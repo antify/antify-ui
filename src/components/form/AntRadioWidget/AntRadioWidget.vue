@@ -16,6 +16,7 @@ const props =
     value: string;
     label?: string;
     description?: string;
+    legend?: string;
     radioButtons: RadioButton[];
     radioGroupName: string;
   }>();
@@ -44,7 +45,7 @@ const _value = computed({
 
     <fieldset class="mt-4">
       <slot name="legend">
-        <legend class="sr-only">Notification method</legend>
+        <legend class="sr-only">{{ legend }}</legend>
       </slot>
 
       <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">

@@ -136,7 +136,19 @@ defineProps<{
                 </tr>
 
                 <tr v-if="data.length <= 0">
-                  <slot name="emptyState" />
+                  <slot name="emptyState">
+                    <td
+                      colspan="100"
+                      class="
+                        w-full
+                        py-2
+                        text-center text-gray-500 text-2xl
+                        italic
+                      "
+                    >
+                      Nothing to see here jet!
+                    </td>
+                  </slot>
                 </tr>
               </tbody>
             </table>

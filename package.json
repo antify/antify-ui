@@ -1,6 +1,6 @@
 {
   "name": "@antify/antify-ui",
-  "version": "0.0.27",
+  "version": "0.0.26",
   "private": false,
   "main": "dist/index.js",
   "files": [
@@ -60,5 +60,15 @@
     "vue-loader": "^16.8.3",
     "vue-router": "^4.1.0",
     "vue-tsc": "^0.34.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antify/antify-ui.git"
+  },
+  "engines": {
+    "node": ">=0.14"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -9,7 +9,7 @@ export default {
 import AntHeader from '../layout/AntHeader.vue';
 
 defineProps<{
-  imageSrc: string;
+  imageSrc?: string;
 }>();
 </script>
 
@@ -70,7 +70,10 @@ defineProps<{
       </footer>
     </div>
 
-    <div class="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+    <div
+      v-if="imageSrc"
+      class="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2"
+    >
       <img
         class="absolute inset-0 h-full w-full object-cover"
         :src="imageSrc"

@@ -34,9 +34,9 @@ const _value = computed({
 
 <template>
   <div>
-    <slot v-bind="{ id: _id }">
-      <label :for="_id" v-if="label">{{ label }}</label>
-    </slot>
+    <label :for="_id">
+      <slot>{{ label }}</slot>
+    </label>
 
     <Datepicker :id="_id" v-model="_value" v-bind="$attrs">
       <template v-for="(_, slot) of $slots" v-slot:[slot.toString()]="scope">

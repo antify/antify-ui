@@ -8,6 +8,7 @@ export default {
 import { ref, computed } from 'vue';
 import { faEye, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { uuid } from 'vue3-uuid';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 const emit = defineEmits(['update:password']);
 
@@ -19,9 +20,9 @@ const props =
     rules?: Function[];
     description?: string;
     placeholder?: string;
-    leadingIcon?: Object;
+    leadingIcon?: IconDefinition;
     overlappingLabel?: boolean;
-    showPassword: boolean;
+    showPassword?: boolean;
   }>();
 
 const _id = ref(props.id || uuid.v4());
@@ -72,18 +73,17 @@ const validate = () => {
 </script>
 
 <template>
-  <slot name="passwordLabel" v-bind="{ id: _id }">
-    <label
-      :for="_id"
-      v-if="label"
-      class="block text-sm font-medium text-gray-700"
-      :class="{
-        'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
-      }"
-    >
+  <label
+    :for="_id"
+    class="block text-sm font-medium text-gray-700"
+    :class="{
+      'absolute -top-2 left-2 -mt-px bg-white z-50': overlappingLabel,
+    }"
+  >
+    <slot name="passwordLabel" v-bind="{ id: _id }">
       {{ label }}
-    </label>
-  </slot>
+    </slot>
+  </label>
 
   <div class="relative">
     <div

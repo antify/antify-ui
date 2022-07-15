@@ -17,7 +17,7 @@ const props =
     id?: string;
     value: string;
     label?: string;
-    rules?: [];
+    rules?: Function[];
     type?: string;
     description?: string;
     placeholder?: string;
@@ -59,18 +59,18 @@ const validate = () => {
 <template>
   <div>
     <div class="relative">
-      <slot name="label">
-        <label
-          v-if="label"
-          :for="_id"
-          :class="{
-            'absolute -top-2 left-2 -mt-px bg-white z-50': _overlappingLabel,
-          }"
-          class="block text-sm font-medium text-gray-700"
-        >
+      <label
+        v-if="label"
+        :for="_id"
+        :class="{
+          'absolute -top-2 left-2 -mt-px bg-white z-50': _overlappingLabel,
+        }"
+        class="block text-sm font-medium text-gray-700"
+      >
+        <slot name="label">
           {{ label }}
-        </label>
-      </slot>
+        </slot>
+      </label>
 
       <div class="relative">
         <slot name="leadingIcon">

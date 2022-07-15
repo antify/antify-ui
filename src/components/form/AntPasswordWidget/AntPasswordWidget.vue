@@ -9,6 +9,7 @@ export default {
 import { ref } from 'vue';
 import AntPasswordField from './AntPasswordField.vue';
 import { uuid } from 'vue3-uuid';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 const props =
   defineProps<{
@@ -21,7 +22,7 @@ const props =
     rulesPassword?: Function[];
     rulesPasswordRepeat?: Function[];
     description?: string;
-    leadingIcon?: Object;
+    leadingIcon?: IconDefinition;
     overlappingLabel?: boolean;
     showPassword: boolean;
   }>();
@@ -38,7 +39,7 @@ const _rulesPassword = ref(
 const _rulesPasswordRepeat = ref(
   props.rulesPasswordRepeat || [
     (value: any) => !!value || 'Repeat password is required',
-    (value: any) => value === props.password || 'Password needs to be the same',
+    (value: any) => value === props.password || 'Passwords need to be equal',
   ]
 );
 

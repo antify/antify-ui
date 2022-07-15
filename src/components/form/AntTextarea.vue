@@ -30,15 +30,14 @@ const _value = computed({
 </script>
 
 <template>
-  <slot>
-    <label
-      v-if="label"
-      :for="`textarea-${id}`"
-      class="block text-sm font-medium text-gray-700 mb-1"
-    >
-      <span>{{ label }}</span>
-    </label>
-  </slot>
+  <label
+    :for="`textarea-${id}`"
+    class="block text-sm font-medium text-gray-700"
+  >
+    <slot>
+      <span v-if="label" class="mb-1">{{ label }}</span>
+    </slot>
+  </label>
 
   <div>
     <textarea

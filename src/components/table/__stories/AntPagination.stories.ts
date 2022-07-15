@@ -5,6 +5,17 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 export default {
   title: 'Components/Table/Ant Pagination',
   component: AntPagination,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    buttons: {
+      description: 'Slot space for buttons (next, prev)',
+      table: { type: { summary: 'HTML' } },
+    },
+    position: {
+      description: 'Slot space for current position (Page 1 from 20)',
+      table: { type: { summary: 'HTML' } },
+    },
+  },
 };
 
 const Template = (args: any) => ({

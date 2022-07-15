@@ -5,6 +5,67 @@ import { ref } from 'vue';
 export default {
   title: 'Components/Forms/Ant Input',
   component: AntInput,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    id: {
+      description: 'The ID for the input and label combination',
+      table: {
+        defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
+      },
+    },
+    value: {
+      description: 'The reactive value of the input',
+    },
+    description: {
+      description: 'The description for the input',
+    },
+    label: {
+      description:
+        'The main label for the input<br>can also be set via the named "label" slot',
+      table: {
+        type: {
+          summary: 'HTML|String',
+        },
+      },
+    },
+    overlappingLabel: {
+      description:
+        'Changes the display style for the label to overlap the input field',
+      table: { defaultValue: { summary: false } },
+    },
+    placeholder: {
+      description:
+        'Placeholder for the input field, "label" will be used if not provieded',
+    },
+    rules: {
+      description:
+        'Array of rule functions that will be called on blur, they should return an error message to be displayed',
+    },
+    type: {
+      description: 'The input type',
+      table: { defaultValue: { summary: '"text"' } },
+    },
+    errorIcon: {
+      description:
+        'Will be displayed if the rules give back false or a string.<br><a href="https://fontawesome.com/icons/circle-exclamation?s=solid" target="_blank">Link to default</a>',
+      table: {
+        defaultValue: {
+          summary: 'faCircleExclamation',
+        },
+        type: {
+          summary: 'HTML',
+        },
+      },
+    },
+    leadingIcon: {
+      description: 'Will be displayed inside of the input at the start.',
+      table: {
+        type: {
+          summary: 'HTML',
+        },
+      },
+    },
+  },
 };
 
 const Template = (args: any) => ({

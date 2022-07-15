@@ -3,6 +3,18 @@ import { faHouse, faRecycle } from '@fortawesome/free-solid-svg-icons';
 export default {
   title: 'Components/Navigation/Ant Nav Item',
   component: AntNavItem,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    navItem: {
+      description: 'Item to be displayed',
+      table: {
+        type: {
+          detail:
+            'type NavItem = {icon?: Object; label: String; route?: RouteLocationRaw; active: Boolean; subItems?: NavItem[];}',
+        },
+      },
+    },
+  },
 };
 
 const Template = (args: any) => ({

@@ -5,8 +5,15 @@ export default {
   component: AntProfilePicture,
   argTypes: {
     size: {
-      control: { type: 'select' },
+      control: { type: 'radio' },
       options: ['small', 'medium', 'large'],
+      table: { defaultValue: { summary: 'medium' } },
+    },
+    imageUrl: {
+      description: 'Src to profile picture.',
+    },
+    alt: {
+      description: 'Alt for image',
     },
   },
 };
