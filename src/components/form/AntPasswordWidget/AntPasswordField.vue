@@ -17,7 +17,7 @@ const props =
     id?: string;
     password: string;
     label?: string;
-    rules?: Function[];
+    validator?: Function;
     description?: string;
     placeholder?: string;
     leadingIcon?: IconDefinition;
@@ -60,14 +60,14 @@ const errors = ref<Array<string>>([]);
 const validate = () => {
   errors.value = [];
 
-  if (props.rules && props.rules.length > 0) {
-    props.rules.forEach((validator: Function) => {
-      const validationError = validator(_password.value);
+  if (props.validator && typeof props.validator === 'function') {
+    const messages = props.validator(_password.value);
 
-      if (!validationError || typeof validationError === 'string') {
-        errors.value.push(validationError);
-      }
-    });
+    if (Array.isArray(messages)) {
+      messages.forEach((message) => {
+        errors.value.push(message);
+      });
+    }
   }
 };
 </script>

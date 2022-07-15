@@ -37,9 +37,9 @@ export default {
       description:
         'Placeholder for the input field, "label" will be used if not provieded',
     },
-    rules: {
+    validator: {
       description:
-        'Array of rule functions that will be called on blur, they should return an error message to be displayed',
+        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
     },
     type: {
       description: 'The input type',
@@ -164,8 +164,9 @@ Validated.args = {
   id: 'input-id-987654321',
   value: 'test@test.de',
   label: 'Validated',
-  rules: [
-    (value: any) => !!value || 'value can not be empty',
-    (value: any) => value.length > 3 || 'value is to short',
-  ],
+  validator: (value: any) => {
+    console.log('value', value);
+    if (!value) return ['value can not be empty'];
+    if (value.length < 3) return ['value is to short'];
+  },
 };
