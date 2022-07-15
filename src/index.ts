@@ -11,6 +11,7 @@ import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordFie
 import AntPasswordWidget from './components/form/AntPasswordWidget/AntPasswordWidget.vue';
 import AntRadio from './components/form/AntRadioWidget/AntRadio.vue';
 import AntRadioWidget from './components/form/AntRadioWidget/AntRadioWidget.vue';
+import AntLoginWidget from './components/form/AntLoginWidget/AntLoginWidget.vue';
 import AntCheckbox from './components/form/AntCheckbox.vue';
 import AntDatePicker from './components/form/AntDatePicker.vue';
 import AntInput from './components/form/AntInput.vue';
@@ -32,6 +33,7 @@ import AntSidebar from './components/layout/AntSidebar.vue';
 import AntTabs from './components/layout/tabs/AntTabs.vue';
 import AntAccordionWidget from './components/layout/AntAccordionWidget/AntAccordionWidget.vue';
 import AntAccordionItem from './components/layout/AntAccordionWidget/AntAccordionItem.vue';
+import AntLoginLayout from './components/layout/AntLoginLayout.vue';
 
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
@@ -80,9 +82,11 @@ export const Plugin = {
     vue.component(AntBanner.name, AntBanner);
     vue.component(AntAccordionWidget.name, AntAccordionWidget);
     vue.component(AntAccordionItem.name, AntAccordionItem);
+    vue.component(AntLoginLayout.name, AntLoginLayout);
     vue.component(AntNotFound.name, AntNotFound);
     vue.component(AntPasswordField.name, AntPasswordField);
     vue.component(AntPasswordWidget.name, AntPasswordWidget);
+    vue.component(AntLoginWidget.name, AntLoginWidget);
     vue.component(AntRadio.name, AntRadio);
     vue.component(AntRadioWidget.name, AntRadioWidget);
 
@@ -124,9 +128,11 @@ export {
   AntBanner,
   AntAccordionWidget,
   AntAccordionItem,
+  AntLoginLayout,
   AntNotFound,
   AntPasswordField,
   AntPasswordWidget,
+  AntLoginWidget,
   AntRadio,
   AntRadioWidget,
 };

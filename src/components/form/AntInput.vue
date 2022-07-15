@@ -24,6 +24,8 @@ const props =
     leadingIcon?: Object;
     overlappingLabel?: boolean;
     validator?: Function;
+    errors?: string[];
+    isError?: boolean;
   }>();
 
 const _id = ref(props.id ? props.id : uuid.v4());
@@ -31,8 +33,9 @@ const _type = ref(props.type ? props.type : 'text');
 const _overlappingLabel = ref(
   props.overlappingLabel ? props.overlappingLabel : false
 );
+const _errors = ref(props.errors || []);
 
-const errors = ref<Array<string>>([]);
+// const errors = ref<Array<string>>([]);
 const content = computed<string>({
   get: () => {
     return props.value as string;
@@ -43,16 +46,8 @@ const content = computed<string>({
 });
 
 const validate = () => {
-  errors.value = [];
-
   if (props.validator) {
-    const messages = props.validator(content.value);
-
-    if (Array.isArray(messages)) {
-      messages.forEach((message) => {
-        errors.value.push(message);
-      });
-    }
+    props.validator(content.value);
   }
 };
 </script>
@@ -97,10 +92,10 @@ const validate = () => {
           :type="_type"
           :placeholder="placeholder || label"
           :aria-describedby="`${id}-description`"
-          :aria-invalid="errors.length > 0"
+          :aria-invalid="_errors.length > 0 || isError"
           :class="{
             'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
-              errors.length > 0,
+              _errors.length > 0 || isError,
             'pl-10': leadingIcon,
           }"
           class="
@@ -124,7 +119,7 @@ const validate = () => {
 
         <slot name="errorIcon">
           <div
-            v-if="errors.length > 0"
+            v-if="_errors.length > 0 || isError"
             class="
               absolute
               inset-y-0
@@ -145,18 +140,18 @@ const validate = () => {
       </div>
     </div>
 
-    <p
-      v-if="description || (errors && errors.length > 0)"
+    <div
+      v-if="description || (_errors && _errors.length > 0)"
       class="mt-2 text-sm text-gray-500"
       :id="`${id}-description`"
     >
-      <template v-if="errors">
-        <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+      <template v-if="_errors">
+        <div v-for="error in _errors" class="text-red-600">{{ error }}</div>
       </template>
 
       <template v-else>
         {{ description }}
       </template>
-    </p>
+    </div>
   </div>
 </template>

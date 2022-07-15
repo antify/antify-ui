@@ -23,6 +23,8 @@ const props =
     leadingIcon?: IconDefinition;
     overlappingLabel?: boolean;
     showPassword?: boolean;
+    isError?: boolean;
+    errors?: string[];
   }>();
 
 const _id = ref(props.id || uuid.v4());
@@ -55,21 +57,17 @@ const revealPassword = () => {
   }
 };
 
-const errors = ref<Array<string>>([]);
+const _errors = ref<Array<string>>(props.errors || []);
 
 const validate = () => {
-  errors.value = [];
-
   if (props.validator && typeof props.validator === 'function') {
     const messages = props.validator(_password.value);
-
-    if (Array.isArray(messages)) {
-      messages.forEach((message) => {
-        errors.value.push(message);
-      });
-    }
   }
 };
+
+const hasError = computed(() => {
+  return (_errors.value && _errors.value.length > 0) || props.isError;
+});
 </script>
 
 <template>
@@ -123,11 +121,11 @@ const validate = () => {
       "
       :class="{
         'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
-          errors && errors.length > 0,
+          hasError,
         'pl-10': leadingIcon,
       }"
       :aria-describedby="`${id}-description`"
-      :aria-invalid="errors && errors.length > 0"
+      :aria-invalid="hasError"
       v-bind="$attrs"
       @blur="validate"
     />
@@ -147,10 +145,7 @@ const validate = () => {
         </slot>
       </div>
 
-      <div
-        v-if="errors && errors.length > 0"
-        class="pointer-events-none h-full flex items-center"
-      >
+      <div v-if="hasError" class="pointer-events-none h-full flex items-center">
         <slot name="passwordErrorIcon">
           <fa-icon
             :icon="faCircleExclamation"

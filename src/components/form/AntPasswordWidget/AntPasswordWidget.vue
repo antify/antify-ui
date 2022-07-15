@@ -12,7 +12,11 @@ import { uuid } from 'vue3-uuid';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { EventEmitter } from '@tiptap/core/dist/packages/core/src/EventEmitter';
 
-const emit = defineEmits(['update:password']);
+const emit = defineEmits([
+  'update:password',
+  'update:errorsPassword',
+  'update:errorsPasswordRepeat',
+]);
 
 const props =
   defineProps<{
@@ -24,17 +28,47 @@ const props =
     repeatPlaceholder?: string;
     passwordValidator?: Function;
     passwordRepeatValidator?: Function;
+    errorsPassword: string[];
+    errorsPasswordRepeat: string[];
     description?: string;
     leadingIcon?: IconDefinition;
     overlappingLabel?: boolean;
-    showPassword: boolean;
+    showPassword?: boolean;
+    isErrorPassword?: boolean;
+    isErrorPasswordRepeat?: boolean;
   }>();
 
 const _id = ref(props.id || uuid.v4());
 
+const _errorsPassword = computed<string[]>({
+  get: () => {
+    return props.errorsPassword;
+  },
+  set: (val) => {
+    emit('update:errorsPassword', val);
+  },
+});
+const _errorsPasswordRepeat = computed<string[]>({
+  get: () => {
+    return props.errorsPasswordRepeat;
+  },
+  set: (val) => {
+    emit('update:errorsPasswordRepeat', val);
+  },
+});
+
 const defaultPasswordValidator = (value: any) => {
-  if (!value) return ['Password can not be empty.'];
-  if (value?.length < 8) return ['Min password length is 8 symbols'];
+  if (!value) {
+    _errorsPassword.value = ['Password can not be empty.'];
+    return;
+  }
+
+  if (value?.length < 8) {
+    _errorsPassword.value = ['Min password length is 8 symbols'];
+    return;
+  }
+
+  _errorsPassword.value = [];
 };
 
 const _passwordValidator = ref(
@@ -42,10 +76,19 @@ const _passwordValidator = ref(
 );
 
 const defaultPasswordRepeatValidator = (value: any) => {
-  console.log('BLUB', _password.value);
-  if (!value) return ['Repeat password is required.'];
-  if (value !== _password.value) return ['Passwords need to be equal'];
+  if (!value) {
+    _errorsPasswordRepeat.value = ['Repeat password is required.'];
+    return;
+  }
+
+  if (value !== _password.value) {
+    _errorsPasswordRepeat.value = ['Passwords need to be equal'];
+    return;
+  }
+
+  _errorsPasswordRepeat.value = [];
 };
+
 const _passwordRepeatValidator = ref(
   props.passwordRepeatValidator || defaultPasswordRepeatValidator
 );
@@ -69,24 +112,28 @@ const _password = computed<string>({
         v-model:password="_password"
         :id="_id"
         :label="label"
-        :validator="_passwordValidator"
         :placeholder="placeholder"
         :leading-icon="leadingIcon"
         :overlapping-label="overlappingLabel"
         :show-password="showPassword"
         :description="description"
+        :validator="_passwordValidator"
+        :is_error="isErrorPassword"
+        :errors="_errorsPassword"
       />
 
       <AntPasswordField
         v-model:password="repeatPassword"
         :id="`${_id}-password-repeat`"
         :label="repeatLabel"
-        :validator="_passwordRepeatValidator"
         :placeholder="repeatPlaceholder"
         :leading-icon="leadingIcon"
         :overlapping-label="overlappingLabel"
         :show-password="showPassword"
         :description="description"
+        :validator="_passwordRepeatValidator"
+        :is_error="isErrorPasswordRepeat"
+        :errors="_errorsPasswordRepeat"
       />
     </div>
   </div>
