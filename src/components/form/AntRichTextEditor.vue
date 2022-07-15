@@ -21,19 +21,6 @@ const props =
     label?: string;
   }>();
 
-const editor = ref(
-  useEditor({
-    content: props.data,
-    extensions: [
-      StarterKit,
-      Underline,
-      Heading.configure({
-        levels: [1, 2, 3],
-      }),
-    ],
-  })
-);
-
 const _data = computed({
   get: () => {
     return props.data || '';
@@ -42,6 +29,23 @@ const _data = computed({
     emit('update:data', val);
   },
 });
+
+const editor = ref(
+  useEditor({
+    content: _data.value,
+    extensions: [
+      StarterKit,
+      Underline,
+      Heading.configure({
+        levels: [1, 2, 3],
+      }),
+    ],
+    onUpdate: ({ editor }) => {
+      const state = editor.getHTML();
+      _data.value = state;
+    },
+  })
+);
 
 onUnmounted(() => editor?.value?.destroy());
 </script>
@@ -57,7 +61,7 @@ onUnmounted(() => editor?.value?.destroy());
   >
     <slot name="buttons" v-bind="editor">
       <div class="space-x-1 mb-2 flex">
-        <slot name="headers-dropdown" v-bind="editor">
+        <slot name="headers-buttons" v-bind="editor">
           <AntButton
             @click="
               editor
@@ -145,6 +149,6 @@ onUnmounted(() => editor?.value?.destroy());
       </div>
     </slot>
 
-    <EditorContent :editor="editor" v-model="_data" />
+    <EditorContent :editor="editor" />
   </div>
 </template>

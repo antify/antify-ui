@@ -4,6 +4,31 @@ import { ref } from 'vue';
 export default {
   title: 'Components/Forms/Ant Select',
   component: AntSelect,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    id: {
+      description: 'Id for select-field and label.',
+      table: {
+        defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
+      },
+    },
+    label: {
+      description:
+        'The main label for the select-field<br>can also be set via the default slot.',
+    },
+    options: {
+      description: 'List of SelectOptions',
+      table: {
+        type: {
+          summary: 'SelectOption[]',
+          detail: 'type SelectOption = {label: string; value: string;}',
+        },
+      },
+    },
+    value: {
+      description: 'The reactive value of the select-field',
+    },
+  },
 };
 
 const Template = (args: any) => ({
@@ -27,7 +52,6 @@ export const Primary = Template.bind({});
 Primary.args = {
   id: 'select-id-123456789',
   label: 'Select',
-  placeholder: 'Select placeholder',
   options: [
     {
       label: 'Option 1',
@@ -55,7 +79,6 @@ export const NoLabel = Template.bind({});
 // @ts-ignore
 NoLabel.args = {
   id: 'select-id-1234567891',
-  placeholder: 'Select placeholder',
   options: [
     {
       label: 'Option 1',

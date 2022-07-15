@@ -34,17 +34,6 @@ defineProps<{
             >
               {{ userName }}
             </p>
-
-            <p
-              class="
-                text-sm
-                font-medium
-                text-gray-500
-                group-hover:text-gray-700
-              "
-            >
-              <slot name="viewProfile" />
-            </p>
           </slot>
         </div>
       </div>

@@ -4,6 +4,41 @@ import { ref } from 'vue';
 export default {
   title: 'Components/Forms/Ant Checkbox',
   component: AntCheckbox,
+  argTypes: {
+    id: {
+      description: 'The ID for the checkbox and label combination',
+      table: {
+        defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
+      },
+    },
+    value: {
+      description: 'The reactive value of the checkbox',
+    },
+    color: {
+      control: 'text',
+      table: { defaultValue: { summary: 'primary' } },
+      description: 'A tailwind css color definition',
+    },
+    label: {
+      description:
+        'The main label for the checkbox<br>(can be a slot or a property)<br>as a slot it gets an {id} as param to use in for',
+      table: { type: { summary: 'HTML|String' } },
+    },
+    description: {
+      description:
+        'Place for description<br>(can be a slot or a property)<br>as a slot it gets an {id} as param to use in id (for described-by prop)',
+      table: { type: { summary: 'HTML|String' } },
+    },
+    legend: {
+      description:
+        'Place for a sr-only legend<br>(can be a slot or a property)',
+      table: { type: { summary: 'HTML' } },
+    },
+    default: {
+      description: 'Slot that contains both label and description gets an {id}',
+      table: { type: { summary: 'HTML' } },
+    },
+  },
 };
 
 const Template = (args: any) => ({

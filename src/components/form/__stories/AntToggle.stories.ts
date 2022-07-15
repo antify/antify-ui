@@ -5,6 +5,29 @@ import { faX, faCheck } from '@fortawesome/free-solid-svg-icons';
 export default {
   title: 'Components/Forms/Ant Toggle',
   component: AntToggle,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    value: {
+      description: 'The reactive value of the toggle button',
+    },
+    id: {
+      description: 'Id for toggle button and label.',
+      table: {
+        defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
+      },
+    },
+    color: {
+      control: 'text',
+      table: { defaultValue: { summary: 'primary' } },
+      description: 'A tailwind css color definition',
+    },
+    default: {
+      description: 'Default slot is used to display label',
+    },
+    icon: {
+      description: 'Can be used to add a icon to the toggle button',
+    },
+  },
 };
 
 export const Simple = (args: any) => ({

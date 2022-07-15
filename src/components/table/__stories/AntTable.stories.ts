@@ -4,6 +4,60 @@ import { ROW_TYPES } from '../../../types/TableHeader.type';
 export default {
   title: 'Components/Table/Ant Table',
   component: AntTable,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    headers: {
+      description: 'List of header definitions',
+      table: {
+        type: {
+          summary: 'TableHeader',
+          detail: `type TableHeader = {
+        identifier: string;
+        headerClassList?: string;
+        rowClassList?: string;
+        title: string;
+        type: ROW_TYPES;
+        links?: {
+          href: string;
+          label: string;
+        }[];
+      }`,
+        },
+      },
+    },
+    data: {
+      description:
+        'List of rows to be displayed in the table. The properties of the elements need to be equal to the identifier of a table row for it to be displayed<br>They will be updated as they are beeing moved inside the table.',
+    },
+    afterRowContent: {
+      description:
+        'Slot to add custom elements to all cells. Gets {elem, header} as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+    beforeRowContent: {
+      description:
+        'Slot to add custom elements to all cells. Gets {elem, header} as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+    emptyState: {
+      description: 'Place for custom empty states.',
+      table: { type: { summary: 'HTML' } },
+    },
+    headerContent: {
+      description:
+        'Overwrite for the default header items. Gets header as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+    headerLastCell: {
+      description: 'Space to add cells to the header.',
+      table: { type: { summary: 'HTML' } },
+    },
+    rowLastCell: {
+      description:
+        'Space to add cells to all rows. Gets the current element as property.',
+      table: { type: { summary: 'HTML' } },
+    },
+  },
 };
 
 const Template = (args: any) => ({
@@ -15,7 +69,6 @@ const Template = (args: any) => ({
   <div class="h-96">
     <AntTable v-bind="args" >
       <template #emptyState>
-        <td colspan="100" class="w-full py-2 text-center text-gray-500 text-2xl italic">Nothing to see here jet!</td>
       </template>
     </AntTable>
   </div>

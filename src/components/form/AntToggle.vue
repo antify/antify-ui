@@ -14,9 +14,12 @@ const props =
   defineProps<{
     id?: string;
     value: boolean;
+    color?: string;
   }>();
 
 const _id = ref<string>(props.id || uuid.v4());
+const _color = ref<string>(props.color || 'primary');
+
 const _value = computed<boolean>({
   get: (): boolean => {
     return props.value;
@@ -44,9 +47,11 @@ const _value = computed<boolean>({
         ease-in-out
         duration-200
         focus:outline-none
-        focus:ring-2 focus:ring-offset-2 focus:ring-primary
+        focus:ring-2 focus:ring-offset-2
       "
-      :class="{ 'bg-primary': _value, 'bg-gray-200': !_value }"
+      :class="
+        (_value ? `bg-${_color}` : 'bg-gray-200') + ` focus:ring-${_color}`
+      "
       role="switch"
       aria-checked="false"
       :aria-labelledby="`${_id}-toggle`"

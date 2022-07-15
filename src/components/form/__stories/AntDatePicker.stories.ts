@@ -4,6 +4,23 @@ import { ref } from 'vue';
 export default {
   title: 'Components/Forms/Ant Date Picker',
   component: AntDatePicker,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    id: {
+      description: 'The ID for the Datepicker and label combination',
+      table: {
+        defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
+      },
+    },
+    value: {
+      control: 'none',
+      description: 'The reactive value of the date picker',
+    },
+    label: {
+      description:
+        'The main label for the checkbox<br>can also be set via the default slot',
+    },
+  },
 };
 
 export const Simple = (args: any) => ({

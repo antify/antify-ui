@@ -45,12 +45,7 @@ const _icon = ref<IconDefinition>(props.icon || faBullhorn);
             </span>
 
             <p class="ml-3 font-medium truncate" :class="`text-${_textColor}`">
-              <slot>
-                <span class="md:hidden"> We announced a new product! </span>
-                <span class="hidden md:inline">
-                  Big news! We're excited to announce a brand new product.
-                </span>
-              </slot>
+              <slot></slot>
             </p>
           </div>
 

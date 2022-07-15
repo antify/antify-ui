@@ -3,6 +3,19 @@ import AntTabs from '../AntTabs.vue';
 export default {
   title: 'Components/Layout/Ant Tabs',
   component: AntTabs,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    tabs: {
+      description: 'Array of "Tabs"',
+      table: {
+        type: {
+          summary: 'TabsType[]',
+          detail:
+            'type TabsType = {name: string; to: RouteLocationRaw; current: boolean;}',
+        },
+      },
+    },
+  },
 };
 
 const Template = (args: any) => ({

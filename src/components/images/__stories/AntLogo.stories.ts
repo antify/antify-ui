@@ -3,10 +3,24 @@ import AntLogo from '../AntLogo.vue';
 export default {
   title: 'Components/Images/Ant Logo',
   component: AntLogo,
+  parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     size: {
-      control: { type: 'select' },
+      description: 'Sets the size of the logo',
+      control: { type: 'radio' },
       options: ['small', 'medium', 'large'],
+      table: { defaultValue: { summary: 'medium' } },
+    },
+    logoUrl: {
+      description: 'Url to the logo, not used if default slot is used.',
+    },
+    alt: {
+      description: 'Alt-tag for the logo, not used if default slot is used.',
+    },
+    default: {
+      description:
+        "Slot that overrides the default img-tag so you're able to use a svg or some different style of logo (height should be set to 100%)",
+      table: { type: { summary: 'HTML' } },
     },
   },
 };

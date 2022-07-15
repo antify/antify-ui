@@ -63,7 +63,7 @@ const onClick = (event: Event) => {
             :aria-current="tab.current ? 'page' : undefined"
             @click="onClick"
           >
-            <slot name="tabItem" v-bind="tab">{{ tab.name }}</slot>
+            {{ tab.name }}
           </div>
         </nav>
       </div>

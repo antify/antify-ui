@@ -8,6 +8,33 @@ import { SingleHeader } from '../../table/__stories/AntTable.stories';
 export default {
   title: 'Components/Layout/Ant Dual Content',
   component: AntDualContent,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    mainHead: {
+      description: 'Slot to set the main head area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    mainBody: {
+      description: 'Slot to set the main body area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    mainFooter: {
+      description: 'Slot to set the main footer area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    asideHead: {
+      description: 'Slot to set the aside head area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    asideBody: {
+      description: 'Slot to set the aside body area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    asideFooter: {
+      description: 'Slot to set the aside footer area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+  },
 };
 
 export const Simple = (args: any) => ({

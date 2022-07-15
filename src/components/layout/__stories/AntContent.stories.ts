@@ -7,6 +7,21 @@ import { WithImage } from '../../table/__stories/AntTable.stories';
 export default {
   title: 'Components/Layout/Ant Content',
   component: AntContent,
+  parameters: { controls: { sort: 'requiredFirst' } },
+  argTypes: {
+    head: {
+      description: 'Slot to set the head area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    body: {
+      description: 'Slot to set the body area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+    footer: {
+      description: 'Slot to set the footer area of the content',
+      tabel: { type: { summary: 'HTML' } },
+    },
+  },
 };
 
 const Template = (args: any) => ({

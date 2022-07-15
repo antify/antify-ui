@@ -15,7 +15,6 @@ const props =
   defineProps<{
     id?: string;
     label?: string;
-    placeholder?: string;
     options?: SelectOption[];
     value: string;
   }>();
@@ -33,15 +32,14 @@ const _value = computed({
 
 <template>
   <div>
-    <slot v-bind="{ id: _id }">
-      <label :for="_id" class="block text-sm font-medium text-gray-700">
-        <span>{{ label }}</span>
-      </label>
-    </slot>
+    <label :for="_id">
+      <slot>
+        <span class="block text-sm font-medium text-gray-700">{{ label }}</span>
+      </slot>
+    </label>
 
     <select
       :id="_id"
-      :placeholder="placeholder"
       v-model="_value"
       class="
         mt-1

@@ -5,9 +5,21 @@ export default {
   title: 'Components/Elements/Ant Badge',
   component: AntBadge,
   argTypes: {
-    mainBgColor: { control: 'text' },
-    secondaryBgColor: { control: 'text' },
-    textColor: { control: 'text' },
+    mainBgColor: {
+      control: 'text',
+      table: { defaultValue: { summary: 'primary-light' } },
+      description: 'A tailwind css color definition',
+    },
+    secondaryBgColor: {
+      control: 'text',
+      table: { defaultValue: { summary: 'primary' } },
+      description: 'A tailwind css color definition',
+    },
+    textColor: {
+      control: 'text',
+      table: { defaultValue: { summary: 'white' } },
+      description: 'A tailwind css color definition',
+    },
     size: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
