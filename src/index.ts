@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import UUID from 'vue3-uuid';
 
 import AntButton from './components/buttons/AntButton.vue';
 import CreateButton from './components/buttons/CreateButton.vue';
@@ -8,6 +7,11 @@ import DeleteButton from './components/buttons/DeleteButton.vue';
 import AntDraggable from './components/dragDrop/AntDraggable.vue';
 import AntDropzone from './components/dragDrop/AntDropzone.vue';
 
+import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordField.vue';
+import AntPasswordWidget from './components/form/AntPasswordWidget/AntPasswordWidget.vue';
+import AntRadio from './components/form/AntRadioWidget/AntRadio.vue';
+import AntRadioWidget from './components/form/AntRadioWidget/AntRadioWidget.vue';
+import AntLoginWidget from './components/form/AntLoginWidget/AntLoginWidget.vue';
 import AntCheckbox from './components/form/AntCheckbox.vue';
 import AntDatePicker from './components/form/AntDatePicker.vue';
 import AntInput from './components/form/AntInput.vue';
@@ -29,6 +33,10 @@ import AntSidebar from './components/layout/AntSidebar.vue';
 import AntTabs from './components/layout/tabs/AntTabs.vue';
 import AntAccordionWidget from './components/layout/AntAccordionWidget/AntAccordionWidget.vue';
 import AntAccordionItem from './components/layout/AntAccordionWidget/AntAccordionItem.vue';
+import AntLoginLayout from './components/layout/AntLoginLayout.vue';
+import AntMediathek from './components/layout/AntMediathek/AntMediathek.vue';
+
+import AntMediathekItem from './components/layout/AntMediathek/AntMediathekItem.vue';
 
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
@@ -43,10 +51,8 @@ import AntBanner from './components/elements/AntBanner.vue';
 
 import AntNotFound from './components/pages/AntNotFound.vue';
 
-export const Plugin = {
+export const AntifyUi = {
   install(vue: any) {
-    // vue.use(UUID);
-
     vue.component(AntButton.name, AntButton);
     vue.component(CreateButton.name, CreateButton);
     vue.component(DeleteButton.name, DeleteButton);
@@ -79,7 +85,15 @@ export const Plugin = {
     vue.component(AntBanner.name, AntBanner);
     vue.component(AntAccordionWidget.name, AntAccordionWidget);
     vue.component(AntAccordionItem.name, AntAccordionItem);
+    vue.component(AntLoginLayout.name, AntLoginLayout);
     vue.component(AntNotFound.name, AntNotFound);
+    vue.component(AntPasswordField.name, AntPasswordField);
+    vue.component(AntPasswordWidget.name, AntPasswordWidget);
+    vue.component(AntLoginWidget.name, AntLoginWidget);
+    vue.component(AntRadio.name, AntRadio);
+    vue.component(AntRadioWidget.name, AntRadioWidget);
+    vue.component(AntMediathek.name, AntMediathek);
+    vue.component(AntMediathekItem.name, AntMediathekItem);
 
     vue.component('fa-icon', FontAwesomeIcon);
   },
@@ -119,5 +133,13 @@ export {
   AntBanner,
   AntAccordionWidget,
   AntAccordionItem,
+  AntLoginLayout,
   AntNotFound,
+  AntPasswordField,
+  AntPasswordWidget,
+  AntLoginWidget,
+  AntRadio,
+  AntRadioWidget,
+  AntMediathek,
+  AntMediathekItem,
 };

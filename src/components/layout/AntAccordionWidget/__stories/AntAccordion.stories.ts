@@ -4,7 +4,7 @@ import AntAccordionItem from '../AntAccordionItem.vue';
 export default {
   title: 'Components/Layout/Ant Accordion',
   component: AntAccordionWidget,
-  subComponent: AntAccordionItem,
+  subcomponents: { AntAccordionItem },
 };
 
 const Template = (args: any) => ({

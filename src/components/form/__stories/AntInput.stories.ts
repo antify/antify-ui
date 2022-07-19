@@ -39,7 +39,15 @@ export default {
     },
     validator: {
       description:
-        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
+        'A function that provides a validator. This validator is called on blur',
+    },
+    isError: {
+      description:
+        'Sets the error state of the input field without giving a list of errors.',
+    },
+    errors: {
+      description: 'A list of error messages for the input field to display',
+      table: { type: { summary: 'string[]' } },
     },
     type: {
       description: 'The input type',
@@ -169,4 +177,5 @@ Validated.args = {
     if (!value) return ['value can not be empty'];
     if (value.length < 3) return ['value is to short'];
   },
+  errors: ['value can not be empty'],
 };

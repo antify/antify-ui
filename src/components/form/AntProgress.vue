@@ -1,4 +1,3 @@
-import { uuid } from 'vue3-uuid'; import { ref, computed } from 'vue';
 <script lang="ts">
 export default {
   name: 'AntProgress',
@@ -8,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { uuid } from 'vue3-uuid';
+import { v4 } from 'uuid';
 
 const props =
   defineProps<{
@@ -19,7 +18,7 @@ const props =
     color?: string;
   }>();
 
-const _id = ref<string>(props.id ? props.id : uuid.v4());
+const _id = ref<string>(props.id ? props.id : v4());
 const _value = ref<number>(props.value || 0);
 const _fullValue = ref<number>(props.fullValue || 100);
 const _color = ref<string>(props.color || 'primary');

@@ -54,7 +54,7 @@ export default {
     },
     passwordValidator: {
       description:
-        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
+        'A function that provides a validator. This validator is called on blur',
       table: {
         defaultValue: {
           summary: 'Function',
@@ -63,9 +63,25 @@ export default {
         },
       },
     },
+    isErrorPassword: {
+      description:
+        'Sets the error state of the input field without giving a list of errors.',
+    },
+    isErrorPasswordRepeat: {
+      description:
+        'Sets the error state of the input field without giving a list of errors.',
+    },
+    errorsPassword: {
+      description: 'A list of error messages for the input field to display',
+      table: { type: { summary: 'string[]' } },
+    },
+    errorsPasswordRepeat: {
+      description: 'A list of error messages for the input field to display',
+      table: { type: { summary: 'string[]' } },
+    },
     passwordRepeatValidator: {
       description:
-        'A function that provides a validator. The function gets the current value from the input and expects back an array of strings. Those strings will then be displayed as errors.',
+        'A function that provides a validator. This validator is called on blur',
       table: {
         defaultValue: {
           summary: 'Function',
@@ -81,11 +97,20 @@ const Template = (args: any) => ({
   components: { AntPasswordWidget },
   setup() {
     const password = ref<string>('');
+    const errorsPassword = ref<string[]>([]);
+    const errorsPasswordRepeat = ref<string[]>([]);
 
-    return { args, password };
+    return { args, password, errorsPassword, errorsPasswordRepeat };
   },
-  template:
-    '<div class="m-2"><AntPasswordWidget v-bind="args" v-model:password="password"/></div>',
+  template: `
+    <div class="m-2">
+      <AntPasswordWidget
+        v-bind="args" 
+        v-model:password="password"
+        v-model:errorsPassword="errorsPassword"
+        v-model:errorsPasswordRepeat="errorsPasswordRepeat"
+      />
+    </div>`,
 });
 
 export const Primary = Template.bind({});

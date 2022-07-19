@@ -6,7 +6,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { uuid } from 'vue3-uuid';
+import { v4 } from 'uuid';
 import { ref, computed } from 'vue';
 
 const emit = defineEmits(['update:groupValue']);
@@ -20,7 +20,7 @@ const props =
     value: string;
   }>();
 
-const _id = ref(props.id ? props.id : uuid.v4());
+const _id = ref(props.id ? props.id : v4());
 const _color = ref(props.color ? props.color : 'primary');
 
 const _groupValue = computed({

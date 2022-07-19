@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { uuid } from 'vue3-uuid';
+import { v4 } from 'uuid';
 
 const emit = defineEmits(['update:value']);
 
@@ -21,7 +21,7 @@ const props =
     color?: string;
   }>();
 
-const _id = ref(props.id ? props.id : uuid.v4());
+const _id = ref(props.id ? props.id : v4());
 const _color = ref(props.color ? props.color : 'primary');
 
 const _value = computed({
