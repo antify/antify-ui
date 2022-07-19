@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { uuid } from 'vue3-uuid';
+import { v4 } from 'uuid';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
@@ -20,7 +20,7 @@ const props =
     value: Date;
   }>();
 
-const _id = ref(props.id ? props.id : uuid.v4());
+const _id = ref(props.id ? props.id : v4());
 
 const _value = computed({
   get: () => {

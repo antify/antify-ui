@@ -4,19 +4,30 @@ export default {
 };
 </script>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import AntButton from '../../buttons/AntButton.vue';
+
+defineProps<{
+  errors?: string[];
+}>();
+</script>
 
 <template>
   <form class="mt-8 space-y-6">
     <input type="hidden" name="remember" value="true" />
 
-    <div class="rounded-md shadow-sm -space-y-px">
-      <div>
-        <slot name="emailField"></slot>
+    <div>
+      <div class="rounded-md shadow-sm -space-y-px">
+        <slot name="emailField"> </slot>
+        <slot name="passwordField"> </slot>
       </div>
 
-      <div>
-        <slot name="passwordField"></slot>
+      <div
+        v-for="(error, index) in errors || []"
+        :key="`login-error-${index}`"
+        class="text-red-600 text-sm"
+      >
+        <slot name="error" v-bind="{ error }">{{ error }}</slot>
       </div>
     </div>
 

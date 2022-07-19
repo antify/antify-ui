@@ -6,7 +6,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { uuid } from 'vue3-uuid';
+import { v4 } from 'uuid';
 import { SelectOption } from '../../types/SelectOption.type';
 import { ref, computed } from 'vue';
 
@@ -19,7 +19,7 @@ const props =
     value: string;
   }>();
 
-const _id = ref(props.id || uuid.v4());
+const _id = ref(props.id || v4());
 const _value = computed({
   get: () => {
     return props.value;

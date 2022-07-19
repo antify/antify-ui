@@ -1,10 +1,18 @@
 import AntLoginWidget from '../AntLoginWidget.vue';
+import AntInput from '../../AntInput.vue';
+import AntPasswordField from '../../AntPasswordWidget/AntPasswordField.vue';
+import AntButton from '../../../buttons/AntButton.vue';
+import { ref } from 'vue';
 
 export default {
   title: 'Components/Forms/Ant Login Widget',
   component: AntLoginWidget,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    errors: {
+      description: 'List of errors',
+      table: { type: { summary: 'string[]' }, defaultValue: { summary: '[]' } },
+    },
     emailField: {
       description: 'Slot for Login/Name Input',
       table: { type: { summary: 'HTML' } },
@@ -19,21 +27,100 @@ export default {
       table: { type: { summary: 'HTML' } },
     },
     submitButton: {
-      description: 'Slot for button',
-      table: { type: { summary: 'HTML' } },
+      description: 'Slot for button.',
+      table: {
+        type: { summary: 'HTML' },
+        defaultValue: {
+          summary: 'Button',
+          detail: 'Default "Sign in" button with submit logic.',
+        },
+      },
+    },
+    error: {
+      description:
+        'Slot for overwriting the error style. Gets the error to display.',
+      table: { type: { summary: 'HTML|string' } },
     },
   },
 };
 
 export const Simple = (args: any) => ({
-  components: { AntLoginWidget },
+  components: { AntLoginWidget, AntInput, AntPasswordField, AntButton },
   setup() {
-    return { args };
+    const formData = ref({
+      email: '',
+      password: '',
+    });
+    return { args, formData };
   },
   template: `
-  <AntLoginWidget v-bind="args">
-    <template #emailField>
+  <div class="m-2">
+    <AntLoginWidget v-bind="args">
+      <template #emailField>
+        <div data-cy="email">
+          <AntInput
+            v-model:value="formData.email"
+            id="adminadntloginid"
+            class="rounded-none relative rounded-t-md focus:z-10"
+            placeholder="Email"
+          />
+        </div>
+      </template>
 
-    </template>
-  </AntLoginWidget>`,
+      <template #passwordField>
+        <div data-cy="password">
+          <AntPasswordField
+            v-model:password="formData.password"
+            class="rounded-none rounded-b-md focus:z-10"
+            id="password-input-login-page"
+            placeholder="password"
+            :show-password="true"
+          />
+        </div>
+      </template>
+    </AntLoginWidget>
+  </div>`,
+});
+
+export const WithErrors = (args: any) => ({
+  components: { AntLoginWidget, AntInput, AntPasswordField, AntButton },
+  setup() {
+    const formData = ref({
+      email: 'test@gmailde',
+      password: '',
+    });
+
+    const errors = ['E-Mail is not valid', 'Password can not be empty'];
+
+    return { args, formData, errors };
+  },
+  template: `
+  <div class="m-2">
+    <AntLoginWidget v-bind="args" :errors="errors">
+      <template #emailField>
+        <div data-cy="email">
+          <AntInput
+            v-model:value="formData.email"
+            id="adminadntloginid"
+            class="rounded-none relative rounded-t-md focus:z-10"
+            placeholder="Email"
+            :is-error="true"
+          />
+        </div>
+      </template>
+
+      <template #passwordField>
+        <div data-cy="password">
+          <AntPasswordField
+            v-model:password="formData.password"
+            class="rounded-none rounded-b-md focus:z-10"
+            id="password-input-login-page"
+            placeholder="password"
+            :show-password="true"
+            :is-error="true"
+          />
+        </div>
+      </template>
+    </AntLoginWidget>
+  </div>`,
 });

@@ -34,6 +34,9 @@ import AntTabs from './components/layout/tabs/AntTabs.vue';
 import AntAccordionWidget from './components/layout/AntAccordionWidget/AntAccordionWidget.vue';
 import AntAccordionItem from './components/layout/AntAccordionWidget/AntAccordionItem.vue';
 import AntLoginLayout from './components/layout/AntLoginLayout.vue';
+import AntMediathek from './components/layout/AntMediathek/AntMediathek.vue';
+
+import AntMediathekItem from './components/layout/AntMediathek/AntMediathekItem.vue';
 
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
@@ -48,7 +51,7 @@ import AntBanner from './components/elements/AntBanner.vue';
 
 import AntNotFound from './components/pages/AntNotFound.vue';
 
-export const Plugin = {
+export const AntifyUi = {
   install(vue: any) {
     vue.component(AntButton.name, AntButton);
     vue.component(CreateButton.name, CreateButton);
@@ -89,6 +92,8 @@ export const Plugin = {
     vue.component(AntLoginWidget.name, AntLoginWidget);
     vue.component(AntRadio.name, AntRadio);
     vue.component(AntRadioWidget.name, AntRadioWidget);
+    vue.component(AntMediathek.name, AntMediathek);
+    vue.component(AntMediathekItem.name, AntMediathekItem);
 
     vue.component('fa-icon', FontAwesomeIcon);
   },
@@ -135,4 +140,6 @@ export {
   AntLoginWidget,
   AntRadio,
   AntRadioWidget,
+  AntMediathek,
+  AntMediathekItem,
 };

@@ -7,7 +7,7 @@ export default {
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { faEye, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { uuid } from 'vue3-uuid';
+import { v4 } from 'uuid';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 const emit = defineEmits(['update:password']);
@@ -27,7 +27,7 @@ const props =
     errors?: string[];
   }>();
 
-const _id = ref(props.id || uuid.v4());
+const _id = ref(props.id || v4());
 
 const _password = computed({
   get: () => {
