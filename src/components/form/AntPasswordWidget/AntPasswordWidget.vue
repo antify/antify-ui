@@ -8,9 +8,8 @@ export default {
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import AntPasswordField from './AntPasswordField.vue';
-import { v4 } from 'uuid';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
-import { EventEmitter } from '@tiptap/core/dist/packages/core/src/EventEmitter';
+import { generateId } from '../../../utils/helper';
 
 const emit = defineEmits([
   'update:password',
@@ -38,7 +37,7 @@ const props =
     isErrorPasswordRepeat?: boolean;
   }>();
 
-const _id = ref(props.id || v4());
+const _id = ref(props.id ||  generateId(40));
 
 const _errorsPassword = computed<string[]>({
   get: () => {

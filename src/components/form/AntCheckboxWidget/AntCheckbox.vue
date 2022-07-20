@@ -1,19 +1,19 @@
 <script lang="ts">
 export default {
   name: 'AntCheckbox',
-  inheritAttrs: false,
 };
 </script>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { v4 } from 'uuid';
+import { generateId } from '../../../utils/helper';
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:checked']);
 
 const props =
   defineProps<{
-    value: boolean;
+    checked: boolean | any[];
+    value?: string;
     id?: string;
     label?: string;
     description?: string;
@@ -21,21 +21,21 @@ const props =
     color?: string;
   }>();
 
-const _id = ref(props.id ? props.id : v4());
+const _id = ref(props.id ? props.id : generateId(40));
 const _color = ref(props.color ? props.color : 'primary');
 
-const _value = computed({
+const _checked = computed({
   get: () => {
-    return props.value;
+    return props.checked;
   },
   set: (val) => {
-    emit('update:value', val);
+    emit('update:checked', val);
   },
 });
 </script>
 
 <template>
-  <fieldset class="space-y-5">
+  <fieldset>
     <slot name="legend">
       <legend class="sr-only">{{ legend }}</legend>
     </slot>
@@ -44,9 +44,11 @@ const _value = computed({
       <div class="flex items-center h-5">
         <input
           type="checkbox"
+          v-bind="$attrs"
           :id="_id"
           :aria-describedby="`${_id}-description`"
-          v-model="_value"
+          v-model="_checked"
+          :value="value"
           :class="`focus:ring-${_color} h-4 w-4 text-${_color} border-gray-300 rounded transition-all duration-500`"
         />
       </div>

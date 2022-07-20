@@ -1,7 +1,7 @@
 import AntProgress from '../AntProgress.vue';
 
 export default {
-  title: 'Components/Forms/Ant Progress',
+  title: 'Components/Elements/Ant Progress',
   component: AntProgress,
   argTypes: {
     id: {

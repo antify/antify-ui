@@ -1,7 +1,6 @@
 <script lang="ts">
 export default {
   name: 'AntLayout',
-  inheritAttrs: false,
 };
 </script>
 

@@ -19,6 +19,9 @@ const props =
   defineProps<{
     data?: string;
     label?: string;
+    validator?: Function;
+    errors?: string[];
+    isError?: boolean;
   }>();
 
 const _data = computed({
@@ -43,6 +46,10 @@ const editor = ref(
     onUpdate: ({ editor }) => {
       const state = editor.getHTML();
       _data.value = state;
+
+      if (props.validator && typeof props.validator === 'function') {
+        props.validator(_data.value);
+      }
     },
   })
 );
@@ -52,7 +59,9 @@ onUnmounted(() => editor?.value?.destroy());
 
 <template>
   <slot>
-    <div v-if="label" class="mb-2">{{ label }}</div>
+    <div v-if="label" class="block text-sm font-medium text-gray-700 mb-2">
+      {{ label }}
+    </div>
   </slot>
 
   <div
@@ -149,6 +158,17 @@ onUnmounted(() => editor?.value?.destroy());
       </div>
     </slot>
 
-    <EditorContent :editor="editor" />
+    <EditorContent
+      :editor="editor"
+      v-bind="$attrs"
+      :class="{
+        'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
+          (errors && errors.length > 0) || isError,
+      }"
+    />
+
+    <slot name="errorList" v-bind="{ errors }">
+      <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+    </slot>
   </div>
 </template>

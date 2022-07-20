@@ -69,7 +69,7 @@ export const Table = (args: any) => ({
     </template>
 
     <template #body>
-      <AntTable class="h-screen" v-bind="args" />
+      <AntTable v-bind="args" />
     </template>
 
     <template #footer>

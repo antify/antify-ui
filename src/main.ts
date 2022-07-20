@@ -10,7 +10,4 @@ const router = createRouter({
   routes: [],
 });
 
-createApp(App)
-  .use(router)
-  .component('fa-icon', FontAwesomeIcon)
-  .mount('#app');
+createApp(App).use(router).component('fa-icon', FontAwesomeIcon).mount('#app');

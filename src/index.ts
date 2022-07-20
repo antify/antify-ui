@@ -7,15 +7,18 @@ import DeleteButton from './components/buttons/DeleteButton.vue';
 import AntDraggable from './components/dragDrop/AntDraggable.vue';
 import AntDropzone from './components/dragDrop/AntDropzone.vue';
 
+import AntForm from './components/form/AntForm.vue';
+import AntInputGroup from './components/form/AntInputGroup.vue';
 import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordField.vue';
 import AntPasswordWidget from './components/form/AntPasswordWidget/AntPasswordWidget.vue';
 import AntRadio from './components/form/AntRadioWidget/AntRadio.vue';
 import AntRadioWidget from './components/form/AntRadioWidget/AntRadioWidget.vue';
 import AntLoginWidget from './components/form/AntLoginWidget/AntLoginWidget.vue';
-import AntCheckbox from './components/form/AntCheckbox.vue';
+import AntCheckbox from './components/form/AntCheckboxWidget/AntCheckbox.vue';
+import AntCheckboxWidget from './components/form/AntCheckboxWidget/AntCheckboxWidget.vue';
 import AntDatePicker from './components/form/AntDatePicker.vue';
 import AntInput from './components/form/AntInput.vue';
-import AntProgress from './components/form/AntProgress.vue';
+import AntProgress from './components/elements/AntProgress.vue';
 import AntRichTextEditor from './components/form/AntRichTextEditor.vue';
 import AntSelect from './components/form/AntSelect.vue';
 import AntTextarea from './components/form/AntTextarea.vue';
@@ -51,6 +54,14 @@ import AntBanner from './components/elements/AntBanner.vue';
 
 import AntNotFound from './components/pages/AntNotFound.vue';
 
+// types
+import { ROW_TYPES, TableHeader } from './types/TableHeader.type';
+import { NavItem } from './types/NavItem.type';
+import { SelectOption } from './types/SelectOption.type';
+import { RadioButton } from './types/RadioButton.type';
+import { TabsType } from './types/Tabs.type';
+import { Checkbox } from './types/Checkbox.type';
+
 export const AntifyUi = {
   install(vue: any) {
     vue.component(AntButton.name, AntButton);
@@ -58,7 +69,10 @@ export const AntifyUi = {
     vue.component(DeleteButton.name, DeleteButton);
     vue.component(AntDraggable.name, AntDraggable);
     vue.component(AntDropzone.name, AntDropzone);
+    vue.component(AntForm.name, AntForm);
+    vue.component(AntInputGroup.name, AntInputGroup);
     vue.component(AntCheckbox.name, AntCheckbox);
+    vue.component(AntCheckboxWidget.name, AntCheckboxWidget);
     vue.component(AntDatePicker.name, AntDatePicker);
     vue.component(AntInput.name, AntInput);
     vue.component(AntProgress.name, AntProgress);
@@ -106,7 +120,10 @@ export {
   DeleteButton,
   AntDraggable,
   AntDropzone,
+  AntForm,
+  AntInputGroup,
   AntCheckbox,
+  AntCheckboxWidget,
   AntDatePicker,
   AntInput,
   AntProgress,
@@ -142,4 +159,12 @@ export {
   AntRadioWidget,
   AntMediathek,
   AntMediathekItem,
+  ROW_TYPES,
 };
+
+export type AntNavItem = NavItem;
+export type AntTableHeader = TableHeader;
+export type AntSelectOption = SelectOption;
+export type AntRadioButton = RadioButton;
+export type AntTabsType = TabsType;
+export type AntCheckbox = Checkbox;

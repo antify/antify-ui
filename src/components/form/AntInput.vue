@@ -8,7 +8,7 @@ export default {
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { ref, computed } from 'vue';
-import { v4 } from 'uuid';
+import { generateId } from '../../utils/helper';
 
 const emit = defineEmits(['update:value']);
 
@@ -27,11 +27,10 @@ const props =
     isError?: boolean;
   }>();
 
-const _id = ref(props.id ? props.id : v4());
+const _id = ref(props.id ? props.id : generateId(40));
 const _overlappingLabel = ref(
   props.overlappingLabel ? props.overlappingLabel : false
 );
-const _errors = ref(props.errors || []);
 
 const content = computed<string>({
   get: () => {
@@ -52,7 +51,7 @@ const validate = () => {
 <template>
   <div class="relative">
     <label
-      v-if="label"
+      v-if="label || $slots['label']"
       :for="_id"
       :class="{
         'absolute -top-2 left-2 -mt-px bg-white z-50': _overlappingLabel,
@@ -90,10 +89,10 @@ const validate = () => {
         :type="type"
         :placeholder="placeholder || label"
         :aria-describedby="`${_id}-description`"
-        :aria-invalid="_errors.length > 0 || isError"
+        :aria-invalid="(errors && errors.length > 0) || isError"
         :class="{
           'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
-            _errors.length > 0 || isError,
+            (errors && errors.length > 0) || isError,
           'pl-10': leadingIcon,
         }"
         class="
@@ -118,7 +117,7 @@ const validate = () => {
 
       <slot name="errorIcon">
         <div
-          v-if="_errors.length > 0 || isError"
+          v-if="(errors && errors.length > 0) || isError"
           class="
             absolute
             inset-y-0
@@ -129,7 +128,7 @@ const validate = () => {
             pointer-events-none
             z-10
           "
-          :title="_errors[0]"
+          :title="errors && errors[0]"
         >
           <fa-icon
             :icon="faCircleExclamation"
@@ -142,12 +141,14 @@ const validate = () => {
   </div>
 
   <div
-    v-if="description || (_errors && _errors.length > 0)"
+    v-if="description || (errors && errors.length > 0)"
     class="mt-2 text-sm text-gray-500"
     :id="`${_id}-description`"
   >
-    <template v-if="_errors && _errors.length > 0">
-      <div v-for="error in _errors" class="text-red-600">{{ error }}</div>
+    <template v-if="errors && errors.length > 0">
+      <slot name="errorList" v-bind="{ errors }">
+        <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+      </slot>
     </template>
 
     <template v-else>

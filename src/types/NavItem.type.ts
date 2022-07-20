@@ -6,4 +6,5 @@ export type NavItem = {
   route?: RouteLocationRaw;
   active: Boolean;
   subItems?: NavItem[];
+  clickHandler?: (payload: MouseEvent) => void;
 };

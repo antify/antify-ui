@@ -14,7 +14,7 @@ export default {
       control: { type: 'radio' },
       options: ['small', 'medium', 'large'],
       description: 'Defines the size of the button',
-      defaultValue: 'medium',
+      table: { defaultValue: { summary: 'medium' } },
     },
     icon: {
       control: { type: 'none' },
