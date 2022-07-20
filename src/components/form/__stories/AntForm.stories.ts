@@ -42,7 +42,7 @@ export const Simple = (args: any) => ({
 
         <div class="w-full">
           <AntInput v-model:value="value" label="Input 3"/>
-        <div>
+        </div>
       </AntInputGroup>
 
       <div class="w-full"><AntInput v-model:value="value" label="Input 4"/></div>
