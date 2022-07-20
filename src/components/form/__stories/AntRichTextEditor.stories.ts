@@ -5,6 +5,10 @@ export default {
   title: 'Components/Forms/Ant Rich Text Editor',
   component: AntRichTextEditor,
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be given to the EditorContent from <a href="https://www.npmjs.com/package/%40tiptap%2Fvue-3">@tiptap/vue-3</a>.',
+    },
     data: {
       description: 'The value diplayed inside the Editor',
       table: {

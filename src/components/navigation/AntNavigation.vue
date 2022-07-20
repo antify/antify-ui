@@ -1,7 +1,6 @@
 <script lang="ts">
 export default {
   name: 'AntNavigation',
-  inheritAttrs: false,
 };
 </script>
 

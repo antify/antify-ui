@@ -8,6 +8,10 @@ export default {
   parameters: { controls: { sort: 'requiredFirst' } },
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the button directly. This way you can access the default button events.',
+    },
     backgroundColor: { control: 'color' },
     label: {
       description:

@@ -6,6 +6,10 @@ export default {
   component: AntDatePicker,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes given to this will be forwarded to the vue datepicker directly. As well as all the default slots can be accessed from outside (See <a href="https://www.npmjs.com/package/%40vuepic%2Fvue-datepicker">@vuepic/vue-datepicker</a> for more details)',
+    },
     id: {
       description: 'The ID for the Datepicker and label combination',
       table: {

@@ -27,7 +27,7 @@ const props =
     errors?: string[];
   }>();
 
-const _id = ref(props.id ||  generateId(40));
+const _id = ref(props.id || generateId(40));
 
 const _password = computed({
   get: () => {
@@ -101,6 +101,7 @@ const hasError = computed(() => {
 
     <input
       v-model="_password"
+      v-bind="$attrs"
       :id="_id"
       :type="useType"
       :placeholder="placeholder || label"
@@ -126,7 +127,6 @@ const hasError = computed(() => {
       }"
       :aria-describedby="`${id}-description`"
       :aria-invalid="hasError"
-      v-bind="$attrs"
       @blur="validate"
     />
 

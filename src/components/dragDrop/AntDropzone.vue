@@ -1,8 +1,6 @@
-import { onMounted, ref } from 'vue';
 <script lang="ts">
 export default {
   name: 'AntDropzone',
-  inheritAttrs: false,
 };
 </script>
 

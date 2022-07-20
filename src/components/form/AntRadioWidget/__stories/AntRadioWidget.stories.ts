@@ -6,6 +6,10 @@ export default {
   component: AntRadioWidget,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to all radio-buttons. This way you can access the default input-field events.',
+    },
     default: {
       description: 'Override for label and description',
       table: { type: { summary: 'HTML' } },

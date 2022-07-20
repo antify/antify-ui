@@ -6,6 +6,10 @@ export default {
   component: AntCheckbox,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the checkbox field. This way you can access the default input-field events.',
+    },
     id: {
       description: 'The ID for the checkbox and label combination',
       table: {

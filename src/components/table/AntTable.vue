@@ -1,6 +1,7 @@
 <script lang="ts">
 export default {
   name: 'AntTable',
+  inheritAttrs: false,
 };
 </script>
 
@@ -27,7 +28,10 @@ defineProps<{
               overflow-x-auto overflow-y-auto
             "
           >
-            <table class="min-w-full divide-y divide-gray-300 max-h-full">
+            <table
+              v-bind="$attrs"
+              class="min-w-full divide-y divide-gray-300 max-h-full"
+            >
               <thead class="bg-gray-50 sticky top-0 border-b">
                 <tr class="">
                   <th

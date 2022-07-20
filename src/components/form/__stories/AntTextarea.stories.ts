@@ -6,6 +6,10 @@ export default {
   component: AntTextarea,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the textarea field. This way you can access the default textarea-field events.',
+    },
     value: {
       description: 'The reactive value of the textarea',
     },

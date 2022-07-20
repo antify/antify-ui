@@ -7,6 +7,10 @@ export default {
   component: AntInput,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes given to this will be forwarded to the input-field directly. For example if you want to react on the change-Event from the input you can just do so. See the "CustomEventHandlers" Example for details.',
+    },
     id: {
       description: 'The ID for the input and label combination',
       table: {
@@ -179,3 +183,21 @@ Validated.args = {
   },
   errors: ['value can not be empty'],
 };
+
+export const CustomEventHandlers = (args: any) => ({
+  components: { AntInput },
+  setup() {
+    const value = ref('');
+    args.label = 'Custom blur-event handler';
+    args.placeholder = 'Edit me';
+    args.description =
+      'Adds to the default blur-event handler. Be carful with preventDefault because this could destroy the default behaviour of the component.';
+
+    const input = (event: FocusEvent) => {
+      window.alert('Hello World: ' + value.value);
+    };
+
+    return { args, input, value };
+  },
+  template: `<div class="m-2"><AntInput v-bind="args" v-model:value="value" @blur="input"/></div>`,
+});

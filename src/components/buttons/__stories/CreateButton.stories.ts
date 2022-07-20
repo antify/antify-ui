@@ -6,6 +6,10 @@ export default {
   component: CreateButton,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the button directly. This way you can access the default button events.',
+    },
     backgroundColor: { control: 'color' },
     label: {
       description:

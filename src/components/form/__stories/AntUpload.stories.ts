@@ -7,6 +7,10 @@ export default {
   component: AntUpload,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the upload field. This way you can access the default input-field events.',
+    },
     icon: {
       description:
         'Slot to add icon to the upload field, can also be set as property',

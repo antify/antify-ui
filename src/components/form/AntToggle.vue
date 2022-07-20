@@ -17,7 +17,7 @@ const props =
     color?: string;
   }>();
 
-const _id = ref<string>(props.id ||  generateId(40));
+const _id = ref<string>(props.id || generateId(40));
 const _color = ref<string>(props.color || 'primary');
 
 const _value = computed<boolean>({
@@ -33,6 +33,7 @@ const _value = computed<boolean>({
 <template>
   <div class="flex items-center">
     <button
+      v-bind="$attrs"
       type="button"
       class="
         relative

@@ -6,22 +6,27 @@ export default {
   component: AntTable,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the table element.',
+    },
     headers: {
       description: 'List of header definitions',
       table: {
         type: {
           summary: 'TableHeader',
-          detail: `type TableHeader = {
-        identifier: string;
-        headerClassList?: string;
-        rowClassList?: string;
-        title: string;
-        type: ROW_TYPES;
-        links?: {
-          to: string;
-          label: string;
-        }[];
-      }`,
+          detail: `
+            type TableHeader = {
+              identifier: string;
+              headerClassList?: string;
+              rowClassList?: string;
+              title: string;
+              type: ROW_TYPES;
+              links?: {
+                to: string;
+                label: string;
+              }[];
+            }`,
         },
       },
     },

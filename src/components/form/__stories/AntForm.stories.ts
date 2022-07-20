@@ -9,6 +9,10 @@ export default {
   component: AntForm,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes given to this will be forwarded to the form directly. So you will get all the events here that the form normally gets.',
+    },
     default: {
       description: 'Slot for the formular',
       table: { type: { summary: 'HTML' } },

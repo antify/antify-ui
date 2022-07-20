@@ -37,7 +37,7 @@ const props =
     isErrorPasswordRepeat?: boolean;
   }>();
 
-const _id = ref(props.id ||  generateId(40));
+const _id = ref(props.id || generateId(40));
 
 const _errorsPassword = computed<string[]>({
   get: () => {
@@ -109,6 +109,7 @@ const _password = computed<string>({
     <div class="mt-1 relative">
       <AntPasswordField
         v-model:password="_password"
+        v-bind="$attrs"
         :id="_id"
         :label="label"
         :placeholder="placeholder"
@@ -123,6 +124,7 @@ const _password = computed<string>({
 
       <AntPasswordField
         v-model:password="repeatPassword"
+        v-bind="$attrs"
         :id="`${_id}-password-repeat`"
         :label="repeatLabel"
         :placeholder="repeatPlaceholder"
