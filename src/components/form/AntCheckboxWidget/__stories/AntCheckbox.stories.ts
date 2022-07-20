@@ -2,8 +2,9 @@ import AntCheckbox from '../AntCheckbox.vue';
 import { ref } from 'vue';
 
 export default {
-  title: 'Components/Forms/Ant Checkbox',
+  title: 'Components/Forms/Checkbox/Ant Checkbox',
   component: AntCheckbox,
+  parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     id: {
       description: 'The ID for the checkbox and label combination',
@@ -11,8 +12,11 @@ export default {
         defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
       },
     },
+    checked: {
+      description: 'The reactive checked state of the checkbox',
+    },
     value: {
-      description: 'The reactive value of the checkbox',
+      description: 'The value of the checkbox',
     },
     color: {
       control: 'text',
@@ -49,7 +53,7 @@ const Template = (args: any) => ({
     return { args, value };
   },
   template: `<div class="m-2">
-    <AntCheckbox v-bind="args" v-model:value="value"/>
+    <AntCheckbox v-bind="args" v-model:checked="value"/>
     <span class="text-sm text-gray-500">Reactive value: {{value}}</span>
   </div>`,
 });

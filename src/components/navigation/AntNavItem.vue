@@ -25,11 +25,13 @@ const openSubItemMenu = () => {
   <component
     :is="navItem.route ? 'router-link' : 'div'"
     :to="navItem.route"
+    @click="navItem.clickHandler"
     class="group grid px-2 py-2 text-base font-medium rounded-md"
     :class="{
       'text-gray-600 hover:bg-gray-50 hover:text-gray-900': !navItem.active,
       'bg-gray-100 text-gray-900': navItem.active,
       'grid-cols-2': navItem.subItems,
+      'cursor-pointer': navItem.clickHandler,
     }"
   >
     <div class="flex">

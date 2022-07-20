@@ -6,8 +6,8 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { v4 } from 'uuid';
 import { ref, computed } from 'vue';
+import { generateId } from '../../utils/helper';
 
 const emit = defineEmits(['update:value']);
 const props =
@@ -18,7 +18,7 @@ const props =
     placeholder?: string;
   }>();
 
-const _id = ref(props.id || v4());
+const _id = ref(props.id || generateId(40));
 const _value = computed({
   get: () => {
     return props.value;

@@ -7,9 +7,9 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { v4 } from 'uuid';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { generateId } from '../../utils/helper';
 
 const emit = defineEmits(['update:value']);
 
@@ -20,7 +20,7 @@ const props =
     value: Date;
   }>();
 
-const _id = ref(props.id ? props.id : v4());
+const _id = ref(props.id ? props.id : generateId(40));
 
 const _value = computed({
   get: () => {

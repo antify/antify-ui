@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { v4 } from 'uuid';
+import { generateId } from '../../utils/helper';
 
 type UploadTarget = { target: any };
 type FileInfo = { src: string; fileName: string };
@@ -25,7 +25,7 @@ const props =
     showPreview?: boolean;
   }>();
 
-const _id = ref(props.id || v4());
+const _id = ref(props.id ||  generateId(40));
 const _acceptType = ref(props.acceptType || '*');
 
 const uploaded = ref<FileInfo>({

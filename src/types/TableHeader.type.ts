@@ -1,8 +1,10 @@
+import { RouteLocationRaw } from 'vue-router';
 export enum ROW_TYPES {
   TEXT,
   IMAGE,
   HTML,
   TEXT_WITH_LINKS,
+  SLOT,
 }
 
 export type TableHeader = {
@@ -12,7 +14,7 @@ export type TableHeader = {
   title: string;
   type: ROW_TYPES;
   links?: {
-    href: string;
+    to: RouteLocationRaw;
     label: string;
   }[];
 };

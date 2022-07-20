@@ -1,12 +1,11 @@
 <script lang="ts">
 export default {
   name: 'AntDualContent',
-  inheritAttrs: false,
 };
 </script>
 
 <template>
-  <div class="h-full flex">
+  <div class="h-screen max-h-screen flex overflow-hidden">
     <main
       class="
         h-screen
@@ -19,15 +18,31 @@ export default {
         md::order-last
       "
     >
-      <div class="border-b grow-0 shrink-0 basis-auto pl-10 md:pl-0">
+      <div
+        class="
+          bg-white
+          border-b
+          pl-10
+          md:pl-4
+          px-4
+          h-14
+          min-h-14
+          flex
+          justify-between
+          items-center
+        "
+      >
         <slot name="mainHead"></slot>
       </div>
 
-      <div class="grow shrink-0 overflow-y-auto basis-auto">
+      <div class="overflow-y-auto h-full">
         <slot name="mainBody"></slot>
       </div>
 
-      <div class="grow-0 shrink-0 basis-auto">
+      <div
+        v-if="$slots['mainFooter']"
+        class="flex justify-between bg-white px-4 py-3.5"
+      >
         <slot name="mainFooter"></slot>
       </div>
     </main>
@@ -47,15 +62,31 @@ export default {
         flex-col
       "
     >
-      <div class="border-b grow-0 shrink-0 basis-auto pl-10 md:pl-0">
+      <div
+        class="
+          bg-white
+          border-b
+          pl-10
+          md:pl-4
+          px-4
+          h-14
+          min-h-14
+          flex
+          justify-between
+          items-center
+        "
+      >
         <slot name="asideHead"></slot>
       </div>
 
-      <div class="grow shrink-0 overflow-y-auto basis-auto">
+      <div class="overflow-y-auto h-full">
         <slot name="asideBody"></slot>
       </div>
 
-      <div class="grow-0 shrink-0 basis-auto">
+      <div
+        v-if="$slots['asideFooter']"
+        class="flex justify-between bg-white px-4 py-3.5"
+      >
         <slot name="asideFooter"></slot>
       </div>
     </aside>

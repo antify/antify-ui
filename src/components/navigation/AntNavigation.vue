@@ -71,7 +71,7 @@ defineProps<{
       </slot>
     </div>
 
-    <div class="flex-shrink-0 flex items-center px-4 py-3 border-b w-full">
+    <div class="flex-shrink-0 flex items-center px-4 h-14 border-b w-full">
       <slot name="logo" />
     </div>
 

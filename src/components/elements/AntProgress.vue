@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { v4 } from 'uuid';
+import { generateId } from '../../utils/helper';
 
 const props =
   defineProps<{
@@ -18,7 +18,7 @@ const props =
     color?: string;
   }>();
 
-const _id = ref<string>(props.id ? props.id : v4());
+const _id = ref<string>(props.id ? props.id : generateId(40));
 const _value = ref<number>(props.value || 0);
 const _fullValue = ref<number>(props.fullValue || 100);
 const _color = ref<string>(props.color || 'primary');

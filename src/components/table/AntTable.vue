@@ -1,7 +1,6 @@
 <script lang="ts">
 export default {
   name: 'AntTable',
-  inheritAttrs: false,
 };
 </script>
 
@@ -28,9 +27,7 @@ defineProps<{
               overflow-x-auto overflow-y-auto
             "
           >
-            <table
-              class="min-w-full divide-y divide-gray-300 h-full max-h-full"
-            >
+            <table class="min-w-full divide-y divide-gray-300 max-h-full">
               <thead class="bg-gray-50 sticky top-0 border-b">
                 <tr class="">
                   <th
@@ -117,13 +114,17 @@ defineProps<{
                       >
                         <span v-if="index !== 0">&nbsp;|&nbsp;</span>
 
-                        <a
-                          :href="link.href"
+                        <router-link
+                          :to="link.to"
                           class="text-blue-600 hover:text-blue-800"
                         >
                           {{ link.label }}
-                        </a>
+                        </router-link>
                       </div>
+                    </div>
+
+                    <div v-else-if="header.type === ROW_TYPES.SLOT">
+                      <slot name="cellContent" v-bind="{ elem }"></slot>
                     </div>
 
                     <slot

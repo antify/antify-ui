@@ -234,12 +234,12 @@ const _data = computed(() => {
                       >
                         <span v-if="index !== 0">&nbsp;|&nbsp;</span>
 
-                        <a
-                          :href="link.href"
+                        <router-link
+                          :to="link.to"
                           class="text-blue-600 hover:text-blue-800"
                         >
                           {{ link.label }}
-                        </a>
+                        </router-link>
                       </div>
                     </div>
 
