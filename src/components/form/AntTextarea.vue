@@ -55,6 +55,8 @@ const _value = computed({
         sm:text-sm
         border-gray-300
         rounded-md
+        disabled:opacity-50
+        disabled:cursor-not-allowed
       "
     />
   </div>

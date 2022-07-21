@@ -164,6 +164,17 @@ LeadingIconAndOverlappingLabel.args = {
 };
 
 /**
+ * use with leading Icon and overlapping label.
+ */
+export const Disabled = Template.bind({});
+// @ts-ignore
+Disabled.args = {
+  value: 'test@email.de',
+  label: 'E-Mail',
+  disabled: true,
+};
+
+/**
  * Validation Icon.
  */
 export const Validated = Template.bind({});

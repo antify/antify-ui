@@ -27,7 +27,7 @@ const props =
     errors?: string[];
   }>();
 
-const _id = ref(props.id ||  generateId(40));
+const _id = ref(props.id || generateId(40));
 
 const _password = computed({
   get: () => {
@@ -118,6 +118,8 @@ const hasError = computed(() => {
         focus:ring-primary-light
         focus:border-primary-light
         sm:text-sm
+        disabled:opacity-50
+        disabled:cursor-not-allowed
       "
       :class="{
         'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':

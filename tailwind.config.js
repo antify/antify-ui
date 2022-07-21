@@ -3,7 +3,7 @@ module.exports = {
 	safelist: [
 		{
 			pattern:
-				/(bg|ring|text|border)-(slate|gray|zinc|neutral|stone|red|organe|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[1234567890]*/,
+				/(bg|ring|text|border)-(primary|secondary|slate|gray|zinc|neutral|stone|red|organe|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-([1234567890]*|light|dark)/,
 			variants: ['hover', 'focus', 'sm', 'md', 'lg', 'xl', '2xl'],
 		},
 	],

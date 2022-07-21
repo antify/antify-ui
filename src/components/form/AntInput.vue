@@ -111,6 +111,8 @@ const validate = () => {
           focus:ring-primary-light
           focus:border-primary-light
           sm:text-sm
+          disabled:opacity-50
+          disabled:cursor-not-allowed
         "
         @blur="validate"
       />
