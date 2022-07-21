@@ -77,7 +77,9 @@ onUnmounted(() => editor?.value?.destroy());
                 ? editor.chain().focus().toggleHeading({ level: 1 }).run()
                 : false
             "
-            :class="{ 'bg-gray-200': editor.isActive('heading', { level: 1 }) }"
+            :class="{
+              '!bg-gray-200': editor.isActive('heading', { level: 1 }),
+            }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="">H1</span>
@@ -89,7 +91,9 @@ onUnmounted(() => editor?.value?.destroy());
                 ? editor.chain().focus().toggleHeading({ level: 2 }).run()
                 : false
             "
-            :class="{ 'bg-gray-200': editor.isActive('heading', { level: 2 }) }"
+            :class="{
+              '!bg-gray-200': editor.isActive('heading', { level: 2 }),
+            }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="">H2</span>
@@ -101,7 +105,9 @@ onUnmounted(() => editor?.value?.destroy());
                 ? editor.chain().focus().toggleHeading({ level: 3 }).run()
                 : false
             "
-            :class="{ 'bg-gray-200': editor.isActive('heading', { level: 3 }) }"
+            :class="{
+              '!bg-gray-200': editor.isActive('heading', { level: 3 }),
+            }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="">H3</span>
@@ -111,7 +117,7 @@ onUnmounted(() => editor?.value?.destroy());
         <slot name="bold-button" v-bind="editor">
           <AntButton
             @click="editor ? editor.chain().focus().toggleBold().run() : false"
-            :class="{ 'bg-gray-200': editor.isActive('bold') }"
+            :class="{ '!bg-gray-200': editor.isActive('bold') }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="font-bold">B</span>
@@ -123,7 +129,7 @@ onUnmounted(() => editor?.value?.destroy());
             @click="
               editor ? editor.chain().focus().toggleItalic().run() : false
             "
-            :class="{ 'bg-gray-200': editor.isActive('italic') }"
+            :class="{ '!bg-gray-200': editor.isActive('italic') }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="italic">I</span>
@@ -135,7 +141,7 @@ onUnmounted(() => editor?.value?.destroy());
             @click="
               editor ? editor.chain().focus().toggleUnderline().run() : false
             "
-            :class="{ 'bg-gray-200': editor.isActive('underline') }"
+            :class="{ '!bg-gray-200': editor.isActive('underline') }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="underline">U</span>
@@ -147,7 +153,7 @@ onUnmounted(() => editor?.value?.destroy());
             @click="
               editor ? editor.chain().focus().toggleStrike().run() : false
             "
-            :class="{ 'bg-gray-200': editor.isActive('strike') }"
+            :class="{ '!bg-gray-200': editor.isActive('strike') }"
             class="hover:bg-gray-200 border-none"
           >
             <span class="line-through">S</span>
