@@ -93,6 +93,8 @@ const validate = () => {
         :class="{
           'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
             (errors && errors.length > 0) || isError,
+          'border-gray-300 placeholder-gray-400 focus:border-primary-light':
+            (!errors || errors.length === 0) && !isError,
           'pl-10': leadingIcon,
         }"
         class="
@@ -101,10 +103,9 @@ const validate = () => {
           w-full
           px-3
           py-2
-          border border-gray-300
+          border
           rounded-md
           shadow-sm
-          placeholder-gray-400
           transition-all
           duration-300
           focus:outline-none
