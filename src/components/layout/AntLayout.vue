@@ -24,12 +24,33 @@ const sidebarDisplayed = ref<boolean>(false);
 <template>
   <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+
     <div
       class="
+        block
+        md:hidden
+        fixed
+        inset-0
+        w-screen
+        h-screen
+        bg-gray-500 bg-opacity-20
+        transition-all
+        duration-500
+      "
+      :class="{
+        'opacity-100': sidebarDisplayed,
+        'opacity-0': !sidebarDisplayed,
+      }"
+      @click="() => (sidebarDisplayed = false)"
+    />
+
+    <div
+      class="
+        flex
+        md:hidden
         w-3/5
         fixed
         inset-0
-        flex
         z-40
         transition-all
         duration-500
@@ -41,16 +62,6 @@ const sidebarDisplayed = ref<boolean>(false);
         'translate-x-0': sidebarDisplayed,
       }"
     >
-      <div
-        class="
-          inset-0
-          bg-gray-600 bg-opacity-75
-          transition-opacity
-          ease-linear
-          duration-300
-        "
-      />
-
       <AntNavigation
         :nav-items="navItems"
         :profile-href="profileHref"
