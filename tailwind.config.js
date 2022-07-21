@@ -1,5 +1,12 @@
 module.exports = {
-	content: ['./dist/index.js', './src/components/**/*.{vue,js,ts,jsx,tsx}'],
+	content: ['./dist/index.js', './src/**/*.{vue,js,ts,jsx,tsx}'],
+	safelist: [
+		{
+			pattern:
+				/(bg|ring|text|border)-(slate|gray|zinc|neutral|stone|red|organe|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[1234567890]*/,
+			variants: ['hover', 'focus', 'sm', 'md', 'lg', 'xl', '2xl'],
+		},
+	],
 	theme: {
 		extend: {
 			colors: {
