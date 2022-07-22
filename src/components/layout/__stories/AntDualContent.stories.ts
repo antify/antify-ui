@@ -101,7 +101,7 @@ export const Complex = (args: any) => ({
     </template>
 
     <template #asideBody>
-      <AntTable class="h-screen" v-bind="args"/>
+      <AntTable v-bind="args"/>
     </template>
   </AntDualContent>
   `,
