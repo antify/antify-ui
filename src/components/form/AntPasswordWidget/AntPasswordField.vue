@@ -165,7 +165,9 @@ const hasError = computed(() => {
     :id="`${id}-description`"
   >
     <template v-if="errors">
-      <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+      <slot name="errorList" v-bind="{ errors }">
+        <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+      </slot>
     </template>
 
     <template v-else>
