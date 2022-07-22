@@ -6,6 +6,10 @@ export default {
   component: AntPasswordField,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the password field. This way you can access the default input-field events.',
+    },
     password: {
       description: 'Reactive value for password field',
     },

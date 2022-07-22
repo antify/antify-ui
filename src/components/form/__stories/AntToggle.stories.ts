@@ -7,6 +7,10 @@ export default {
   component: AntToggle,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the toggle-button field. This way you can access the default button events.',
+    },
     value: {
       description: 'The reactive value of the toggle button',
     },

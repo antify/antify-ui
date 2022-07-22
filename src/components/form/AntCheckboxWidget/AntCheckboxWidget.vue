@@ -52,6 +52,7 @@ const _value = computed<Checkbox[]>({
     >
       <AntCheckbox
         v-model:checked="_value"
+        v-bind="$attrs"
         :id="checkbox.id"
         :value="checkbox.value"
         :label="checkbox.label"

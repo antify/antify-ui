@@ -21,10 +21,13 @@ const Template = (args: any) => ({
 
 export const Simple = Template.bind({});
 // @ts-ignore
-Simple.args = {};
+Simple.args = {
+  id: 'draggable-123412341234',
+};
 
 export const WithDragger = Template.bind({});
 // @ts-ignore
 WithDragger.args = {
+  id: 'draggable-1234123412342',
   showGrabber: true,
 };

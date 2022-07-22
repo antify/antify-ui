@@ -6,6 +6,10 @@ export default {
   component: AntSelect,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the select field. This way you can access the default select-field events.',
+    },
     id: {
       description: 'Id for select-field and label.',
       table: {

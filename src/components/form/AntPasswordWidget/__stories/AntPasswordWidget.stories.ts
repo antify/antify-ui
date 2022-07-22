@@ -6,6 +6,10 @@ export default {
   component: AntPasswordWidget,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to all password fields. This way you can access the default input-field events.',
+    },
     password: {
       description: 'Reactive value for password field',
     },

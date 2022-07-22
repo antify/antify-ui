@@ -122,6 +122,7 @@ const _data = computed(() => {
             "
           >
             <table
+              v-bind="$attrs"
               class="min-w-full divide-y divide-gray-300 h-full max-h-full"
             >
               <thead class="bg-gray-50 sticky top-0 border-b">

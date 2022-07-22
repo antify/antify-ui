@@ -1,6 +1,7 @@
 <script lang="ts">
 export default {
   name: 'AntTable',
+  inheritAttrs: false,
 };
 </script>
 
@@ -27,7 +28,10 @@ defineProps<{
               overflow-x-auto overflow-y-auto
             "
           >
-            <table class="min-w-full divide-y divide-gray-300 max-h-full">
+            <table
+              v-bind="$attrs"
+              class="min-w-full divide-y divide-gray-300 max-h-full"
+            >
               <thead class="bg-gray-50 sticky top-0 border-b">
                 <tr class="">
                   <th
@@ -58,6 +62,9 @@ defineProps<{
                 <tr
                   v-for="(elem, index) in data"
                   :key="`table-row-${elem.id}-${index}`"
+                  :id="elem.id"
+                  class="target:bg-gray-200"
+                  :class="{ 'bg-gray-200': elem.active }"
                 >
                   <td
                     v-for="(header, index) in headers"

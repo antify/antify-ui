@@ -9,6 +9,10 @@ export default {
   component: AntLoginWidget,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the form. This way you can access the default form events. This is also how you set the @submit handler.',
+    },
     errors: {
       description: 'List of errors',
       table: { type: { summary: 'string[]' }, defaultValue: { summary: '[]' } },

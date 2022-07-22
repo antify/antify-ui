@@ -7,6 +7,10 @@ export default {
   component: AntDragDropTable,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the table element.',
+    },
     headers: {
       description: 'List of header definitions',
       table: {

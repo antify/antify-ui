@@ -6,6 +6,10 @@ export default {
   component: AntRadio,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the radio-button. This way you can access the default input-field events.',
+    },
     groupValue: {
       description: 'Reactive value for the radio group',
     },

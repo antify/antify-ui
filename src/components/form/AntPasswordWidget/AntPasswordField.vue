@@ -101,6 +101,7 @@ const hasError = computed(() => {
 
     <input
       v-model="_password"
+      v-bind="$attrs"
       :id="_id"
       :type="useType"
       :placeholder="placeholder || label"
@@ -128,7 +129,6 @@ const hasError = computed(() => {
       }"
       :aria-describedby="`${id}-description`"
       :aria-invalid="hasError"
-      v-bind="$attrs"
       @blur="validate"
     />
 

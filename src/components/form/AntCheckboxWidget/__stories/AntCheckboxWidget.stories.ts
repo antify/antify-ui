@@ -7,6 +7,10 @@ export default {
   component: AntCheckboxWidget,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
+    args: {
+      description:
+        'Additional attributes will be forwarded to the all checkbox field. This way you can access the default input-field events.',
+    },
     checkboxes: {
       description: 'List of checkboxes',
       table: {
