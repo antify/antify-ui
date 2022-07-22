@@ -55,6 +55,8 @@ const _value = computed({
         focus:border-indigo-500
         sm:text-sm
         rounded-md
+        disabled:opacity-50
+        disabled:cursor-not-allowed
       "
       v-bind="$attrs"
     >
@@ -62,6 +64,7 @@ const _value = computed({
         v-for="(option, index) in options"
         :key="`${id}-${index}`"
         :value="option.value"
+        class="disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {{ option.label }}
       </option>

@@ -25,7 +25,7 @@ const props =
     showPreview?: boolean;
   }>();
 
-const _id = ref(props.id ||  generateId(40));
+const _id = ref(props.id || generateId(40));
 const _acceptType = ref(props.acceptType || '*');
 
 const uploaded = ref<FileInfo>({
@@ -95,12 +95,12 @@ const _value = computed({
     </label>
 
     <input
+      v-bind="$attrs"
       @change="(val) => (_value = val)"
       :id="_id"
       :accept="_acceptType"
       class="hidden"
       type="file"
-      v-bind="$attrs"
     />
   </div>
 </template>
