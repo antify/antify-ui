@@ -42,7 +42,16 @@ const _groupValue = computed({
       :value="value"
       :id="_id"
       :name="name"
-      :class="`focus:ring-${_color} h-4 w-4 text-${_color} border-gray-300 transition-all duration-500`"
+      class="
+        h-4
+        w-4
+        border-gray-300
+        transition-all
+        duration-500
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+      "
+      :class="`focus:ring-${_color} text-${_color}`"
       type="radio"
     />
 

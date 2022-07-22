@@ -49,7 +49,7 @@ const _checked = computed({
           :aria-describedby="`${_id}-description`"
           v-model="_checked"
           :value="value"
-          :class="`focus:ring-${_color} h-4 w-4 text-${_color} border-gray-300 rounded transition-all duration-500`"
+          :class="`focus:ring-${_color} h-4 w-4 text-${_color} border-gray-300 rounded transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed`"
         />
       </div>
 

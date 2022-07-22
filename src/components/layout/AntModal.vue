@@ -74,22 +74,11 @@ defineProps<{
           :class="{
             'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95': !active,
             'opacity-100 translate-y-0 sm:scale-100': active,
-            'h-screen top-0 left-0 min-w-full': fullscreen,
+            'h-screen max-h-screen top-0 left-0 min-w-full': fullscreen,
             'top-12 min-w-full sm:min-w-96 focus-within:sm:my-8': !fullscreen,
           }"
         >
-          <div
-            class="
-              relative
-              border-b
-              w-full
-              py-4
-              pl-3
-              grow-0
-              shrink-0
-              basis-auto
-            "
-          >
+          <div class="relative border-b w-full py-4 pl-3">
             <slot name="header">
               <slot name="closeIcon">
                 <fa-icon
@@ -118,28 +107,13 @@ defineProps<{
             </slot>
           </div>
 
-          <div
-            class="p-3 grow shrink-0 overflow-y-auto basis-auto"
-            :class="{ 'h-screen': fullscreen }"
-          >
+          <div class="p-3 overflow-y-auto" :class="{ 'h-full': fullscreen }">
             <slot>
               <p class="text-sm text-gray-500">Fill me</p>
             </slot>
           </div>
 
-          <div
-            class="
-              mt-5
-              sm:mt-6
-              text-right
-              px-3
-              py-4
-              border-t
-              grow-0
-              shrink-0
-              basis-auto
-            "
-          >
+          <div class="mt-5 sm:mt-6 text-right px-3 py-4 border-t">
             <slot name="buttons">
               <AntButton
                 label="Close"

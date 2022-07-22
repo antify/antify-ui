@@ -52,7 +52,7 @@ export default {
 const Template = (args: any) => ({
   components: { AntCheckbox },
   setup() {
-    const value = ref<boolean>(false);
+    const value = ref<boolean>(args.value || false);
 
     return { args, value };
   },
@@ -66,4 +66,12 @@ export const Simple = Template.bind({});
 // @ts-ignore
 Simple.args = {
   label: 'Checkbox',
+};
+
+export const Disabled = Template.bind({});
+// @ts-ignore
+Disabled.args = {
+  label: 'Disabled',
+  disabled: true,
+  value: true,
 };

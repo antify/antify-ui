@@ -46,14 +46,32 @@ const Template = (args: any) => ({
   template: `
   <div class="m-2">
     <AntRadio v-bind="args" v-model:group-value="groupValue"/>
-    <span class="text-xs text-gray-500">Reactive Value: {{groupValue}}</span>
   </div>`,
 });
 
-export const Simple = Template.bind({});
+export const Checked = Template.bind({});
 // @ts-ignore
-Simple.args = {
+Checked.args = {
   label: 'Test',
   name: 'radio-group',
   value: 'test',
+  checked: true,
+};
+
+export const UnChecked = Template.bind({});
+// @ts-ignore
+UnChecked.args = {
+  label: 'Test',
+  name: 'radio-group',
+  value: 'test',
+};
+
+export const Disabled = Template.bind({});
+// @ts-ignore
+Disabled.args = {
+  label: 'Disabled',
+  name: 'radio-group',
+  value: 'disabled',
+  checked: true,
+  disabled: true,
 };
