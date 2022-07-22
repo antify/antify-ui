@@ -62,6 +62,9 @@ defineProps<{
                 <tr
                   v-for="(elem, index) in data"
                   :key="`table-row-${elem.id}-${index}`"
+                  :id="elem.id"
+                  class="target:bg-gray-200"
+                  :class="{ 'bg-gray-200': elem.active }"
                 >
                   <td
                     v-for="(header, index) in headers"

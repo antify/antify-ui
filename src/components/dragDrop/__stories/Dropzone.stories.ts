@@ -17,4 +17,6 @@ const Template = (args: any) => ({
 
 export const Simple = Template.bind({});
 // @ts-ignore
-Simple.args = {};
+Simple.args = {
+  id: 'q1123aaa'
+};
