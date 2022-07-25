@@ -77,16 +77,16 @@ export const Simple = (args: any) => ({
   template: `
     <div class="m-2">
       <AntMediathek v-bind="args" class="space-x-4 mt-4">
-      <template #default={style}>
-        <AntMediathekItem v-for="item in items">
-          <template #icon>
-            <img v-if="item.imageSrc" :src="item.imageSrc" />
-            <fa-icon v-else :icon="item.icon" />
-          </template>
-          <template #title>
-            <span :title="item.title">{{item.title}}</span>
-          </template>
-        </AntMediathekItem>
+        <template #default={style}>
+          <AntMediathekItem v-for="item in items">
+            <template #icon>
+              <img v-if="item.imageSrc" :src="item.imageSrc" />
+              <fa-icon v-else :icon="item.icon" />
+            </template>
+            <template #title>
+              <span :title="item.title">{{item.title}}</span>
+            </template>
+          </AntMediathekItem>
         </template>
       </AntMediathek>
     </div>

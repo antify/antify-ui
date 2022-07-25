@@ -23,10 +23,30 @@ const props =
     iconClass?: string;
     value: UploadTarget;
     showPreview?: boolean;
+    labelStyle?: string;
   }>();
 
 const _id = ref(props.id || generateId(40));
 const _acceptType = ref(props.acceptType || '*');
+const _labelStyle =
+  props.labelStyle ||
+  `
+        py-3
+        px-3
+        border-2 border-dashed
+        w-full
+        text-center
+        flex
+        items-center
+        justify-center
+        text-gray-400
+        hover:text-gray-600
+        hover:border-gray-600
+        transition-all
+        duration-500
+        flex-wrap
+        cursor-pointer
+        relative`;
 
 const uploaded = ref<FileInfo>({
   src: '',
@@ -62,26 +82,7 @@ const _value = computed({
       </div>
     </slot>
 
-    <label
-      :for="_id"
-      class="
-        py-3
-        border-2 border-dashed
-        w-full
-        text-center
-        flex
-        items-center
-        justify-center
-        text-gray-400
-        hover:text-gray-600
-        hover:border-gray-600
-        transition-all
-        duration-500
-        flex-wrap
-        cursor-pointer
-        relative
-      "
-    >
+    <label :for="_id" :class="_labelStyle">
       <slot name="label">{{ label }}</slot>
 
       <slot name="icon">

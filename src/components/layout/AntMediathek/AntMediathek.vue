@@ -22,6 +22,7 @@ defineProps<{
   searchPlaceholder?: string;
 }>();
 
+let interval: number;
 const search = ref<string>('');
 const activeListStyle = ref<string>('cells');
 const _search = computed<string>({
@@ -29,7 +30,13 @@ const _search = computed<string>({
     return search.value;
   },
   set: (val) => {
-    emit('search', val);
+    if (interval) {
+      clearTimeout(interval);
+    }
+
+    interval = setTimeout(() => {
+      emit('search', val);
+    }, 300);
   },
 });
 </script>

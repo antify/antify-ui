@@ -14,7 +14,7 @@ const active = ref<boolean>(false);
     class="
       flex flex-col
       border
-      w-32
+      min-w-32
       h-40
       transition-all
       duration-500
@@ -23,7 +23,17 @@ const active = ref<boolean>(false);
     :class="{ 'ring-offset-2 ring-2 ring-primary': active }"
     @click="active = !active"
   >
-    <div class="bg-gray-200 flex justify-center items-center text-4xl h-full">
+    <div
+      class="
+        bg-gray-200
+        flex
+        justify-center
+        items-center
+        text-4xl
+        h-full
+        overflow-hidden
+      "
+    >
       <slot name="icon"></slot>
     </div>
 

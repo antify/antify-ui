@@ -140,7 +140,7 @@ defineProps<{
                     />
                   </td>
 
-                  <slot name="rowLastCell" />
+                  <slot name="rowLastCell" v-bind="{ elem }" />
                 </tr>
 
                 <tr v-if="data.length <= 0">

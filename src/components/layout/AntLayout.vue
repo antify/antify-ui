@@ -39,7 +39,7 @@ const sidebarDisplayed = ref<boolean>(false);
       "
       :class="{
         'opacity-100': sidebarDisplayed,
-        'opacity-0': !sidebarDisplayed,
+        'opacity-0 max-h-0': !sidebarDisplayed,
       }"
       @click="() => (sidebarDisplayed = false)"
     />

@@ -50,10 +50,10 @@ export default {
     <aside
       class="
         hidden
-        md:flex
+        xl:flex
         relative
-        md:order-first
-        md:flex-col
+        xl:order-first
+        xl:flex-col
         flex-shrink-0
         w-96
         border-r border-gray-200

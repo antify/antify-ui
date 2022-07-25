@@ -15,10 +15,10 @@ const props =
   }>();
 
 const classes = computed(() => ({
-  'rounded-full block overflow-hidden': true,
-  'w-8': props.size === 'small',
-  'w-12': !props.size || props.size === 'medium',
-  'w-16': props.size === 'large',
+  'rounded-full block overflow-hidden object-contain': true,
+  'w-8 h-8': props.size === 'small',
+  'w-12 h-12': !props.size || props.size === 'medium',
+  'w-16 w-16': props.size === 'large',
 }));
 
 onMounted(() => {
@@ -30,6 +30,6 @@ onMounted(() => {
 
 <template>
   <div :class="classes">
-    <img :src="imageUrl" :alt="alt" />
+    <img :src="imageUrl" :alt="alt" class="object-cover h-full w-full" />
   </div>
 </template>
