@@ -6,10 +6,25 @@ export default {
   title: 'Components/Forms/Ant Upload',
   component: AntUpload,
   parameters: { controls: { sort: 'requiredFirst' } },
+  decorators: [() => ({ template: '<div class="m-2"><story/></div>' })],
   argTypes: {
     args: {
       description:
         'Additional attributes will be forwarded to the upload field. This way you can access the default input-field events.',
+    },
+    loading: {
+      description:
+        'If true then a loading spinner will be shown inside the upload box',
+    },
+    progress: {
+      description:
+        'Should be used as property. If set than a progress bar will be shown at the bottom of the upload box. See "Upload Progress Demo" for more details.',
+      table: {
+        type: {
+          summary: '0',
+          detail: 'A value between 0 and 100.',
+        },
+      },
     },
     icon: {
       description:
@@ -55,40 +70,93 @@ export default {
 const Template = (args: any) => ({
   components: { AntUpload },
   setup() {
-    return { args };
+    const image = ref({});
+    const loading = ref(false);
+
+    const upload = () => {
+      console.log('DO UPLOAD');
+      loading.value = true;
+
+      setTimeout(() => {
+        loading.value = false;
+      }, 1000);
+    };
+
+    return { args, image, loading, upload };
   },
-  template: `<div class="m-2"><AntUpload v-bind="args"/></div>`,
+  template: `
+  <AntUpload 
+    v-bind="args"
+    v-model:value="image"
+    v-model:loading="loading"
+      @change="upload"
+  />
+  `,
 });
 
 export const Simple = Template.bind({});
 // @ts-ignore
 Simple.args = {
   label: 'Simple Upload',
+  showPreview: true,
 };
 
 export const ImageUpload = (args: any) => ({
   components: { AntUpload },
   setup() {
     const image = ref({});
+    const loading = ref(false);
 
-    return {
-      label: 'Image Upload',
-      acceptType: 'image/*',
-      icon: faCamera,
-      value: image,
-      args,
-    };
+    args.acceptType = 'image/*';
+    args.icon = faCamera;
+    args.label = 'Image Upload';
+    args.showPreview = true;
+
+    return { image, loading, args };
   },
   template: `
-  <div class="m-2">
     <AntUpload 
       v-bind="args"
-      v-model:value="value"
-      accept-type="acceptType"
-      :icon="icon"
-      :label="label"
-      :show-preview="true"
+      v-model:value="image"
+      v-model:loading="loading"
     />
-    <span class="text-xs text-gray-400">Reactive value: {{value}}</span>
-  </div>`,
+
+    <span class="text-xs text-gray-400">Reactive value: {{image}}</span>`,
+});
+
+export const UploadProgressDemo = (args: any) => ({
+  components: { AntUpload },
+  setup() {
+    const image = ref({});
+    const loading = ref(false);
+    const progress = ref<number>(0);
+
+    args.icon = faCamera;
+    args.label = 'Upload with Progress bar';
+    args.showPreview = true;
+
+    const upload = async () => {
+      progress.value += 10;
+      for (let i = 0; i < 9; i++) {
+        await new Promise<void>((resolve) => {
+          setTimeout(() => {
+            progress.value += 10;
+            resolve();
+          }, 500);
+        });
+      }
+    };
+
+    return { image, loading, args, upload, progress };
+  },
+  template: `
+    <AntUpload 
+      v-bind="args"
+      v-model:value="image"
+      v-model:loading="loading"
+      :progress="progress"
+      @change="upload"
+    />
+
+    <span class="text-xs text-gray-400">Reactive value: {{image}}</span>`,
 });
