@@ -61,7 +61,6 @@ import { SelectOption } from './types/SelectOption.type';
 import { RadioButton } from './types/RadioButton.type';
 import { TabsType } from './types/Tabs.type';
 import { Checkbox } from './types/Checkbox.type';
-import component from './shims/vue';
 import { POSITION, TOASTER_TYPE, Toaster } from './types/Toaster.type';
 
 export const AntifyUi = {
