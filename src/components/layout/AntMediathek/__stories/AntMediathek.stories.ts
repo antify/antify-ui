@@ -78,7 +78,7 @@ export const Simple = (args: any) => ({
     <div class="m-2">
       <AntMediathek v-bind="args" class="space-x-4 mt-4">
         <template #default={style}>
-          <AntMediathekItem v-for="item in items">
+          <AntMediathekItem v-for="item in items" class="w-full">
             <template #icon>
               <img v-if="item.imageSrc" :src="item.imageSrc" />
               <fa-icon v-else :icon="item.icon" />
