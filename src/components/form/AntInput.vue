@@ -49,113 +49,119 @@ const validate = () => {
 </script>
 
 <template>
-  <div class="relative">
-    <label
-      v-if="label || $slots['label']"
-      :for="_id"
-      :class="{
-        'absolute -top-2 left-2 -mt-px bg-white z-50': _overlappingLabel,
-      }"
-      class="block text-sm font-medium text-gray-700"
-    >
-      <slot name="label">
-        {{ label }}
-      </slot>
-    </label>
-
+  <div class="w-full">
     <div class="relative">
-      <slot name="leadingIcon">
-        <div
-          v-if="leadingIcon"
-          class="
-            absolute
-            inset-y-0
-            left-0
-            pl-3
-            flex
-            items-center
-            pointer-events-none
-            z-10
-          "
-        >
-          <fa-icon :icon="leadingIcon" class="h-5 w-5 text-gray-400" />
-        </div>
-      </slot>
-
-      <input
-        v-model="content"
-        v-bind="$attrs"
-        :id="_id"
-        :type="type"
-        :placeholder="placeholder || label"
-        :aria-describedby="`${_id}-description`"
-        :aria-invalid="(errors && errors.length > 0) || isError"
+      <label
+        v-if="label || $slots['label']"
+        :for="_id"
         :class="{
-          'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
-            (errors && errors.length > 0) || isError,
-          'border-gray-300 placeholder-gray-400 focus:border-primary-light':
-            (!errors || errors.length === 0) && !isError,
-          'pl-10': leadingIcon,
+          'absolute -top-2 left-2 -mt-px bg-white z-50': _overlappingLabel,
         }"
-        class="
-          appearance-none
-          block
-          w-full
-          px-3
-          py-2
-          border
-          rounded-md
-          shadow-sm
-          transition-all
-          duration-300
-          focus:outline-none
-          focus:ring-primary-light
-          focus:border-primary-light
-          sm:text-sm
-          disabled:opacity-50
-          disabled:cursor-not-allowed
-        "
-        @blur="validate"
-      />
+        class="block text-sm font-medium text-gray-700"
+      >
+        <slot name="label">
+          {{ label }}
+        </slot>
+      </label>
 
-      <slot name="errorIcon">
-        <div
-          v-if="(errors && errors.length > 0) || isError"
-          class="
-            absolute
-            inset-y-0
-            right-0
-            pr-3
-            flex
-            items-center
-            pointer-events-none
-            z-10
-          "
-          :title="errors && errors[0]"
-        >
-          <fa-icon
-            :icon="faCircleExclamation"
-            class="h-5 w-5 text-red-500"
-            aria-hidden="true"
+      <div class="flex">
+        <div class="relative w-full">
+          <slot name="leadingIcon">
+            <div
+              v-if="leadingIcon"
+              class="
+                absolute
+                inset-y-0
+                left-0
+                pl-3
+                flex
+                items-center
+                pointer-events-none
+                z-10
+              "
+            >
+              <fa-icon :icon="leadingIcon" class="h-5 w-5 text-gray-400" />
+            </div>
+          </slot>
+
+          <input
+            v-model="content"
+            v-bind="$attrs"
+            :id="_id"
+            :type="type"
+            :placeholder="placeholder || label"
+            :aria-describedby="`${_id}-description`"
+            :aria-invalid="(errors && errors.length > 0) || isError"
+            :class="{
+              'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
+                (errors && errors.length > 0) || isError,
+              'border-gray-300 placeholder-gray-400 focus:border-primary-light':
+                (!errors || errors.length === 0) && !isError,
+              'pl-10': leadingIcon,
+            }"
+            class="
+              appearance-none
+              block
+              w-full
+              px-3
+              py-2
+              border
+              rounded-md
+              shadow-sm
+              transition-all
+              duration-300
+              focus:outline-none
+              focus:ring-primary-light
+              focus:border-primary-light
+              sm:text-sm
+              disabled:opacity-50
+              disabled:cursor-not-allowed
+            "
+            @blur="validate"
           />
+
+          <slot name="errorIcon">
+            <div
+              v-if="(errors && errors.length > 0) || isError"
+              class="
+                absolute
+                inset-y-0
+                right-0
+                pr-3
+                flex
+                items-center
+                pointer-events-none
+                z-10
+              "
+              :title="errors && errors[0]"
+            >
+              <fa-icon
+                :icon="faCircleExclamation"
+                class="h-5 w-5 text-red-500"
+                aria-hidden="true"
+              />
+            </div>
+          </slot>
         </div>
-      </slot>
+
+        <slot></slot>
+      </div>
     </div>
-  </div>
 
-  <div
-    v-if="description || (errors && errors.length > 0)"
-    class="mt-2 text-sm text-gray-500"
-    :id="`${_id}-description`"
-  >
-    <template v-if="errors && errors.length > 0">
-      <slot name="errorList" v-bind="{ errors }">
-        <div v-for="error in errors" class="text-red-600">{{ error }}</div>
-      </slot>
-    </template>
+    <div
+      v-if="description || (errors && errors.length > 0)"
+      class="mt-1 text-sm text-gray-500"
+      :id="`${_id}-description`"
+    >
+      <template v-if="errors && errors.length > 0">
+        <slot name="errorList" v-bind="{ errors }">
+          <div v-for="error in errors" class="text-red-600">{{ error }}</div>
+        </slot>
+      </template>
 
-    <template v-else>
-      {{ description }}
-    </template>
+      <template v-else>
+        {{ description }}
+      </template>
+    </div>
   </div>
 </template>

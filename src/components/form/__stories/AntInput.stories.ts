@@ -1,4 +1,5 @@
 import AntInput from '../AntInput.vue';
+import AntButton from '../../buttons/AntButton.vue';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 
@@ -6,6 +7,7 @@ export default {
   title: 'Components/Forms/Ant Input',
   component: AntInput,
   parameters: { controls: { sort: 'requiredFirst' } },
+  decorators: [() => ({ template: '<div class="m-2"><story/></div>' })],
   argTypes: {
     args: {
       description:
@@ -57,12 +59,34 @@ export default {
       description: 'The input type',
       table: { defaultValue: { summary: '"text"' } },
     },
+    default: {
+      description:
+        'Is used to add elements after the input field, see "Combine Elements"-example for mor info',
+      table: {
+        type: {
+          summary: 'HTML',
+        },
+      },
+    },
     errorIcon: {
       description:
         'Will be displayed if the rules give back false or a string.<br><a href="https://fontawesome.com/icons/circle-exclamation?s=solid" target="_blank">Link to default</a>',
       table: {
         defaultValue: {
           summary: 'faCircleExclamation',
+        },
+        type: {
+          summary: 'HTML',
+        },
+      },
+    },
+    errorList: {
+      description:
+        'Overwrite for the default error list. Will only be displayed if there are errors. Will get the errors as param.',
+      table: {
+        defaultValue: {
+          summary: 'HTML',
+          detail: 'All errors small and red',
         },
         type: {
           summary: 'HTML',
@@ -87,10 +111,10 @@ const Template = (args: any) => ({
 
     return { args, value };
   },
-  template: `<div class="m-2">
+  template: `
     <AntInput v-bind="args" v-model:value="value"/>
     <span class="text-xs text-gray-500">Reactive value: {{value}}</span>
-  </div>`,
+`,
 });
 
 /**
@@ -181,7 +205,28 @@ Disabled.args = {
 /**
  * Validation Icon.
  */
-export const Validated = Template.bind({});
+export const Validated = (args: any) => ({
+  components: { AntInput },
+  setup() {
+    const value = ref<string>('');
+
+    args.id = 'input-id-987654321';
+    args.value = 'test@test.de';
+    args.label = 'Validated';
+    args.validator = (value: any) => {
+      if (!value) return ['value can not be empty'];
+      if (value.length < 3) return ['value is to short'];
+    };
+    args.errors = ['value can not be empty'];
+
+    return { args, value };
+  },
+  template: `
+    <AntInput v-bind="args" v-model:value="value"/>
+   
+    <span class="text-xs text-gray-500">Reactive value: {{value}}</span>
+  `,
+});
 // @ts-ignore
 Validated.args = {
   id: 'input-id-987654321',
@@ -210,5 +255,24 @@ export const CustomEventHandlers = (args: any) => ({
 
     return { args, input, value };
   },
-  template: `<div class="m-2"><AntInput v-bind="args" v-model:value="value" @blur="input"/></div>`,
+  template: `<AntInput v-bind="args" v-model:value="value" @blur="input"/>`,
+});
+
+export const CombineElements = (args: any) => ({
+  components: { AntInput, AntButton },
+  setup() {
+    const value = ref('');
+    args.label = 'Combined';
+    args.placeholder = 'Edit me';
+    args.description = 'Adds a button on the end of the Input.';
+    args.leadingIcon = faEnvelope;
+
+    return { args, value };
+  },
+  template: `
+    <AntInput v-bind="args" v-model:value="value" class="rounded-none rounded-bl-md rounded-tl-md">
+      <AntButton label="Save" class="rounded-none rounded-br-md rounded-tr-md -ml-px w-20">
+        <span class="w-full h-full flex justify-center items-center">Save</span>
+      </AntButton>
+    </AntInput>`,
 });

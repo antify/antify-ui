@@ -8,7 +8,6 @@ import AntDraggable from './components/dragDrop/AntDraggable.vue';
 import AntDropzone from './components/dragDrop/AntDropzone.vue';
 
 import AntForm from './components/form/AntForm.vue';
-import AntInputGroup from './components/form/AntInputGroup.vue';
 import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordField.vue';
 import AntPasswordWidget from './components/form/AntPasswordWidget/AntPasswordWidget.vue';
 import AntRadio from './components/form/AntRadioWidget/AntRadio.vue';
@@ -70,7 +69,6 @@ export const AntifyUi = {
     vue.component(AntDraggable.name, AntDraggable);
     vue.component(AntDropzone.name, AntDropzone);
     vue.component(AntForm.name, AntForm);
-    vue.component(AntInputGroup.name, AntInputGroup);
     vue.component(AntCheckbox.name, AntCheckbox);
     vue.component(AntCheckboxWidget.name, AntCheckboxWidget);
     vue.component(AntDatePicker.name, AntDatePicker);
@@ -121,7 +119,6 @@ export {
   AntDraggable,
   AntDropzone,
   AntForm,
-  AntInputGroup,
   AntCheckbox,
   AntCheckboxWidget,
   AntDatePicker,

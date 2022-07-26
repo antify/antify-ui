@@ -2,7 +2,6 @@ import AntForm from '../AntForm.vue';
 import AntInput from '../AntInput.vue';
 import AntButton from '../../buttons/AntButton.vue';
 import AntHeader from '../../layout/AntHeader.vue';
-import AntInputGroup from '../AntInputGroup.vue';
 
 export default {
   title: 'Components/Forms/Ant Form',
@@ -21,7 +20,7 @@ export default {
 };
 
 export const Simple = (args: any) => ({
-  components: { AntForm, AntInput, AntButton, AntHeader, AntInputGroup },
+  components: { AntForm, AntInput, AntButton, AntHeader },
   setup() {
     const submit = () => {
       console.log('SUBMIT');
@@ -39,15 +38,15 @@ export const Simple = (args: any) => ({
 
       <AntInput v-model:value="value" label="Input 1"/>
       
-      <AntInputGroup> 
+      <div class="w-full flex justify-between space-x-4">
         <div class="w-full">
           <AntInput v-model:value="value" label="Input 2"/>
         </div>
-
+        
         <div class="w-full">
           <AntInput v-model:value="value" label="Input 3"/>
         </div>
-      </AntInputGroup>
+      </div>
 
       <div class="w-full"><AntInput v-model:value="value" label="Input 4"/></div>
       
