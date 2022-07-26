@@ -8,11 +8,13 @@ export default {
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { generateId } from '../../utils/helper';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import AntProgress from '../elements/AntProgress.vue';
 
 type UploadTarget = { target: any };
 type FileInfo = { src: string; fileName: string };
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:loading']);
 
 const props =
   defineProps<{
@@ -24,6 +26,8 @@ const props =
     value: UploadTarget;
     showPreview?: boolean;
     labelStyle?: string;
+    loading: boolean;
+    progress?: number;
   }>();
 
 const _id = ref(props.id || generateId(40));
@@ -68,7 +72,10 @@ const _value = computed({
 <template>
   <div class="flex">
     <slot name="preview" v-bind="uploaded">
-      <div class="left-0 m-2 flex flex-col items-center justify-center">
+      <div
+        v-if="uploaded.src && showPreview"
+        class="left-0 m-2 flex flex-col items-center justify-center"
+      >
         <img
           v-if="uploaded.src && showPreview"
           :src="uploaded.src"
@@ -83,6 +90,9 @@ const _value = computed({
     </slot>
 
     <label :for="_id" :class="_labelStyle">
+      <div class="mr-2">
+        <fa-icon v-if="loading" :icon="faSpinner" class="fa-spin" />
+      </div>
       <slot name="label">{{ label }}</slot>
 
       <slot name="icon">
@@ -92,6 +102,20 @@ const _value = computed({
           class="block w-full h-10"
           :class="iconClass"
         />
+      </slot>
+
+      <slot name="progress">
+        <div
+          v-if="progress || $slots['progress']"
+          class="w-full absolute bottom-0"
+        >
+          <AntProgress
+            :value="progress"
+            class="min-h-0 h-1 overflow-hidden transition-all duration-500"
+          >
+            <template #label><span></span></template>
+          </AntProgress>
+        </div>
       </slot>
     </label>
 

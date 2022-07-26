@@ -1,6 +1,7 @@
 <script lang="ts">
 export default {
   name: 'AntProgress',
+  inheritAttrs: false,
 };
 </script>
 
@@ -17,24 +18,25 @@ const props =
     color?: string;
   }>();
 
-const _id = ref<string>(props.id ? props.id : generateId(40));
-const _value = ref<number>(props.value || 0);
-const _fullValue = ref<number>(props.fullValue || 100);
+const _id = ref<string>(props.id || generateId(40));
 const _color = ref<string>(props.color || 'primary');
-const current = computed<number>(() => (_value.value * 100) / _fullValue.value);
+
+const current = computed<number>(
+  () => ((props.value || 0) * 100) / (props.fullValue || 100)
+);
 </script>
 
 <template>
   <div class="text-xs text-gray-500 flex justify-between">
     <slot name="label">
       <span>{{ label }}</span>
-    </slot>
 
-    <span>
-      {{ _value.toLocaleString(undefined, {}) }}/{{
-        _fullValue.toLocaleString(undefined, {})
-      }}
-    </span>
+      <span>
+        {{ (value || 0).toLocaleString(undefined, {}) }}/{{
+          (fullValue || 100).toLocaleString(undefined, {})
+        }}
+      </span>
+    </slot>
   </div>
 
   <div
@@ -50,10 +52,11 @@ const current = computed<number>(() => (_value.value * 100) / _fullValue.value);
       overflow-hidden
       rounded-full
     "
+    v-bind="$attrs"
   >
     <div
       :style="`width: ${current}%`"
-      :class="`bg-${_color} h-full absolute left-0 transition-all rounded-full`"
+      :class="`bg-${_color} h-full absolute left-0 transition-all rounded-full duration-500`"
     />
 
     <div class="z-10 flex items-center"><slot></slot></div>
