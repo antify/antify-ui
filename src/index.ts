@@ -50,6 +50,7 @@ import AntTable from './components/table/AntTable.vue';
 
 import AntBadge from './components/elements/AntBadge.vue';
 import AntBanner from './components/elements/AntBanner.vue';
+import AntToaster from './components/elements/AntToaster.vue';
 
 import AntNotFound from './components/pages/AntNotFound.vue';
 
@@ -60,6 +61,7 @@ import { SelectOption } from './types/SelectOption.type';
 import { RadioButton } from './types/RadioButton.type';
 import { TabsType } from './types/Tabs.type';
 import { Checkbox } from './types/Checkbox.type';
+import { POSITION, TOASTER_TYPE, Toaster } from './types/Toaster.type';
 
 export const AntifyUi = {
   install(vue: any) {
@@ -95,6 +97,7 @@ export const AntifyUi = {
     vue.component(AntTabs.name, AntTabs);
     vue.component(AntBadge.name, AntBadge);
     vue.component(AntBanner.name, AntBanner);
+    vue.component(AntToaster.name, AntToaster);
     vue.component(AntAccordionWidget.name, AntAccordionWidget);
     vue.component(AntAccordionItem.name, AntAccordionItem);
     vue.component(AntLoginLayout.name, AntLoginLayout);
@@ -145,6 +148,7 @@ export {
   AntTabs,
   AntBadge,
   AntBanner,
+  AntToaster,
   AntAccordionWidget,
   AntAccordionItem,
   AntLoginLayout,
@@ -156,7 +160,9 @@ export {
   AntRadioWidget,
   AntMediathek,
   AntMediathekItem,
-  ROW_TYPES,
+  ROW_TYPES as ANT_ROW_TYPES,
+  POSITION as ANT_TOASTER_POSITION,
+  TOASTER_TYPE as ANT_TOASTER_TYPE,
 };
 
 export type AntNavItem = NavItem;
@@ -165,3 +171,4 @@ export type AntSelectOption = SelectOption;
 export type AntRadioButton = RadioButton;
 export type AntTabsType = TabsType;
 export type AntCheckbox = Checkbox;
+export type AntToaster = Toaster;
