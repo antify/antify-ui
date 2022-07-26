@@ -74,6 +74,8 @@ defineProps<{
       <slot name="logo" />
     </div>
 
+    <slot name="header" />
+
     <div class="flex-1 h-0 pb-4 overflow-y-auto">
       <nav class="mt-5 px-2 space-y-1">
         <AntNavItem
@@ -83,6 +85,8 @@ defineProps<{
         />
       </nav>
     </div>
+
+    <slot name="footer" />
 
     <AntNavProfile :to="profileHref" :user-name="userName">
       <template v-for="(_, slot) of $slots" v-slot:[slot.toString()]="scope">
