@@ -165,10 +165,10 @@ export {
   TOASTER_TYPE as ANT_TOASTER_TYPE,
 };
 
-export type AntNavItem = NavItem;
+export type AntNavItemType = NavItem;
 export type AntTableHeader = TableHeader;
 export type AntSelectOption = SelectOption;
 export type AntRadioButton = RadioButton;
 export type AntTabsType = TabsType;
-export type AntCheckbox = Checkbox;
-export type AntToaster = Toaster;
+export type AntCheckboxType = Checkbox;
+export type AntToasterType = Toaster;
