@@ -59,10 +59,28 @@ export default {
       },
     },
     showPreview: {
-      description: '',
+      description:
+        'Defines if a preview should be shown after a successful upload',
       table: {
-        defaultValue: { summary: 'true' },
+        defaultValue: { summary: 'false' },
       },
+    },
+    labelStyle: {
+      description: 'Override for the default style',
+      table: {
+        defaultValue: {
+          summary: 'string',
+          detail: `py-3 px-3 border-2 border-dashed w-full text-center flex items-center justify-center text-gray-400 hover:text-gray-600 hover:border-gray-600 transition-all duration-500 flex-wrap  cursor-pointer relative`,
+        },
+      },
+    },
+    error: {
+      description:
+        'Is triggered if an error occurs while uploading, gets an error message.',
+    },
+    upload: {
+      description:
+        'Is triggerd after succesfully adding a file to upload, gets the single File to upload.',
     },
   },
 };
@@ -74,7 +92,6 @@ const Template = (args: any) => ({
     const loading = ref(false);
 
     const upload = () => {
-      console.log('DO UPLOAD');
       loading.value = true;
 
       setTimeout(() => {
@@ -155,7 +172,7 @@ export const UploadProgressDemo = (args: any) => ({
       v-model:value="image"
       v-model:loading="loading"
       :progress="progress"
-      @change="upload"
+      @upload="upload"
     />
 
     <span class="text-xs text-gray-400">Reactive value: {{image}}</span>`,

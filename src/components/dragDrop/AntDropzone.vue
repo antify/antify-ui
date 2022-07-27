@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 
 const emit = defineEmits(['dropped']);
 
@@ -15,6 +15,21 @@ const props =
     dropzoneType?: string;
   }>();
 
+const onDrop = (event: DragEvent) => {
+  if (event && event.dataTransfer) {
+    emit('dropped', [
+      ...event.dataTransfer.getData(`${props.id}-data`),
+      ...event.dataTransfer.files,
+    ]);
+  }
+};
+
+function preventDefaults(e: Event) {
+  e.preventDefault();
+}
+
+const events = ['dragenter', 'dragover', 'dragleave', 'drop'];
+
 onMounted(() => {
   if (
     props.dropzoneType &&
@@ -22,36 +37,21 @@ onMounted(() => {
   ) {
     throw Error(`Dropzone type ${props.dropzoneType} is not allowed`);
   }
+
+  events.forEach((eventName) => {
+    document.body.addEventListener(eventName, preventDefaults);
+  });
 });
 
-const onDrop = (event: DragEvent) => {
-  if (event && event.dataTransfer) {
-    emit('dropped', event.dataTransfer.getData(`${props.id}-data`));
-  }
-};
+onUnmounted(() => {
+  events.forEach((eventName) => {
+    document.body.removeEventListener(eventName, preventDefaults);
+  });
+});
 </script>
 
 <template>
-  <div
-    :dropzone="dropzoneType || 'copy'"
-    class="
-      w-full
-      h-48
-      border-dashed border-4
-      text-2xl text-gray-300
-      italic
-      font-semibold
-      flex
-      justify-center
-      items-center
-      hover:text-gray-500
-      hover:border-gray-500
-      transition-all
-      rounded-xl
-      select-none
-    "
-    @drop="onDrop"
-  >
+  <div :dropzone="dropzoneType || 'copy'" @drop.prevent="onDrop">
     <slot>Dropzone</slot>
   </div>
 </template>

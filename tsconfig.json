@@ -13,7 +13,7 @@
     "declarationMap": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "es5", "es6", "dom.iterable"],
     "skipLibCheck": true,
     "moduleResolution": "node",
     "types": [

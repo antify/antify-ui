@@ -10,11 +10,12 @@ import { computed, ref } from 'vue';
 import { generateId } from '../../utils/helper';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import AntProgress from '../elements/AntProgress.vue';
+import AntDropzone from '../dragDrop/AntDropzone.vue';
 
 type UploadTarget = { target: any };
 type FileInfo = { src: string; fileName: string };
 
-const emit = defineEmits(['update:value', 'update:loading']);
+const emit = defineEmits(['update:value', 'update:loading', 'error', 'upload']);
 
 const props =
   defineProps<{
@@ -34,23 +35,9 @@ const _id = ref(props.id || generateId(40));
 const _acceptType = ref(props.acceptType || '*');
 const _labelStyle =
   props.labelStyle ||
-  `
-        py-3
-        px-3
-        border-2 border-dashed
-        w-full
-        text-center
-        flex
-        items-center
-        justify-center
-        text-gray-400
-        hover:text-gray-600
-        hover:border-gray-600
-        transition-all
-        duration-500
-        flex-wrap
-        cursor-pointer
-        relative`;
+  `py-3 px-3 border-2 border-dashed w-full text-center flex items-center
+   justify-center  text-gray-400 hover:text-gray-600 hover:border-gray-600
+   transition-all duration-500 flex-wrap  cursor-pointer relative`;
 
 const uploaded = ref<FileInfo>({
   src: '',
@@ -63,10 +50,20 @@ const _value = computed({
   },
   set: (val: UploadTarget) => {
     emit('update:value', val);
+    emit('upload', val.target?.files[0]);
+
     uploaded.value.src = URL.createObjectURL(val.target?.files[0]);
     uploaded.value.fileName = val.target?.files[0].name;
   },
 });
+
+function onDrop(event: any[]) {
+  if (event[0].type.match(props.acceptType)) {
+    _value.value = { target: { files: event } };
+  } else {
+    emit('error', 'Filetype not allowed');
+  }
+}
 </script>
 
 <template>
@@ -89,35 +86,38 @@ const _value = computed({
       </div>
     </slot>
 
-    <label :for="_id" :class="_labelStyle">
-      <div class="mr-2">
-        <fa-icon v-if="loading" :icon="faSpinner" class="fa-spin" />
-      </div>
-      <slot name="label">{{ label }}</slot>
-
-      <slot name="icon">
-        <fa-icon
-          v-if="icon"
-          :icon="icon"
-          class="block w-full h-10"
-          :class="iconClass"
-        />
-      </slot>
-
-      <slot name="progress">
-        <div
-          v-if="progress || $slots['progress']"
-          class="w-full absolute bottom-0"
-        >
-          <AntProgress
-            :value="progress"
-            class="min-h-0 h-1 overflow-hidden transition-all duration-500"
-          >
-            <template #label><span></span></template>
-          </AntProgress>
+    <AntDropzone :id="`dropzone-${_id}`" @dropped="onDrop" class="w-full">
+      <label :for="_id" :class="_labelStyle" dropzone="copy">
+        <div class="mr-2">
+          <fa-icon v-if="loading" :icon="faSpinner" class="fa-spin" />
         </div>
-      </slot>
-    </label>
+
+        <slot name="label">{{ label }}</slot>
+
+        <slot name="icon">
+          <fa-icon
+            v-if="icon"
+            :icon="icon"
+            class="block w-full h-10"
+            :class="iconClass"
+          />
+        </slot>
+
+        <slot name="progress">
+          <div
+            v-if="progress || $slots['progress']"
+            class="w-full absolute bottom-0"
+          >
+            <AntProgress
+              :value="progress"
+              class="min-h-0 h-1 overflow-hidden transition-all duration-500"
+            >
+              <template #label><span></span></template>
+            </AntProgress>
+          </div>
+        </slot>
+      </label>
+    </AntDropzone>
 
     <input
       v-bind="$attrs"
