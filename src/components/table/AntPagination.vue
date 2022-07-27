@@ -22,8 +22,8 @@ export default {
     <div class="hidden sm:block">
       <slot name="position" />
     </div>
-    
-    <div class="flex-1 flex justify-between sm:justify-end">
+
+    <div class="flex-1 flex justify-between sm:justify-end space-x-4">
       <slot name="buttons" />
     </div>
   </nav>
