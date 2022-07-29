@@ -12,13 +12,15 @@ export default {
       v-if="$slots['header']"
       class="w-full h-14 border-b flex justify-between items-center"
     >
-      <slot name="header"> </slot>
+      <slot name="header" />
     </div>
 
-    <slot default></slot>
-
-    <div v-if="$slots['footer']" class="space-x-4 border-t flex justify-end">
-      <slot name="footer"></slot>
+    <slot default />
+    <div
+      v-if="$slots['footer']"
+      class="space-x-4 border-t flex justify-end py-4"
+    >
+      <slot name="footer" />
     </div>
   </form>
 </template>
