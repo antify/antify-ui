@@ -32,7 +32,6 @@ import AntHeader from './components/layout/AntHeader.vue';
 import AntLayout from './components/layout/AntLayout.vue';
 import AntModal from './components/layout/AntModal.vue';
 import AntSidebar from './components/layout/AntSidebar.vue';
-import AntTabs from './components/layout/tabs/AntTabs.vue';
 import AntAccordionWidget from './components/layout/AntAccordionWidget/AntAccordionWidget.vue';
 import AntAccordionItem from './components/layout/AntAccordionWidget/AntAccordionItem.vue';
 import AntLoginLayout from './components/layout/AntLoginLayout.vue';
@@ -43,6 +42,7 @@ import AntMediathekItem from './components/layout/AntMediathek/AntMediathekItem.
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
 import AntNavProfile from './components/navigation/AntNavProfile.vue';
+import AntTabs from './components/navigation/tabs/AntTabs.vue';
 
 import AntDragDropTable from './components/table/AntDragDropTable.vue';
 import AntPagination from './components/table/AntPagination.vue';

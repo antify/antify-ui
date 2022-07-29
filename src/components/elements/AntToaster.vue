@@ -44,7 +44,7 @@ function remove(toastId: string) {
 </script>
 
 <template>
-  <div class="absolute w-80 p-4 space-y-2" :class="classes">
+  <div class="absolute w-80 px-2" :class="classes">
     <div
       v-for="(toast, index) in _toasts"
       :key="`${toast.id}-${index}-toast`"
@@ -56,6 +56,7 @@ function remove(toastId: string) {
         justify-start
         items-center
         p-4
+        mb-2
         rounded-md
         transition-all
       "

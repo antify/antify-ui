@@ -75,7 +75,7 @@ defineProps<{
             'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95': !active,
             'opacity-100 translate-y-0 sm:scale-100': active,
             'h-screen max-h-screen top-0 left-0 min-w-full': fullscreen,
-            'top-12 min-w-full sm:min-w-96 focus-within:sm:my-8': !fullscreen,
+            'top-12 min-w-full sm:min-w-96': !fullscreen,
           }"
         >
           <div class="relative border-b w-full py-4 pl-3">
@@ -113,7 +113,19 @@ defineProps<{
             </slot>
           </div>
 
-          <div class="mt-5 sm:mt-6 text-right px-3 py-4 border-t">
+          <div
+            class="
+              mt-5
+              sm:mt-6
+              text-right
+              px-3
+              py-4
+              border-t
+              flex
+              justify-end
+              space-x-4
+            "
+          >
             <slot name="buttons">
               <AntButton
                 label="Close"

@@ -17,10 +17,7 @@ export default {
 
     <slot default></slot>
 
-    <div
-      v-if="$slots['footer']"
-      class="px-4 py-4 space-x-4 border-t flex justify-end"
-    >
+    <div v-if="$slots['footer']" class="space-x-4 border-t flex justify-end">
       <slot name="footer"></slot>
     </div>
   </form>

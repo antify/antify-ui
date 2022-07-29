@@ -50,7 +50,7 @@ const _value = computed({
   },
   set: (val: UploadTarget) => {
     emit('update:value', val);
-    emit('upload', val.target?.files[0]);
+    emit('upload', val.target?.files);
 
     uploaded.value.src = URL.createObjectURL(val.target?.files[0]);
     uploaded.value.fileName = val.target?.files[0].name;

@@ -5,6 +5,7 @@ export default {
   title: 'Components/Forms/Ant Select',
   component: AntSelect,
   parameters: { controls: { sort: 'requiredFirst' } },
+  decorators: [() => ({ template: '<div class="m-2"><story/></div>' })],
   argTypes: {
     args: {
       description:
@@ -32,6 +33,18 @@ export default {
     value: {
       description: 'The reactive value of the select-field',
     },
+    validator: {
+      description:
+        'A function that provides a validator. This validator is called on blur',
+    },
+    isError: {
+      description:
+        'Sets the error state of the input field without giving a list of errors.',
+    },
+    errors: {
+      description: 'A list of error messages for the input field to display',
+      table: { type: { summary: 'string[]' } },
+    },
   },
 };
 
@@ -42,11 +55,30 @@ const Template = (args: any) => ({
 
     return { args, value };
   },
-  template: `<div class="m-2">
+  template: `
     <AntSelect v-bind="args" v-model:value="value"/>
     <span class="text-xs text-gray-400">Selected: {{value}}</span>
-    </div>`,
+    `,
 });
+
+const simpleOptions = [
+  {
+    label: 'Option 1',
+    value: '1',
+  },
+  {
+    label: 'Option 2',
+    value: '2',
+  },
+  {
+    label: 'Option 3',
+    value: '3',
+  },
+  {
+    label: 'Option 4',
+    value: '4',
+  },
+];
 
 /**
  * Primary use of input field.
@@ -56,24 +88,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   id: 'select-id-123456789',
   label: 'Select',
-  options: [
-    {
-      label: 'Option 1',
-      value: '1',
-    },
-    {
-      label: 'Option 2',
-      value: '2',
-    },
-    {
-      label: 'Option 3',
-      value: '3',
-    },
-    {
-      label: 'Option 4',
-      value: '4',
-    },
-  ],
+  options: simpleOptions,
 };
 
 /**
@@ -83,22 +98,20 @@ export const NoLabel = Template.bind({});
 // @ts-ignore
 NoLabel.args = {
   id: 'select-id-1234567891',
-  options: [
-    {
-      label: 'Option 1',
-      value: '1',
-    },
-    {
-      label: 'Option 2',
-      value: '2',
-    },
-    {
-      label: 'Option 3',
-      value: '3',
-    },
-    {
-      label: 'Option 4',
-      value: '4',
-    },
-  ],
+  options: simpleOptions,
 };
+
+export const Validated = (args: any) => ({
+  components: { AntSelect },
+  setup() {
+    const value = ref('');
+    args.options = simpleOptions;
+    args.errors = ['Do try me'];
+
+    return { args, value };
+  },
+  template: `
+  <AntSelect v-bind="args" v-model:value="value"/>
+  <span class="text-xs text-gray-400">Selected: {{value}}</span>
+  `,
+});

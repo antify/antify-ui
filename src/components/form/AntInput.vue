@@ -95,7 +95,7 @@ const validate = () => {
             :class="{
               'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500':
                 (errors && errors.length > 0) || isError,
-              'border-gray-300 placeholder-gray-400 focus:border-primary-light':
+              'border-gray-300 placeholder-gray-400 focus:border-primary focus:ring-primary':
                 (!errors || errors.length === 0) && !isError,
               'pl-10': leadingIcon,
             }"
@@ -111,8 +111,7 @@ const validate = () => {
               transition-all
               duration-300
               focus:outline-none
-              focus:ring-primary-light
-              focus:border-primary-light
+              focus:ring-primary
               sm:text-sm
               disabled:opacity-50
               disabled:cursor-not-allowed
