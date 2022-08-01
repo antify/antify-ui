@@ -19,9 +19,9 @@ const props =
     description?: string;
     options?: SelectOption[];
     value: string;
-    errors: string[];
-    isError: boolean;
-    validator: Function;
+    errors?: string[];
+    isError?: boolean;
+    validator?: Function;
   }>();
 
 const _id = ref(props.id || generateId(40));

@@ -51,6 +51,8 @@ import AntTable from './components/table/AntTable.vue';
 import AntBadge from './components/elements/AntBadge.vue';
 import AntBanner from './components/elements/AntBanner.vue';
 import AntToaster from './components/elements/AntToaster.vue';
+import AntLoader from './components/elements/AntLoader.vue';
+import AntSkeleton from './components/elements/AntSkeleton.vue';
 
 import AntNotFound from './components/pages/AntNotFound.vue';
 
@@ -98,6 +100,8 @@ export const AntifyUi = {
     vue.component(AntBadge.name, AntBadge);
     vue.component(AntBanner.name, AntBanner);
     vue.component(AntToaster.name, AntToaster);
+    vue.component(AntLoader.name, AntLoader);
+    vue.component(AntSkeleton.name, AntSkeleton);
     vue.component(AntAccordionWidget.name, AntAccordionWidget);
     vue.component(AntAccordionItem.name, AntAccordionItem);
     vue.component(AntLoginLayout.name, AntLoginLayout);
@@ -149,6 +153,8 @@ export {
   AntBadge,
   AntBanner,
   AntToaster,
+  AntLoader,
+  AntSkeleton,
   AntAccordionWidget,
   AntAccordionItem,
   AntLoginLayout,
