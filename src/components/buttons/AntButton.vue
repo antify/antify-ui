@@ -27,7 +27,7 @@ onMounted(() => {
 });
 
 const classes = computed(() => ({
-  'inline-flex items-center px-2.5 py-1.5 border font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all':
+  'inline-flex items-center px-2.5 py-1.5 border font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed':
     true,
   'text-white bg-primary hover:bg-primary focus:ring-primary': props.primary,
   'border-gray-300 text-gray-700 bg-white hover:bg-gray-50': !props.primary,
