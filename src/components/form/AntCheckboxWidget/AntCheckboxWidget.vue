@@ -19,6 +19,7 @@ const props =
     label?: string;
     description?: string;
     checkboxes: Checkbox[];
+    loading?: boolean;
   }>();
 
 const _id = ref<string>(props.id || generateId(40));
@@ -40,10 +41,6 @@ const _value = computed<Checkbox[]>({
           {{ label }}
         </legend>
       </slot>
-
-      <slot name="description">
-        <p class="text-sm leading-5 text-gray-500">{{ description }}</p>
-      </slot>
     </slot>
 
     <div
@@ -59,8 +56,13 @@ const _value = computed<Checkbox[]>({
         :description="checkbox.description"
         :legend="checkbox.legend"
         :color="checkbox.color"
-        class="relative flex items-start space-y-2"
+        :loading="loading"
+        class="relative flex items-start"
       />
     </div>
+
+    <slot name="description">
+      <p class="text-sm leading-5 text-gray-500">{{ description }}</p>
+    </slot>
   </div>
 </template>

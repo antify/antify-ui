@@ -4,8 +4,6 @@ export default {
 }
 </style>
 
-<script lang="ts" setup></script>
-
 <template>
-  <div class="bg-gray-300 animate-pulse rounded-full"></div>
+  <div class="bg-gray-300 animate-pulse"></div>
 </template>

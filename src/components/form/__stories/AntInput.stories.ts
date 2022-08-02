@@ -25,6 +25,14 @@ export default {
     description: {
       description: 'The description for the input',
     },
+    loading: {
+      description: 'Will show a skeleten instead of the input field, if true.',
+      table: {
+        defaultValue: {
+          summary: 'false',
+        },
+      },
+    },
     label: {
       description:
         'The main label for the input<br>can also be set via the named "label" slot',
@@ -239,6 +247,26 @@ Validated.args = {
   },
   errors: ['value can not be empty'],
 };
+
+/**
+ * Validation Icon.
+ */
+export const Loading = (args: any) => ({
+  components: { AntInput },
+  setup() {
+    const value = ref<string>('');
+
+    args.id = 'input-id-98765432146848';
+    args.value = '';
+    args.label = 'Loading';
+    args.loading = true;
+
+    return { args, value };
+  },
+  template: `
+    <AntInput v-bind="args" v-model:value="value"/>
+  `,
+});
 
 export const CustomEventHandlers = (args: any) => ({
   components: { AntInput },

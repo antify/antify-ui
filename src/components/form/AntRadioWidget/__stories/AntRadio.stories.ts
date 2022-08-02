@@ -66,6 +66,16 @@ UnChecked.args = {
   value: 'test',
 };
 
+export const WithDescription = Template.bind({});
+// @ts-ignore
+WithDescription.args = {
+  label: 'Test',
+  description: 'This is a description, that describes this radio-button.',
+  name: 'radio-group',
+  value: 'test',
+  checked: true,
+};
+
 export const Disabled = Template.bind({});
 // @ts-ignore
 Disabled.args = {
@@ -74,4 +84,27 @@ Disabled.args = {
   value: 'disabled',
   checked: true,
   disabled: true,
+};
+
+export const Loading = Template.bind({});
+// @ts-ignore
+Loading.args = {
+  label: 'Loading',
+  name: 'radio-group',
+  value: 'loading',
+  checked: true,
+  disabeld: false,
+  loading: true,
+};
+
+export const LoadingWithDescription = Template.bind({});
+// @ts-ignore
+LoadingWithDescription.args = {
+  label: 'Loading',
+  description: 'Describe',
+  name: 'radio-group',
+  value: 'loading',
+  checked: true,
+  disabeld: false,
+  loading: true,
 };

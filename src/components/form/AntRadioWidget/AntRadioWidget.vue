@@ -19,6 +19,8 @@ const props =
     legend?: string;
     radioButtons: RadioButton[];
     radioGroupName: string;
+    underneath?: boolean;
+    loading?: boolean;
   }>();
 
 const _value = computed({
@@ -33,33 +35,39 @@ const _value = computed({
 
 <template>
   <div>
-    <slot>
-      <slot name="label">
-        <label class="text-base font-medium text-gray-900">{{ label }}</label>
-      </slot>
+    <label class="block text-sm font-medium text-gray-700">
+      <slot name="label">{{ label }} </slot>
+    </label>
 
-      <slot name="description">
-        <p class="text-sm leading-5 text-gray-500">{{ description }}</p>
-      </slot>
-    </slot>
-
-    <fieldset class="mt-4">
+    <fieldset class="">
       <slot name="legend">
         <legend class="sr-only">{{ legend }}</legend>
       </slot>
 
-      <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+      <div
+        class="space-y-4 sm:flex"
+        :class="{
+          'flex-col items-start justify-start space-y-2 w-full': underneath,
+          'sm:items-center sm:space-y-0  sm:space-x-10': !underneath,
+        }"
+        v-bind="$attrs"
+      >
         <AntRadio
           v-for="(radio, index) in radioButtons"
-          v-bind="$attrs"
+          v-bind="radio"
           v-model:group-value="_value"
           :value="radio.value"
           :key="`radio-button-${radio.id}-${index}`"
           :id="radio.id"
           :label="radio.label"
           :name="radioGroupName"
+          :loading="loading"
         />
       </div>
     </fieldset>
+
+    <slot name="description">
+      <p class="text-sm leading-5 text-gray-500">{{ description }}</p>
+    </slot>
   </div>
 </template>

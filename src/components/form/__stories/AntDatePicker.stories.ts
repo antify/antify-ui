@@ -44,18 +44,38 @@ export const Localized = (args: any) => ({
   components: { AntDatePicker },
   setup() {
     const value = ref(new Date(0));
-
-    return { value };
+    args.label = 'Datepicker DE';
+    args.locale = 'de';
+    args.cancelText = 'Abbrechen';
+    args.selectText = 'Auswählen';
+    args.format = 'dd.MM.yyyy';
+    return { args, value };
   },
   template: `
   <div class="m-2">
     <AntDatePicker
       v-model:value="value"
-      label="Datepicker"
-      locale="de" 
-      cancelText="Abbrechen"
-      selectText="Auswählen"
-      format="dd.MM.yyyy"
+      v-bind="args"
+     />
+  </div>`,
+});
+
+export const Loading = (args: any) => ({
+  components: { AntDatePicker },
+  setup() {
+    const value = ref(new Date(0));
+
+    args.label = 'Label';
+    args.description = 'description';
+    args.loading = true;
+
+    return { args, value };
+  },
+  template: `
+  <div class="m-2">
+    <AntDatePicker
+      v-model:value="value"
+      v-bind="args"
      />
   </div>`,
 });

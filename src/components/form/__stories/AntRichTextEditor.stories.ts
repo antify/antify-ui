@@ -4,6 +4,7 @@ import { ref } from 'vue';
 export default {
   title: 'Components/Forms/Ant Rich Text Editor',
   component: AntRichTextEditor,
+  decorators: [() => ({ template: '<div class="m-2"><story/></div>' })],
   argTypes: {
     args: {
       description:
@@ -102,13 +103,20 @@ const WithDefaultContentTemplate = (args: any) => ({
 
     return { args, data };
   },
-  template: `<div class='m-2'>
+  template: `
   <AntRichTextEditor v-bind="args" v-model:data="data"/>
   <span class="text-xs text-gray-400">Reactive value: {{data}}</span>
-  </div>`,
+  `,
 });
 export const WithDefaultContent = WithDefaultContentTemplate.bind({});
 // @ts-ignore
 WithDefaultContent.args = {
   label: 'This is a Rich Text Editor with content',
+};
+
+export const Loading = Template.bind({});
+// @ts-ignore
+Loading.args = {
+  label: 'Loading test',
+  loading: true,
 };

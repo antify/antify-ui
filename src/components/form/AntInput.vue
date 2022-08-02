@@ -7,6 +7,7 @@ export default {
 
 <script setup lang="ts">
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import AntSkeleton from '../elements/AntSkeleton.vue';
 import { ref, computed } from 'vue';
 import { generateId } from '../../utils/helper';
 
@@ -25,6 +26,7 @@ const props =
     validator?: Function;
     errors?: string[];
     isError?: boolean;
+    loading?: boolean;
   }>();
 
 const _id = ref(props.id ? props.id : generateId(40));
@@ -49,7 +51,7 @@ const validate = () => {
 </script>
 
 <template>
-  <div class="w-full">
+  <div v-if="!loading" class="w-full">
     <div class="relative">
       <label
         v-if="label || $slots['label']"
@@ -162,5 +164,19 @@ const validate = () => {
         {{ description }}
       </template>
     </div>
+  </div>
+
+  <div v-else>
+    <AntSkeleton
+      v-if="label || $slots['label']"
+      class="w-2/6 h-4 rounded-md mb-1"
+    />
+
+    <AntSkeleton class="w-full h-8 rounded-md" />
+
+    <AntSkeleton
+      v-if="description || $slots['description']"
+      class="w-4/6 h-4 rounded-md mt-1"
+    />
   </div>
 </template>

@@ -115,3 +115,17 @@ export const Validated = (args: any) => ({
   <span class="text-xs text-gray-400">Selected: {{value}}</span>
   `,
 });
+
+export const Loading = (args: any) => ({
+  components: { AntSelect },
+  setup() {
+    const value = ref('');
+    args.options = simpleOptions;
+    args.loading = true;
+
+    return { args, value };
+  },
+  template: `
+  <AntSelect v-bind="args" v-model:value="value"/>
+  `,
+});

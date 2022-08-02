@@ -10,6 +10,7 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { SelectOption } from '../../types/SelectOption.type';
 import { ref, computed } from 'vue';
 import { generateId } from '../../utils/helper';
+import AntSkeleton from '../elements/AntSkeleton.vue';
 
 const emit = defineEmits(['update:value']);
 const props =
@@ -22,6 +23,7 @@ const props =
     errors?: string[];
     isError?: boolean;
     validator?: Function;
+    loading?: boolean;
   }>();
 
 const _id = ref(props.id || generateId(40));
@@ -42,7 +44,7 @@ function validate() {
 </script>
 
 <template>
-  <div>
+  <div v-if="!loading">
     <label :for="_id">
       <slot>
         <span class="block text-sm font-medium text-gray-700">{{ label }}</span>
@@ -125,5 +127,19 @@ function validate() {
         {{ description }}
       </template>
     </div>
+  </div>
+
+  <div v-else>
+    <AntSkeleton
+      v-if="label || $slots['label']"
+      class="w-2/6 h-4 rounded-md mb-1"
+    />
+
+    <AntSkeleton class="w-full h-8 rounded-md" />
+
+    <AntSkeleton
+      v-if="description || $slots['description']"
+      class="w-4/6 h-4 rounded-md mt-1"
+    />
   </div>
 </template>

@@ -7,6 +7,7 @@ export default {
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { generateId } from '../../../utils/helper';
+import AntSkeleton from '../../elements/AntSkeleton.vue';
 
 const emit = defineEmits(['update:checked']);
 
@@ -19,6 +20,7 @@ const props =
     description?: string;
     legend?: string;
     color?: string;
+    loading?: boolean;
   }>();
 
 const _id = ref(props.id ? props.id : generateId(40));
@@ -35,7 +37,7 @@ const _checked = computed({
 </script>
 
 <template>
-  <fieldset>
+  <fieldset v-if="!loading">
     <slot name="legend">
       <legend class="sr-only">{{ legend }}</legend>
     </slot>
@@ -74,4 +76,20 @@ const _checked = computed({
       </slot>
     </div>
   </fieldset>
+
+  <div v-else>
+    <div class="flex justify-start w-full mb-1">
+      <AntSkeleton class="w-4 h-4 rounded-md" />
+
+      <AntSkeleton
+        v-if="label || $slots['label']"
+        class="w-2/6 h-4 rounded-md ml-4"
+      />
+    </div>
+
+    <AntSkeleton
+      v-if="description || $slots['description']"
+      class="w-4/6 h-4 rounded-md mt-1"
+    />
+  </div>
 </template>

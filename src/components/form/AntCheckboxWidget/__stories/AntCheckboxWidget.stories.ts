@@ -132,3 +132,68 @@ export const Simple = (args: any) => ({
   </div>
   `,
 });
+
+export const Loading = (args: any) => ({
+  components: { AntCheckboxWidget },
+  setup() {
+    const elems = ref([
+      {
+        id: '1',
+        value: '1',
+      },
+      {
+        id: '2',
+        value: '2',
+      },
+      {
+        id: '4',
+        value: '4',
+      },
+      {
+        id: '5',
+        value: '5',
+      },
+    ]);
+    const checkboxes = ref<Checkbox[]>([
+      {
+        value: { ...elems.value[0] },
+        label: '1',
+      },
+      {
+        value: { ...elems.value[1] },
+        label: '2',
+      },
+      {
+        value: {
+          id: '3',
+          value: '3',
+        },
+        label: '3',
+      },
+      {
+        value: { ...elems.value[2] },
+        label: '4',
+      },
+      {
+        value: { ...elems.value[3] },
+        label: '5',
+      },
+    ]);
+
+    args.loading = true;
+
+    return { args, checkboxes, elems };
+  },
+  template: `
+  <div class="w-full">
+    <AntCheckboxWidget label="Checkboxes" v-bind="args" v-model:value="elems" :checkboxes="checkboxes" class="w-full"/>
+
+    <div class="text-xs text-gray-500 mt-8">
+      <div>Reactive values:</div>
+      <pre>
+        {{elems}}
+      </pre>
+    </div>
+  </div>
+  `,
+});

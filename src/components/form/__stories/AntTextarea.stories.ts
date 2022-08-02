@@ -49,3 +49,11 @@ Simple.args = {
   id: 'textarea-12341887',
   label: 'Textarea',
 };
+
+export const Loading = Template.bind({});
+// @ts-ignore
+Loading.args = {
+  label: 'loading',
+  description: 'it is loading',
+  loading: true,
+};

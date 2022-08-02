@@ -72,6 +72,15 @@ export const Disabled = Template.bind({});
 // @ts-ignore
 Disabled.args = {
   label: 'Disabled',
+  description: 'I am disabled',
   disabled: true,
+  value: true,
+};
+
+export const Loading = Template.bind({});
+// @ts-ignore
+Loading.args = {
+  label: 'Disabled',
+  loading: true,
   value: true,
 };
