@@ -20,6 +20,7 @@ const props =
 const _mainBgColor = ref<string>(props.mainBgColor || 'primary-light');
 const _secondaryBgColor = ref<string>(props.secondaryBgColor || 'primary');
 const _textColor = ref<string>(props.textColor || 'white');
+
 const _size = computed(() => {
   return props.size === 'medium'
     ? 'text-sm'

@@ -1,7 +1,6 @@
 <script lang="ts">
 export default {
   name: 'AntModal',
-  inheritAttrs: false,
 };
 </script>
 

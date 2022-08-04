@@ -20,6 +20,7 @@ import AntInput from './components/form/AntInput.vue';
 import AntProgress from './components/elements/AntProgress.vue';
 import AntRichTextEditor from './components/form/AntRichTextEditor.vue';
 import AntSelect from './components/form/AntSelect.vue';
+import AntSearchSelect from './components/form/AntSearchSelect.vue';
 import AntTextarea from './components/form/AntTextarea.vue';
 import AntUpload from './components/form/AntUpload.vue';
 
@@ -80,6 +81,7 @@ export const AntifyUi = {
     vue.component(AntProgress.name, AntProgress);
     vue.component(AntRichTextEditor.name, AntRichTextEditor);
     vue.component(AntSelect.name, AntSelect);
+    vue.component(AntSearchSelect.name, AntSearchSelect);
     vue.component(AntTextarea.name, AntTextarea);
     vue.component(AntUpload.name, AntUpload);
     vue.component(AntLogo.name, AntLogo);
@@ -133,6 +135,7 @@ export {
   AntProgress,
   AntRichTextEditor,
   AntSelect,
+  AntSearchSelect,
   AntTextarea,
   AntUpload,
   AntLogo,

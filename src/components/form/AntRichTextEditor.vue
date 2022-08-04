@@ -6,7 +6,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, watch } from 'vue';
 import { useEditor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -27,6 +27,7 @@ const props =
     errors?: string[];
     isError?: boolean;
     loading?: boolean;
+    disabled?: boolean;
   }>();
 
 const _data = computed({
@@ -57,7 +58,15 @@ const editor = ref(
         props.validator(_data.value);
       }
     },
+    editable: !props.disabled,
   })
+);
+
+watch(
+  () => props.disabled,
+  () => {
+    editor.value?.setOptions({ editable: !props.disabled });
+  }
 );
 
 onUnmounted(() => editor?.value?.destroy());
@@ -92,8 +101,9 @@ onUnmounted(() => editor?.value?.destroy());
                 '!bg-gray-200': editor.isActive('heading', { level: 1 }),
               }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
-              <span class="">H1</span>
+              <span>H1</span>
             </AntButton>
 
             <AntButton
@@ -106,6 +116,7 @@ onUnmounted(() => editor?.value?.destroy());
                 '!bg-gray-200': editor.isActive('heading', { level: 2 }),
               }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
               <span class="">H2</span>
             </AntButton>
@@ -120,6 +131,7 @@ onUnmounted(() => editor?.value?.destroy());
                 '!bg-gray-200': editor.isActive('heading', { level: 3 }),
               }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
               <span class="">H3</span>
             </AntButton>
@@ -132,6 +144,7 @@ onUnmounted(() => editor?.value?.destroy());
               "
               :class="{ '!bg-gray-200': editor.isActive('bold') }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
               <span class="font-bold">B</span>
             </AntButton>
@@ -144,6 +157,7 @@ onUnmounted(() => editor?.value?.destroy());
               "
               :class="{ '!bg-gray-200': editor.isActive('italic') }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
               <span class="italic">I</span>
             </AntButton>
@@ -156,6 +170,7 @@ onUnmounted(() => editor?.value?.destroy());
               "
               :class="{ '!bg-gray-200': editor.isActive('underline') }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
               <span class="underline">U</span>
             </AntButton>
@@ -168,6 +183,7 @@ onUnmounted(() => editor?.value?.destroy());
               "
               :class="{ '!bg-gray-200': editor.isActive('strike') }"
               class="hover:bg-gray-200 border-none"
+              :disabled="disabled"
             >
               <span class="line-through">S</span>
             </AntButton>

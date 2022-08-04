@@ -108,10 +108,18 @@ const WithDefaultContentTemplate = (args: any) => ({
   <span class="text-xs text-gray-400">Reactive value: {{data}}</span>
   `,
 });
+
 export const WithDefaultContent = WithDefaultContentTemplate.bind({});
 // @ts-ignore
 WithDefaultContent.args = {
   label: 'This is a Rich Text Editor with content',
+};
+
+export const Disabled = WithDefaultContentTemplate.bind({});
+// @ts-ignore
+Disabled.args = {
+  label: 'Disabled test',
+  disabled: true,
 };
 
 export const Loading = Template.bind({});
