@@ -14,6 +14,7 @@ import {
   faList,
   faTableCellsLarge,
 } from '@fortawesome/free-solid-svg-icons';
+import AntSearchField from '../../form/AntSearchField.vue';
 
 const emit = defineEmits(['search']);
 
@@ -30,13 +31,7 @@ const _search = computed<string>({
     return search.value;
   },
   set: (val) => {
-    if (interval) {
-      clearTimeout(interval);
-    }
-
-    interval = setTimeout(() => {
-      emit('search', val);
-    }, 300);
+    emit('search', val);
   },
 });
 </script>
@@ -84,7 +79,7 @@ const _search = computed<string>({
 
       <div>
         <slot name="searchField">
-          <AntInput
+          <AntSearchField
             v-model:value="_search"
             :leading-icon="faMagnifyingGlass"
             :placeholder="searchPlaceholder || 'Search'"

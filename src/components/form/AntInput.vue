@@ -1,15 +1,20 @@
 <script lang="ts">
+import { antfocus } from '../../utils/helper';
+
 export default {
   name: 'AntInput',
   inheritAttrs: false,
+  directives: {
+    antfocus,
+  },
 };
 </script>
 
 <script setup lang="ts">
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import AntSkeleton from '../elements/AntSkeleton.vue';
 import { ref, computed } from 'vue';
 import { generateId } from '../../utils/helper';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import AntSkeleton from '../elements/AntSkeleton.vue';
 
 const emit = defineEmits(['update:value']);
 
@@ -27,6 +32,7 @@ const props =
     errors?: string[];
     isError?: boolean;
     loading?: boolean;
+    focus?: boolean;
   }>();
 
 const _id = ref(props.id ? props.id : generateId(40));
@@ -118,6 +124,7 @@ const validate = () => {
               disabled:opacity-50
               disabled:cursor-not-allowed
             "
+            v-antfocus="focus"
             @blur="validate"
           />
 
