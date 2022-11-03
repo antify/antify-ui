@@ -6,7 +6,6 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-const active = ref<boolean>(false);
 import {
   faFilePdf,
   faFileImage,
@@ -22,6 +21,8 @@ const props =
     type?: string;
     icon?: IconDefinition;
   }>();
+
+const active = ref<boolean>(false);
 
 const _icon = computed<IconDefinition | null>(() => {
   if (
