@@ -53,6 +53,9 @@ export const Simple = (args: any) => ({
         title: 'some file.txt',
       },
       {
+        title: 'some PDF.pdf',
+      },
+      {
         icon: faFile,
         title: 'some other file.txt',
       },
@@ -78,10 +81,10 @@ export const Simple = (args: any) => ({
     <div class="m-2">
       <AntMediathek v-bind="args" class="space-x-4 mt-4">
         <template #default={style}>
-          <AntMediathekItem v-for="item in items" class="w-full">
+          <AntMediathekItem v-for="item in items" :title="item.title" class="w-full">
             <template #icon>
-              <img v-if="item.imageSrc" :src="item.imageSrc" />
-              <fa-icon v-else :icon="item.icon" />
+              <img v-if="item.imageSrc" :src="item.imageSrc" :alt="item.title" />
+              <fa-icon v-else-if="item.icon" :icon="item.icon" class="text-gray-400"/>
             </template>
             <template #title>
               <span :title="item.title">{{item.title}}</span>

@@ -10,3 +10,7 @@ export const generateId = (length: number) => {
 
   return result;
 };
+
+export const antfocus = {
+  mounted: (el: HTMLElement) => el.focus(),
+};

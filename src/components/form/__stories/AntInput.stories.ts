@@ -109,6 +109,14 @@ export default {
         },
       },
     },
+    focus: {
+      description: 'Sets the input focus',
+      table: {
+        defaultValue: {
+          summary: false,
+        },
+      },
+    },
   },
 };
 
@@ -134,6 +142,7 @@ Primary.args = {
   id: 'input-id-123456789',
   value: '',
   label: 'Input',
+  focus: true,
 };
 
 /**

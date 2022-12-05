@@ -7,10 +7,13 @@ export default {
 
 <script lang="ts" setup>
 import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
+import {AntSkeleton} from "../../index";
 
 defineProps<{
   headers: TableHeader[];
   data: any[];
+  rowHover: boolean;
+  loading: boolean;
 }>();
 </script>
 
@@ -58,13 +61,13 @@ defineProps<{
                 </tr>
               </thead>
 
-              <tbody class="divide-y divide-gray-200 bg-white">
+              <tbody v-if="!loading" class="divide-y divide-gray-200 bg-white">
                 <tr
                   v-for="(elem, index) in data"
                   :key="`table-row-${elem.id}-${index}`"
                   :id="elem.id"
-                  class="target:bg-gray-200"
-                  :class="{ 'bg-gray-200': elem.active }"
+                  class="target:bg-gray-200 transition-all"
+                  :class="{ 'bg-gray-200': elem.active, 'hover:bg-gray-300 cursor:pointer' : rowHover }"
                 >
                   <td
                     v-for="(header, index) in headers"
@@ -131,7 +134,7 @@ defineProps<{
                     </div>
 
                     <div v-else-if="header.type === ROW_TYPES.SLOT">
-                      <slot name="cellContent" v-bind="{ elem }"></slot>
+                      <slot name="cellContent" v-bind="{ elem, header }"></slot>
                     </div>
 
                     <slot
@@ -158,6 +161,20 @@ defineProps<{
                     </td>
                   </slot>
                 </tr>
+              </tbody>
+
+              <tbody v-else class="divide-y divide-gray-200 bg-white">
+                <slot name="loadingRow">
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                  <tr><td colspan="99"><AntSkeleton class="bg-gray-200 animate-pulse m-1 h-6"/></td></tr>
+                </slot>
               </tbody>
             </table>
           </div>

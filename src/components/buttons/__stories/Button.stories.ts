@@ -28,6 +28,10 @@ export default {
       description:
         'Will be displayed behind the label or the default slot.<br>Use Font-awesome Icons.',
     },
+    to: {
+      control: {type: 'LocationAsRelativeRaw'},
+      description: 'If provided transforms the button into an a-tag with the provided link. Style is still the same as a button.'
+    }
   },
 };
 
@@ -76,3 +80,18 @@ WithIcon.args = {
   label: 'Button',
   icon: faCaretRight,
 };
+
+export const AsLink = (args: any) => ({
+  // Components used in your story `template` are defined in the `components` object
+  components: { AntButton },
+  // The story's `args` need to be mapped into the template through the `setup()` method
+  setup() {
+    return {
+      primary: true,
+      label: 'Button',
+      to: '/link'
+    };
+  },
+  // And then the `args` are bound to your component with `v-bind="args"`
+  template: '<div class="m-2"><AntButton :primary="primary" :label="label" :to="to"/></div>',
+});

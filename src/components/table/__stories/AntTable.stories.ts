@@ -1,10 +1,10 @@
 import AntTable from '../AntTable.vue';
-import { ROW_TYPES } from '../../../types/TableHeader.type';
+import {ROW_TYPES} from '../../../types/TableHeader.type';
 
 export default {
   title: 'Components/Table/Ant Table',
   component: AntTable,
-  parameters: { controls: { sort: 'requiredFirst' } },
+  parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     args: {
       description:
@@ -34,49 +34,67 @@ export default {
       description:
         'List of rows to be displayed in the table. The properties of the elements need to be equal to the identifier of a table row for it to be displayed<br>They will be updated as they are beeing moved inside the table.',
     },
+    rowHover: {
+      description: 'If true will enable hover effects for each row.'
+    },
+    loading: {
+      description: 'If true will display skeleton rows instead of an empty table.'
+    },
     afterRowContent: {
       description:
         'Slot to add custom elements to all cells. Gets {elem, header} as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     beforeRowContent: {
       description:
         'Slot to add custom elements to all cells. Gets {elem, header} as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     emptyState: {
       description: 'Place for custom empty states.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     headerContent: {
       description:
         'Overwrite for the default header items. Gets header as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     headerLastCell: {
       description: 'Space to add cells to the header.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     rowLastCell: {
       description:
         'Space to add cells to all rows. Gets the current element as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
+    cellContent: {
+      description: 'Is used if the ROW_TYPE = "SLOT". Gets the current element and the header element to identifier witch cell is currently displayed.',
+      table: {
+        type: {summary: 'HTML'}
+      }
+    },
+    loadingRow: {
+      description: 'Slot to overwrite the default loading skeleton.',
+      table: {
+        type: {summary: 'HTML'}
+      }
+    }
   },
 };
 
 const Template = (args: any) => ({
-  components: { AntTable },
+  components: {AntTable},
   setup() {
-    return { args };
+    return {args};
   },
   template: `
-  <div class="h-96">
-    <AntTable v-bind="args" >
+    <div class="h-96">
+    <AntTable v-bind="args">
       <template #emptyState>
       </template>
     </AntTable>
-  </div>
+    </div>
   `,
 });
 
@@ -126,6 +144,7 @@ Primary.args = {
     },
   ],
   data: testData,
+  rowHover: true,
 };
 
 /**
@@ -255,4 +274,33 @@ EmptyState.args = {
     },
   ],
   data: [],
+};
+
+export const LoadingState = Template.bind({});
+// @ts-ignore
+LoadingState.args = {
+  headers: [
+    {
+      title: 'Name',
+      identifier: 'name',
+      headerClassList: 'font-bold',
+      rowClassList: '',
+      type: ROW_TYPES.TEXT,
+    },
+    {
+      title: 'Title',
+      identifier: 'title',
+      headerClassList: '',
+      rowClassList: '',
+      type: ROW_TYPES.TEXT,
+    },
+    {
+      title: 'E-Mail',
+      identifier: 'email',
+      rowClassList: '',
+      type: ROW_TYPES.TEXT,
+    },
+  ],
+  data: [],
+  loading: true
 };

@@ -5,8 +5,42 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import {
+  faFilePdf,
+  faFileImage,
+  faFile,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+
+const emit = defineEmits(['update:icon']);
+
+const props =
+  defineProps<{
+    title?: string;
+    type?: string;
+    icon?: IconDefinition;
+  }>();
+
 const active = ref<boolean>(false);
+
+const _icon = computed<IconDefinition | null>(() => {
+  if (
+    (props.type && props.type === 'pdf') ||
+    (props.title && props.title.endsWith('.pdf'))
+  ) {
+    return (props.icon as IconDefinition) || faFilePdf;
+  }
+
+  if (
+    (props.type && props.type === 'image') ||
+    (props.title && props.title.match(/.*(\.jpg|\.png|\.gif|\.jpeg)/gm))
+  ) {
+    return (props.icon as IconDefinition) || faFileImage;
+  }
+
+  return (props.icon as IconDefinition) || faFile;
+});
 </script>
 
 <template>
@@ -34,11 +68,13 @@ const active = ref<boolean>(false);
         overflow-hidden
       "
     >
-      <slot name="icon"></slot>
+      <slot name="icon">
+        <fa-icon v-if="_icon" :icon="_icon" class="text-gray-400" />
+      </slot>
     </div>
 
     <div
-      v-if="$slots['title']"
+      v-if="$slots['title'] || title"
       class="
         bg-white
         border-t
@@ -52,7 +88,7 @@ const active = ref<boolean>(false);
       "
     >
       <div class="overflow-hidden overflow-ellipsis h-full">
-        <slot name="title"></slot>
+        <slot name="title">{{ title }}</slot>
       </div>
     </div>
   </div>

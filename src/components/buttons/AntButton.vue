@@ -7,6 +7,7 @@ export default {
 <script lang="ts" setup>
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { computed, onMounted } from 'vue';
+import { LocationAsRelativeRaw } from 'vue-router';
 
 const emit = defineEmits(['click']);
 const props =
@@ -16,6 +17,7 @@ const props =
     size?: string;
     backgroundColor?: string;
     icon?: IconDefinition;
+    to?: LocationAsRelativeRaw;
   }>();
 
 onMounted(() => {
@@ -46,6 +48,7 @@ const onClick = () => {
 
 <template>
   <button
+    v-if="!to"
     v-bind="$attrs"
     :class="classes"
     :style="style"
@@ -56,4 +59,17 @@ const onClick = () => {
 
     <fa-icon v-if="icon" class="pl-2" :icon="icon" />
   </button>
+
+  <router-link
+    v-else
+    v-bind="$attrs"
+    :to="to"
+    :class="classes"
+    :style="style"
+    type="button"
+  >
+    <slot>{{label}}</slot>
+
+    <fa-icon v-if="icon" class="pl-2" :icon="icon"/>
+  </router-link>
 </template>

@@ -5,10 +5,10 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { faArrowsUpDown, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { SelectOption } from '../../types/SelectOption.type';
-import { generateId } from '../../utils/helper';
+import {ref, computed, onMounted, onUnmounted} from 'vue';
+import {faArrowsUpDown, faCheck} from '@fortawesome/free-solid-svg-icons';
+import {SelectOption} from '../../types/SelectOption.type';
+import {generateId} from '../../utils/helper';
 import AntSkeleton from '../elements/AntSkeleton.vue';
 
 const emit = defineEmits(['update:value', 'selectOption']);
@@ -76,7 +76,6 @@ function changeInput() {
 }
 
 function deFocusAllOptions() {
-  console.log('Defocus?');
   currentActive.value = -1;
 }
 
@@ -88,7 +87,7 @@ function setFocus(index: number) {
   }
 }
 
-function focusNext(event: KeyboardEvent) {
+function focusNext() {
   // show if not already shownAntSearchSelect
   showOptions.value = true;
 
@@ -102,7 +101,7 @@ function focusNext(event: KeyboardEvent) {
   }, 1);
 }
 
-function focusPrev(event: KeyboardEvent) {
+function focusPrev() {
   // show if not already shown
   showOptions.value = true;
 
@@ -186,7 +185,7 @@ onUnmounted(() => {
         @click="showOptions = !showOptions"
       >
         <slot name="openIcon">
-          <fa-icon :icon="faArrowsUpDown" class="h-5 w-5 text-gray-400" />
+          <fa-icon :icon="faArrowsUpDown" class="h-5 w-5 text-gray-400"/>
         </slot>
       </button>
 
@@ -257,7 +256,7 @@ onUnmounted(() => {
             class="absolute inset-y-0 right-0 flex items-center pr-4"
           >
             <slot name="selectedIcon">
-              <fa-icon :icon="faCheck" class="h-5 w-5 text-primary" />
+              <fa-icon :icon="faCheck" class="h-5 w-5 text-primary"/>
             </slot>
           </span>
         </li>
@@ -296,7 +295,7 @@ onUnmounted(() => {
       class="w-2/6 h-4 rounded-md mb-1"
     />
 
-    <AntSkeleton class="w-full h-8 rounded-md" />
+    <AntSkeleton class="w-full h-8 rounded-md"/>
 
     <AntSkeleton
       v-if="description || $slots['description']"
