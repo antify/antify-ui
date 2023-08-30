@@ -8,7 +8,7 @@ export default {
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import AntPasswordField from './AntPasswordField.vue';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+// import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { generateId } from '../../../utils/helper';
 
 const emit = defineEmits([
@@ -30,7 +30,7 @@ const props =
     errorsPassword: string[];
     errorsPasswordRepeat: string[];
     description?: string;
-    leadingIcon?: IconDefinition;
+    leadingIcon?: unknown;
     overlappingLabel?: boolean;
     showPassword?: boolean;
     isErrorPassword?: boolean;

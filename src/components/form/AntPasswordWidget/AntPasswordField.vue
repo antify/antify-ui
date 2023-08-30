@@ -7,7 +7,7 @@ export default {
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { faEye, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+// import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { generateId } from '../../../utils/helper';
 
 const emit = defineEmits(['update:password']);
@@ -20,7 +20,7 @@ const props =
     validator?: Function;
     description?: string;
     placeholder?: string;
-    leadingIcon?: IconDefinition;
+    leadingIcon?: unknown;
     overlappingLabel?: boolean;
     showPassword?: boolean;
     isError?: boolean;
