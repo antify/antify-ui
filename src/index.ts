@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import AntButton from './components/form/AntButton.vue';
-import CreateButton from './components/buttons/CreateButton.vue';
-import DeleteButton from './components/buttons/DeleteButton.vue';
-
 import AntDraggable from './components/dragDrop/AntDraggable.vue';
 import AntDropzone from './components/dragDrop/AntDropzone.vue';
 
+import AntButton from './components/form/AntButton.vue';
 import AntForm from './components/form/AntForm.vue';
 import AntPasswordField from './components/form/AntPasswordWidget/AntPasswordField.vue';
 import AntPasswordWidget from './components/form/AntPasswordWidget/AntPasswordWidget.vue';
