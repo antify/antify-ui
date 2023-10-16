@@ -7,7 +7,7 @@ export default {
 <script lang="ts" setup>
 /**
  * Notes:
- * - If skeleton is true, the whole content of the button get rendered and the skeleton just overlays about it.
+ * If skeleton is true, the whole content of the button get rendered and the skeleton just overlays about it.
  * This gives the ability to show the correct size of the button but just in skeleton state.
  */
 import type {IconDefinition} from '@fortawesome/fontawesome-common-types';
@@ -35,12 +35,12 @@ const props = withDefaults(defineProps<{
   color?: Color;
   iconLeft?: IconDefinition;
   iconRight?: IconDefinition;
-  to?: LocationAsRelativeRaw;
+  to?: LocationAsRelativeRaw | string;
   disabled?: boolean;
   grouped?: Grouped;
   skeleton?: false;
 }>(), {
-  color: 'primary',
+  color: 'neutral-light',
   disabled: false,
   outline: false,
   skeleton: false,
@@ -56,16 +56,19 @@ const groupedClassList = computed(() => ({
 }))
 const classes = computed(() => {
   const classes = {
-    'transition-all duration-300 inline-flex items-center font-md relative border-none': true,
-    'focus:outline-none focus:ring-4': true,
+    'transition-all duration-300 inline-flex items-center relative': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': true,
-    'text-xs focus:ring-2': props.size === 'sm',
+    'focus:ring-2': props.size === Size.sm,
+    'focus:ring-4': props.size === Size.md,
     ...groupedClassList.value
   };
 
   classes[`focus:ring-${props.color}/25`] = true;
   classes[`text-${props.color}-font bg-${props.color}`] = !props.outline;
-  classes[`text-${props.color} bg-neutral-lightest`] = props.outline;
+  classes[`bg-neutral-lightest`] = props.outline;
+  classes[`text-${props.color}`] = props.outline && props.color !== Color.neutralLight;
+  // The neutral light version would have text-neutral-light but this its to bright. Use text-neutral instead.
+  classes[`text-neutral`] = props.outline && props.color === Color.neutralLight;
   classes[`hover:bg-${props.color}`] = props.outline && !props.disabled;
 
   return classes;
@@ -76,8 +79,9 @@ const skeletonClasses = computed(() => ({
 }));
 const buttonContentClasses = computed(() => {
   const classes = {
-    'inline-flex items-center justify-center gap-1 py-2.5 px-3.5 transition-colors duration-300': true,
-    'is-outline': props.outline,
+    'd-block w-full inline-flex items-center justify-center transition-colors duration-300 font-medium': true,
+    'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
+    'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
     'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !props.disabled,
     'hover:bg-white/75': props.outline && !props.disabled,
     'hover:bg-black/25': !props.outline && !props.disabled,
@@ -92,6 +96,10 @@ const buttonContentClasses = computed(() => {
 
   return classes;
 });
+const iconClasses = computed(() => ({
+  'h-4': props.size === Size.sm,
+  'h-5': props.size === Size.md,
+}));
 const attrs = computed(() => {
   const _attrs = {};
 
@@ -133,14 +141,14 @@ onMounted(() => {
     <span
         :class="buttonContentClasses"
     >
-      <slot name="icon-right">
-        <fa-icon v-if="iconLeft" :icon="iconLeft"/>
+      <slot name="icon-left">
+        <fa-icon v-if="iconLeft" :icon="iconLeft" :class="iconClasses"/>
       </slot>
 
       <slot/>
 
-      <slot name="icon-left">
-        <fa-icon v-if="iconRight" :icon="iconRight"/>
+      <slot name="icon-right">
+        <fa-icon v-if="iconRight" :icon="iconRight" :class="iconClasses"/>
       </slot>
     </span>
   </component>

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import AntButton from './components/buttons/AntButton.vue';
+import AntButton from './components/form/AntButton.vue';
 import CreateButton from './components/buttons/CreateButton.vue';
 import DeleteButton from './components/buttons/DeleteButton.vue';
 

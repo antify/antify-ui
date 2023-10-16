@@ -6,7 +6,7 @@ export default {
 
 <script lang="ts" setup>
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import AntButton from '../buttons/AntButton.vue';
+import AntButton from '../form/AntButton.vue';
 import AntHeader from './AntHeader.vue';
 
 defineEmits(['update:active']);

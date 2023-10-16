@@ -1,7 +1,7 @@
 import AntContent from '../AntContent.vue';
 import AntTabs from '../../navigation/tabs/AntTabs.vue';
 import AntTable from '../../table/AntTable.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { WithImage } from '../../table/__stories/AntTable.stories';
 
 export default {

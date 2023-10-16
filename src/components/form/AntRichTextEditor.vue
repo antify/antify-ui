@@ -11,7 +11,7 @@ import { useEditor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Heading from '@tiptap/extension-heading';
-import AntButton from '../buttons/AntButton.vue';
+import AntButton from './AntButton.vue';
 import AntSkeleton from '../elements/AntSkeleton.vue';
 import { generateId } from '../../utils/helper';
 

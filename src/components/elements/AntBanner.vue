@@ -11,7 +11,7 @@ import {
   faBullhorn,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import AntButton from '../buttons/AntButton.vue';
+import AntButton from '../form/AntButton.vue';
 
 const props =
   defineProps<{

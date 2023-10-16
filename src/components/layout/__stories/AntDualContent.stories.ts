@@ -2,7 +2,7 @@ import AntDualContent from '../AntDualContent.vue';
 import AntInput from '../../form/AntInput.vue';
 import AntTabs from '../../navigation/tabs/AntTabs.vue';
 import AntTable from '../../table/AntTable.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { SingleHeader } from '../../table/__stories/AntTable.stories';
 
 export default {

@@ -1,11 +1,12 @@
 import AntButton from '../AntButton.vue';
-import {faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {faCaretRight, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../enums/Size.enum';
+import _Grouped from '../../../enums/Grouped.enum';
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 const meta: Meta<typeof AntButton> = {
-    title: 'Components/Buttons/Ant Button',
+    title: 'Components/Forms/Ant Button',
     component: AntButton,
     parameters: {controls: {sort: 'requiredFirst'}},
     // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
@@ -27,22 +28,17 @@ const meta: Meta<typeof AntButton> = {
                 'warning'
             ],
             description: 'The buttons color sheme',
-            table: {defaultValue: {summary: 'primary'}},
+            table: {defaultValue: {summary: 'neutral-light'}},
         },
         grouped: {
             control: {type: 'select'},
-            options: [
-                'none',
-                'left',
-                'center',
-                'right',
-            ],
+            options: Object.values(_Grouped),
             mapping: {
                 'none': undefined
             },
             description: 'Which part of a group the button is',
             table: {
-                defaultValue: {summary: 'none'},
+                defaultValue: {summary: _Grouped.none},
                 type: {summary: 'string'},
             },
         },
@@ -99,7 +95,7 @@ export const Docs: Story = {
         disabled: false,
         size: 'md',
         skeleton: false,
-        color: 'primary',
+        color: 'neutral-light',
         grouped: 'none'
     },
 };
@@ -109,6 +105,20 @@ export const Link: Story = {
     args: {
         ...Docs.args,
         to: '/example'
+    },
+};
+
+export const IconOnly: Story = {
+    render: (args) => ({
+        components: {AntButton},
+        setup() {
+            return {args};
+        },
+        template: '<div class="p-4"><AntButton v-bind="args"></AntButton></div>',
+    }),
+    args: {
+        ...Docs.args,
+        iconLeft: faPlus,
     },
 };
 

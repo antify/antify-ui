@@ -1,6 +1,6 @@
 import AntForm from '../AntForm.vue';
 import AntInput from '../AntInput.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../AntButton.vue';
 import AntHeader from '../../layout/AntHeader.vue';
 
 export default {

@@ -1,5 +1,5 @@
 import AntLoader from '../AntLoader.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { onMounted, ref } from 'vue';
 
 export default {

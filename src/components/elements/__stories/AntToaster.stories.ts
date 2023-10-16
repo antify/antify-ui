@@ -1,5 +1,5 @@
 import AntToaster from '../AntToaster.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { ref } from 'vue';
 import { Toaster, TOASTER_TYPE } from '../../../types/Toaster.type';
 import { generateId } from '../../../utils/helper';

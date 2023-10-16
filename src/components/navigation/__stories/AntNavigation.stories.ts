@@ -3,7 +3,7 @@ import AntNavItem from '../AntNavItem.vue';
 import AntNavProfile from '../AntNavProfile.vue';
 import AntProfilePicture from '../../images/AntProfilePicture.vue';
 import AntLogo from '../../images/AntLogo.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { NavItem } from '../../../types/NavItem.type';
 import {
   faHouse,

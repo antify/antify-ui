@@ -1,5 +1,5 @@
 import AntPagination from '../AntPagination.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 export default {

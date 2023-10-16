@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../AntButton.vue';
 
 defineProps<{
   errors?: string[];

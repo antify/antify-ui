@@ -10,7 +10,7 @@ import { ref } from 'vue';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import AntNavigation from '../navigation/AntNavigation.vue';
 import { NavItem } from '../../types/NavItem.type';
-import AntButton from '../buttons/AntButton.vue';
+import AntButton from '../form/AntButton.vue';
 
 defineProps<{
   navItems?: NavItem[];

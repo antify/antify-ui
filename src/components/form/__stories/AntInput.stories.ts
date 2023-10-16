@@ -1,5 +1,5 @@
 import AntInput from '../AntInput.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../AntButton.vue';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 

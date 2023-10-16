@@ -1,7 +1,7 @@
 import AntLoginWidget from '../AntLoginWidget.vue';
 import AntInput from '../../AntInput.vue';
 import AntPasswordField from '../../AntPasswordWidget/AntPasswordField.vue';
-import AntButton from '../../../buttons/AntButton.vue';
+import AntButton from '../../AntButton.vue';
 import { ref } from 'vue';
 
 export default {

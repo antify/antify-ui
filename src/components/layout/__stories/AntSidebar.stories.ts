@@ -1,5 +1,5 @@
 import AntSidebar from '../AntSidebar.vue';
-import AntButton from '../../buttons/AntButton.vue';
+import AntButton from '../../form/AntButton.vue';
 import { ref } from 'vue';
 
 export default {
