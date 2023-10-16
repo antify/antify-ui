@@ -14,7 +14,7 @@
   "license": "MIT",
   "scripts": {
     "build": "vue-tsc --noEmit && rollup -c",
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "pnpm build",
     "sb": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -80,5 +80,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@8.7.6"
 }
