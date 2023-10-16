@@ -1,97 +1,154 @@
 import AntButton from '../AntButton.vue';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import {faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {Meta, StoryObj} from "@storybook/vue3";
+import Size from '../../../enums/Size.enum';
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
-export default {
-  title: 'Components/Buttons/Ant Button',
-  component: AntButton,
-  parameters: { controls: { sort: 'requiredFirst' } },
-  // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
-  argTypes: {
-    args: {
-      description:
-        'Additional attributes will be forwarded to the button directly. This way you can access the default button events.',
+const meta: Meta<typeof AntButton> = {
+    title: 'Components/Buttons/Ant Button',
+    component: AntButton,
+    parameters: {controls: {sort: 'requiredFirst'}},
+    // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
+    argTypes: {
+        args: {
+            description:
+                'Additional attributes will be forwarded to the button directly. This way you can access the default button events.',
+        },
+        color: {
+            control: {type: 'select'},
+            options: [
+                'danger',
+                'info',
+                'neutral-dark',
+                'neutral-light',
+                'primary',
+                'secondary',
+                'success',
+                'warning'
+            ],
+            description: 'The buttons color sheme',
+            table: {defaultValue: {summary: 'primary'}},
+        },
+        grouped: {
+            control: {type: 'select'},
+            options: [
+                'none',
+                'left',
+                'center',
+                'right',
+            ],
+            mapping: {
+                'none': undefined
+            },
+            description: 'Which part of a group the button is',
+            table: {
+                defaultValue: {summary: 'none'},
+                type: {summary: 'string'},
+            },
+        },
+        size: {
+            control: {type: 'radio'},
+            options: Object.values(Size),
+            description: 'Defines the size of the button',
+            table: {defaultValue: {summary: Size.md}},
+        },
+        iconLeft: {
+            control: {type: 'none'},
+            description:
+                'Will be displayed left to the label or the default slot.<br>Use Font-awesome Icons.',
+        },
+        iconRight: {
+            control: {type: 'none'},
+            description:
+                'Will be displayed right to the label or the default slot.<br>Use Font-awesome Icons.',
+        },
+        to: {
+            control: {type: 'LocationAsRelativeRaw'},
+            description: 'If provided transforms the button into an a-tag with the provided link. Style is still the same as a button.'
+        },
+        disabled: {
+            control: 'boolean',
+            table: {defaultValue: {summary: false}},
+        },
+        outline: {
+            control: 'boolean',
+            table: {defaultValue: {summary: false}},
+        },
+        skeleton: {
+            control: 'boolean',
+            table: {defaultValue: {summary: false}},
+        }
     },
-    backgroundColor: { control: 'color' },
-    label: {
-      description:
-        'The main label of the button <br> You could also use the default slot.',
-    },
-    size: {
-      control: { type: 'radio' },
-      options: ['small', 'medium', 'large'],
-      description: 'Defines the size of the button',
-      table: { defaultValue: { summary: 'medium' } },
-    },
-    icon: {
-      control: { type: 'none' },
-      description:
-        'Will be displayed behind the label or the default slot.<br>Use Font-awesome Icons.',
-    },
-    to: {
-      control: {type: 'LocationAsRelativeRaw'},
-      description: 'If provided transforms the button into an a-tag with the provided link. Style is still the same as a button.'
-    }
-  },
 };
+
+export default meta;
+
+type Story = StoryObj<typeof Button>;
 
 // More on component templates: https://storybook.js.org/docs/vue/writing-stories/introduction#using-args
-const Template = (args: any) => ({
-  // Components used in your story `template` are defined in the `components` object
-  components: { AntButton },
-  // The story's `args` need to be mapped into the template through the `setup()` method
-  setup() {
-    return { args };
-  },
-  // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<div class="m-2"><AntButton v-bind="args" /></div>',
-});
-
-export const Primary = Template.bind({});
-// @ts-ignore More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Primary.args = {
-  primary: true,
-  label: 'Button',
+export const Docs: Story = {
+    render: (args) => ({
+        components: {AntButton},
+        setup() {
+            return {args};
+        },
+        template: '<div class="p-4"><AntButton v-bind="args">Button</AntButton></div>',
+    }),
+    args: {
+        outline: false,
+        disabled: false,
+        size: 'md',
+        skeleton: false,
+        color: 'primary',
+        grouped: 'none'
+    },
 };
 
-export const Secondary = Template.bind({});
-// @ts-ignore
-Secondary.args = {
-  label: 'Button',
+export const Link: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        to: '/example'
+    },
 };
 
-export const Large = Template.bind({});
-// @ts-ignore
-Large.args = {
-  size: 'large',
-  label: 'Button',
+export const IconLeft: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        iconLeft: faCaretRight,
+    },
 };
 
-export const Small = Template.bind({});
-// @ts-ignore
-Small.args = {
-  size: 'small',
-  label: 'Button',
+export const IconRight: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        iconRight: faCaretRight,
+    },
 };
 
-export const WithIcon = Template.bind({});
-// @ts-ignore
-WithIcon.args = {
-  label: 'Button',
-  icon: faCaretRight,
+export const IconLeftAndRight: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        iconLeft: faCaretRight,
+        iconRight: faCaretRight,
+    },
 };
 
-export const AsLink = (args: any) => ({
-  // Components used in your story `template` are defined in the `components` object
-  components: { AntButton },
-  // The story's `args` need to be mapped into the template through the `setup()` method
-  setup() {
-    return {
-      primary: true,
-      label: 'Button',
-      to: '/link'
-    };
-  },
-  // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<div class="m-2"><AntButton :primary="primary" :label="label" :to="to"/></div>',
-});
+export const Grouped: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        grouped: 'left'
+    },
+};
+
+export const Skeleton: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        skeleton: true
+    },
+};

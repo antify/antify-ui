@@ -5,5 +5,5 @@ export default {
 </style>
 
 <template>
-  <div class="bg-gray-300 animate-pulse"></div>
+  <div class="animate-skeleton"></div>
 </template>
