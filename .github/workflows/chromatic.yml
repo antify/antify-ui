@@ -18,7 +18,7 @@ jobs:
         with:
           version: 6.0.2
       - name: Install dependencies
-        run: yarn
+        run: pnpm
         # 👇 Adds Chromatic as a step in the workflow
       - name: Publish to Chromatic
         uses: chromaui/action@v1
