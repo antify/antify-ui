@@ -10,22 +10,22 @@ Antify UI is a Tailwind based components library for use in Antify (Vue 3 / Nuxt
 
 Install Dependencies
 ```
-yarn
+pnpm i
 ```
 
 Start Storybook
 ```
-yarn sb
+pnpm sb
 ```
 
 Build Storybook
 ```
-yarn sb:build
+pnpm build-storybook
 ```
 
 Update Chromatic Build
 ```
-yarn chromatic
+pnpm chromatic
 ```
 
 ## Useful links:
