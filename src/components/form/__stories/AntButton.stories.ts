@@ -1,46 +1,25 @@
 import AntButton from '../AntButton.vue';
-import {faCaretRight, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faCaretRight, faCaretLeft, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../enums/Size.enum';
 import _Grouped from '../../../enums/Grouped.enum';
+import {ButtonColorType} from "../../../types/AntButton.type";
 
-// More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 const meta: Meta<typeof AntButton> = {
     title: 'Components/Forms/Ant Button',
     component: AntButton,
     parameters: {controls: {sort: 'requiredFirst'}},
-    // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
     argTypes: {
-        args: {
-            description:
-                'Additional attributes will be forwarded to the button directly. This way you can access the default button events.',
-        },
-        color: {
+        colorType: {
             control: {type: 'select'},
-            options: [
-                'danger',
-                'info',
-                'neutral-dark',
-                'neutral-light',
-                'primary',
-                'secondary',
-                'success',
-                'warning'
-            ],
-            description: 'The buttons color sheme',
-            table: {defaultValue: {summary: 'neutral-light'}},
+            options: Object.values(ButtonColorType),
+            table: {defaultValue: {summary: ButtonColorType.neutralLight}},
         },
         grouped: {
             control: {type: 'select'},
             options: Object.values(_Grouped),
-            mapping: {
-                'none': undefined
-            },
-            description: 'Which part of a group the button is',
-            table: {
-                defaultValue: {summary: _Grouped.none},
-                type: {summary: 'string'},
-            },
+            description: 'Where is this fields position in a group',
+            table: {defaultValue: {summary: _Grouped.none}},
         },
         size: {
             control: {type: 'radio'},
@@ -60,20 +39,12 @@ const meta: Meta<typeof AntButton> = {
         },
         to: {
             control: {type: 'LocationAsRelativeRaw'},
-            description: 'If provided transforms the button into an a-tag with the provided link. Style is still the same as a button.'
+            description: 'If provided transforms the button into an a-tag with the provided link. Style is still the same as a button.',
+            table: {type: {summary: 'string|object'}}
         },
-        disabled: {
-            control: 'boolean',
-            table: {defaultValue: {summary: false}},
+        submit: {
+            description: 'Change the button type to type="submit"',
         },
-        outline: {
-            control: 'boolean',
-            table: {defaultValue: {summary: false}},
-        },
-        skeleton: {
-            control: 'boolean',
-            table: {defaultValue: {summary: false}},
-        }
     },
 };
 
@@ -81,7 +52,6 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-// More on component templates: https://storybook.js.org/docs/vue/writing-stories/introduction#using-args
 export const Docs: Story = {
     render: (args) => ({
         components: {AntButton},
@@ -90,14 +60,7 @@ export const Docs: Story = {
         },
         template: '<div class="p-4"><AntButton v-bind="args">Button</AntButton></div>',
     }),
-    args: {
-        outline: false,
-        disabled: false,
-        size: 'md',
-        skeleton: false,
-        color: 'neutral-light',
-        grouped: 'none'
-    },
+    args: {},
 };
 
 export const Link: Story = {
@@ -126,7 +89,7 @@ export const IconLeft: Story = {
     render: Docs.render,
     args: {
         ...Docs.args,
-        iconLeft: faCaretRight,
+        iconLeft: faCaretLeft,
     },
 };
 
@@ -142,7 +105,7 @@ export const IconLeftAndRight: Story = {
     render: Docs.render,
     args: {
         ...Docs.args,
-        iconLeft: faCaretRight,
+        iconLeft: faCaretLeft,
         iconRight: faCaretRight,
     },
 };
@@ -160,5 +123,13 @@ export const Skeleton: Story = {
     args: {
         ...Docs.args,
         skeleton: true
+    },
+};
+
+export const Expanded: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        expanded: true
     },
 };

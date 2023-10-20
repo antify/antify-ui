@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@antify/validate':
+    specifier: ^1.4.3
+    version: 1.4.3
+  '@fortawesome/fontawesome-common-types':
+    specifier: ^6.4.2
+    version: 6.4.2
   '@fortawesome/fontawesome-svg-core':
     specifier: ^6.4.2
     version: 6.4.2
@@ -162,6 +168,11 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
+
+  /@antify/validate@1.4.3:
+    resolution: {integrity: sha512-rNSLFhKu5Yuk23NaFdUp2groPsH41VL6yU2a+dlDiE8EiQ9/s7vP/QhndnlwCCIim/Qr1W3Ngpl1ChyakTsezA==}
+    engines: {node: '>=0.14'}
+    dev: false
 
   /@aw-web-design/x-default-browser@1.4.126:
     resolution: {integrity: sha512-Xk1sIhyNC/esHGGVjL/niHLowM0csl/kFO5uawBy4IrWwy0o1G8LGt3jP6nmWGz+USxeeqbihAmp/oVZju6wug==}

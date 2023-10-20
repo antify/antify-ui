@@ -1,34 +1,39 @@
 import AntSkeleton from '../AntSkeleton.vue';
+import {Meta, StoryObj} from "@storybook/vue3";
+import _Grouped from "../../../enums/Grouped.enum";
 
-export default {
-  title: 'Components/Elements/Ant Skeleton',
-  component: AntSkeleton,
-  parameters: { controls: { sort: 'requiredFirst' } },
-  decorators: [() => ({ template: '<div class="m-2"><story/></div>' })],
+const meta: Meta<typeof AntSkeleton> = {
+    title: 'Components/Elements/Ant Skeleton',
+    component: AntSkeleton,
+    argTypes: {
+        grouped: {
+            control: {type: 'select'},
+            options: Object.values(_Grouped),
+            description: 'Where is this fields position in a group',
+            table: {defaultValue: {summary: _Grouped.none}},
+        },
+    },
 };
 
-export const Simple = (args: any) => ({
-  components: { AntSkeleton },
-  setup() {
-    return { args };
-  },
-  template: `<AntSkeleton v-bind="args" class="h-8 min-h-4 max-h-16 w-full "/>`,
-});
+export default meta;
 
-export const Form = (args: any) => ({
-  components: { AntSkeleton },
-  setup() {
-    return { args };
-  },
-  template: `
-  <div class="flex space-x-8">
-    <AntSkeleton v-bind="args" class="h-12 w-12 "/>
+type Story = StoryObj<typeof AntSkeleton>;
 
-    <div class="w-full space-y-2">
-      <AntSkeleton v-bind="args" class="h-6"/>
-      <AntSkeleton v-bind="args" class="h-4 w-1/2"/>
-      <AntSkeleton v-bind="args" class="h-4 w-1/6"/>
-      <AntSkeleton v-bind="args" class="h-6 w-8/12"/>
-    </div>
-  </div>`,
-});
+export const Docs: Story = {
+    render: (args) => ({
+        components: {AntSkeleton},
+        setup() {
+            return {args};
+        },
+        template: '<div class="p-4"><AntSkeleton v-bind="args" class="h-5 w-full" /></div>',
+    }),
+    args: {},
+};
+
+export const Grouped: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        grouped: 'left'
+    },
+};

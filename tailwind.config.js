@@ -49,46 +49,46 @@ const colors = {
     'black': defaultColors.black,
 };
 const fontColors = {
-    'neutral-lightest-font': colors['neutral-darker'],
-    'neutral-lighter-font': colors['neutral-darker'],
-    'neutral-light-font': colors['neutral-darker'],
-    'neutral-font': colors['neutral-darker'],
+    'neutral-lightest-font': colors['neutral-dark'],
+    'neutral-lighter-font': colors['neutral-dark'],
+    'neutral-light-font': colors['neutral-dark'],
+    'neutral-font': colors['neutral-dark'],
     'neutral-dark-font': colors['neutral-lighter'],
     'neutral-darker-font': colors['neutral-lighter'],
     'neutral-darkest-font': colors['neutral-lighter'],
 
-    'primary-light-fonter': colors['neutral-darker'],
-    'primary-light-font': colors['neutral-darker'],
+    'primary-light-fonter': colors['neutral-dark'],
+    'primary-light-font': colors['neutral-dark'],
     'primary-font': colors['neutral-lighter'],
     'primary-dark-font': colors['neutral-lighter'],
     'primary-dark-fonter': colors['neutral-lighter'],
 
-    'secondary-light-fonter': colors['neutral-darker'],
-    'secondary-light-font': colors['neutral-darker'],
+    'secondary-light-fonter': colors['neutral-dark'],
+    'secondary-light-font': colors['neutral-dark'],
     'secondary-font': colors['neutral-lighter'],
     'secondary-dark-font': colors['neutral-lighter'],
     'secondary-dark-fonter': colors['neutral-lighter'],
 
-    'info-light-fonter': colors['neutral-darker'],
-    'info-light-font': colors['neutral-darker'],
+    'info-light-fonter': colors['neutral-dark'],
+    'info-light-font': colors['neutral-dark'],
     'info-font': colors['neutral-lighter'],
     'info-dark-font': colors['neutral-lighter'],
     'info-dark-fonter': colors['neutral-lighter'],
 
-    'success-lighter-font': colors['neutral-darker'],
-    'success-light-font': colors['neutral-darker'],
+    'success-lighter-font': colors['neutral-dark'],
+    'success-light-font': colors['neutral-dark'],
     'success-font': colors['neutral-lighter'],
     'success-dark-font': colors['neutral-lighter'],
     'success-darker-font': colors['neutral-lighter'],
 
-    'warning-lighter-font': colors['neutral-darker'],
-    'warning-light-font': colors['neutral-darker'],
+    'warning-lighter-font': colors['neutral-dark'],
+    'warning-light-font': colors['neutral-dark'],
     'warning-font': colors['neutral-lighter'],
     'warning-dark-font': colors['neutral-lighter'],
     'warning-darker-font': colors['neutral-lighter'],
 
-    'danger-lighter-font': colors['neutral-darker'],
-    'danger-light-font': colors['neutral-darker'],
+    'danger-lighter-font': colors['neutral-dark'],
+    'danger-light-font': colors['neutral-dark'],
     'danger-font': colors['neutral-lighter'],
     'danger-dark-font': colors['neutral-lighter'],
     'danger-dark-fonter': colors['neutral-lighter'],
@@ -102,13 +102,13 @@ module.exports = {
     safelist: [
         {
             pattern:
-                /(bg|ring|text|border)-(neutral|primary|secondary|success|info|warning|danger)/,
-            variants: ['hover', 'focus'],
+                /(bg|ring|text|border|outline|fill)-(neutral|primary|secondary|success|info|warning|danger)/,
+            variants: ['hover', 'focus', 'placeholder'],
         },
         {
             pattern:
-                /text-(neutral|primary|secondary|success|info|warning|danger)-font/,
-            variants: ['hover', 'focus'],
+                /(text|fill)-(neutral|primary|secondary|success|info|warning|danger)-font/,
+            variants: ['hover', 'focus', 'placeholder'],
         },
     ],
     theme: {
