@@ -47,7 +47,7 @@ import AntDragDropTable from './components/table/AntDragDropTable.vue';
 import AntPagination from './components/table/AntPagination.vue';
 import AntTable from './components/table/AntTable.vue';
 
-import AntBadge from './components/elements/AntBadge.vue';
+import AntTag from './components/elements/AntTag.vue';
 import AntBanner from './components/elements/AntBanner.vue';
 import AntToaster from './components/elements/AntToaster.vue';
 import AntLoader from './components/elements/AntLoader.vue';
@@ -98,7 +98,7 @@ export const AntifyUi = {
     vue.component(AntPagination.name, AntPagination);
     vue.component(AntTable.name, AntTable);
     vue.component(AntTabs.name, AntTabs);
-    vue.component(AntBadge.name, AntBadge);
+    vue.component(AntTag.name, AntTag);
     vue.component(AntBanner.name, AntBanner);
     vue.component(AntToaster.name, AntToaster);
     vue.component(AntLoader.name, AntLoader);
@@ -153,7 +153,7 @@ export {
   AntPagination,
   AntTable,
   AntTabs,
-  AntBadge,
+  AntTag,
   AntBanner,
   AntToaster,
   AntLoader,
