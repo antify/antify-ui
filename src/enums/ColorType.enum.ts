@@ -1,5 +1,7 @@
 export enum ColorType {
-    neutral = 'neutral',
+    base = 'base',
+    primary = 'primary',
+    secondary = 'secondary',
     danger = 'danger',
     info = 'info',
     success = 'success',

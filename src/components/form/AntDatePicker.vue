@@ -10,7 +10,7 @@ import { computed, ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { generateId } from '../../utils/helper';
-import AntSkeleton from '../elements/AntSkeleton.vue';
+import AntSkeleton from '../AntSkeleton.vue';
 
 const emit = defineEmits(['update:value']);
 

@@ -7,7 +7,7 @@ export default {
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import Size from '../../../enums/Size.enum'
-import AntSkeleton from "../../elements/AntSkeleton.vue";
+import AntSkeleton from "../../AntSkeleton.vue";
 import {handleEnumValidation} from "../../../handler";
 
 const props = withDefaults(defineProps<{
@@ -24,6 +24,7 @@ const classes = computed(() => ({
   'text-xs': props.size === Size.sm,
   'text-sm': props.size === Size.md,
 }));
+
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
 });
@@ -33,8 +34,14 @@ onMounted(() => {
   <label
       class="flex flex-col gap-1.5 w-full"
   >
-    <span :class="classes">
-      <span :class="{'invisible': skeleton}">
+    <span
+        v-if="label"
+        :class="classes"
+    >
+      <span
+          :class="{'invisible': skeleton}"
+          @click="$emit('clickContent')"
+      >
         <slot name="label">
           {{ label }}
         </slot>
@@ -42,7 +49,8 @@ onMounted(() => {
 
       <AntSkeleton
           v-if="skeleton"
-          :absolute="true"
+          absolute
+          rounded
       />
     </span>
 

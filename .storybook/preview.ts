@@ -1,4 +1,5 @@
 import '../src/assets/tailwind.css';
+import 'tailwindcss/tailwind.css';
 import { createWebHistory, createRouter } from 'vue-router';
 import { setup } from '@storybook/vue3';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

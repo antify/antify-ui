@@ -2,23 +2,21 @@ import AntField from '../AntField.vue';
 import AntBaseInput from '../AntBaseInput.vue';
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../../enums/Size.enum';
-import {ColorType} from "../../../../enums/ColorType.enum";
 import {computed} from "vue";
+import {FieldColorType} from "../types/AntField.type";
 
 const meta: Meta<typeof AntField> = {
-    title: 'Components/Forms/Elements/Ant Field',
+    title: 'Components/Forms/Elements/Field',
     component: AntField,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
         size: {
             control: {type: 'radio'},
             options: Object.values(Size),
-            table: {defaultValue: {summary: Size.md}},
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ColorType),
-            table: {defaultValue: {summary: ColorType.neutral}},
+            options: Object.values(FieldColorType)
         },
         skeleton: {
             control: 'boolean',

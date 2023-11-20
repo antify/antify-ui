@@ -9,11 +9,11 @@ const colors = {
     'neutral-darker': defaultColors.slate['900'],
     'neutral-darkest': defaultColors.slate['950'],
 
-    'primary-lighter': defaultColors.blue['100'],
-    'primary-light': defaultColors.blue['300'],
-    'primary': defaultColors.blue['500'],
-    'primary-dark': defaultColors.blue['700'],
-    'primary-darker': defaultColors.blue['900'],
+    'primary-lighter': defaultColors.sky['100'],
+    'primary-light': defaultColors.sky['300'],
+    'primary': defaultColors.sky['500'],
+    'primary-dark': defaultColors.sky['700'],
+    'primary-darker': defaultColors.sky['900'],
 
     'secondary-lighter': defaultColors.lime['100'],
     'secondary-light': defaultColors.lime['300'],
@@ -46,34 +46,34 @@ const colors = {
     'danger-darker': defaultColors.red['900'],
 
     'white': defaultColors.white,
-    'black': defaultColors.black,
+    'black': defaultColors.black
 };
 const fontColors = {
     'neutral-lightest-font': colors['neutral-dark'],
     'neutral-lighter-font': colors['neutral-dark'],
     'neutral-light-font': colors['neutral-dark'],
-    'neutral-font': colors['neutral-dark'],
+    'neutral-font': colors['neutral-lighter'],
     'neutral-dark-font': colors['neutral-lighter'],
     'neutral-darker-font': colors['neutral-lighter'],
     'neutral-darkest-font': colors['neutral-lighter'],
 
-    'primary-light-fonter': colors['neutral-dark'],
+    'primary-lighter-font': colors['neutral-dark'],
     'primary-light-font': colors['neutral-dark'],
     'primary-font': colors['neutral-lighter'],
     'primary-dark-font': colors['neutral-lighter'],
-    'primary-dark-fonter': colors['neutral-lighter'],
+    'primary-darker-font': colors['neutral-lighter'],
 
-    'secondary-light-fonter': colors['neutral-dark'],
+    'secondary-lighter-font': colors['neutral-dark'],
     'secondary-light-font': colors['neutral-dark'],
     'secondary-font': colors['neutral-lighter'],
     'secondary-dark-font': colors['neutral-lighter'],
-    'secondary-dark-fonter': colors['neutral-lighter'],
+    'secondary-darker-font': colors['neutral-lighter'],
 
-    'info-light-fonter': colors['neutral-dark'],
+    'info-lighter-font': colors['neutral-dark'],
     'info-light-font': colors['neutral-dark'],
     'info-font': colors['neutral-lighter'],
     'info-dark-font': colors['neutral-lighter'],
-    'info-dark-fonter': colors['neutral-lighter'],
+    'info-darker-font': colors['neutral-lighter'],
 
     'success-lighter-font': colors['neutral-dark'],
     'success-light-font': colors['neutral-dark'],
@@ -91,25 +91,17 @@ const fontColors = {
     'danger-light-font': colors['neutral-dark'],
     'danger-font': colors['neutral-lighter'],
     'danger-dark-font': colors['neutral-lighter'],
-    'danger-dark-fonter': colors['neutral-lighter'],
+    'danger-darker-font': colors['neutral-lighter'],
 };
 
 // TODO:: add 2xs-font
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./dist/index.js', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    safelist: [
-        {
-            pattern:
-                /(bg|ring|text|border|outline|fill)-(neutral|primary|secondary|success|info|warning|danger)/,
-            variants: ['hover', 'focus', 'placeholder'],
-        },
-        {
-            pattern:
-                /(text|fill)-(neutral|primary|secondary|success|info|warning|danger)-font/,
-            variants: ['hover', 'focus', 'placeholder'],
-        },
+    content: [
+        './dist/index.js',
+        './src/**/*.{vue,js,ts,jsx,tsx}',
+        './src/**/*.stories.ts'
     ],
     theme: {
         colors: {

@@ -3,10 +3,10 @@ import {faCaretRight, faCaretLeft, faPlus} from '@fortawesome/free-solid-svg-ico
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../enums/Size.enum';
 import _Grouped from '../../../enums/Grouped.enum';
-import {ButtonColorType} from "../../../types/AntButton.type";
+import {ButtonColorType} from "../__types/AntButton.type";
 
 const meta: Meta<typeof AntButton> = {
-    title: 'Components/Forms/Ant Button',
+    title: 'Components/Forms/Button',
     component: AntButton,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
@@ -50,7 +50,7 @@ const meta: Meta<typeof AntButton> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<typeof AntButton>;
 
 export const Docs: Story = {
     render: (args) => ({
@@ -131,5 +131,14 @@ export const Expanded: Story = {
     args: {
         ...Docs.args,
         expanded: true
+    },
+};
+
+export const WithoutBorder: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        outlined: true,
+        bordered: false
     },
 };

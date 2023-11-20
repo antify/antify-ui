@@ -1,7 +1,7 @@
 import AntInputDescription from '../AntInputDescription.vue';
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../../enums/Size.enum';
-import {ColorType} from "../../../../enums/ColorType.enum";
+import {InputDescriptionColorType} from "../types/AntInputDescription.type";
 
 const meta: Meta<typeof AntInputDescription> = {
     title: 'Components/Forms/Elements/Ant Input Description',
@@ -23,8 +23,7 @@ const meta: Meta<typeof AntInputDescription> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ColorType),
-            table: {defaultValue: {summary: ColorType.neutral}},
+            options: Object.values(InputDescriptionColorType)
         },
     },
 };

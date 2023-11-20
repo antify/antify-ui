@@ -13,7 +13,6 @@ import AntBaseInput from './Elements/AntBaseInput.vue'
 import Size from '../../enums/Size.enum'
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {ColorType} from "../../enums/ColorType.enum";
-import {ButtonColorType} from "../../types/AntButton.type";
 import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../handler";
 
@@ -33,7 +32,7 @@ const props = withDefaults(defineProps<{
   validator?: Validator;
   limiter?: boolean;
 }>(), {
-  colorType: ColorType.neutral,
+  colorType: ColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
@@ -83,7 +82,7 @@ function add() {
       <AntButton
           :icon-left="faMinus"
           grouped="left"
-          :colorType="colorType === ColorType.neutral ? ButtonColorType.neutralLight : colorType"
+          :colorType="colorType"
           :size="size"
           :skeleton="skeleton"
           :disabled="disabled || (min !== undefined ? content <= min : false)"
@@ -110,7 +109,7 @@ function add() {
       <AntButton
           :icon-left="faPlus"
           grouped="right"
-          :color-type="colorType === ColorType.neutral ? ButtonColorType.neutralLight : colorType"
+          :color-type="colorType"
           :size="size"
           :skeleton="skeleton"
           :disabled="disabled || (max !== undefined ? content >= max : false)"

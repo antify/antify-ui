@@ -2,12 +2,11 @@ import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../enums/Size.enum';
 import AntTextInput from "../AntTextInput.vue";
 import {computed} from 'vue';
-import {ColorType} from "../../../enums/ColorType.enum";
 import {useValidator} from "@antify/validate";
-import {Type} from "../../../types/AntTextInput.type";
+import {TextInputColorType, Type} from "../__types/AntTextInput.type";
 
 const meta: Meta<typeof AntTextInput> = {
-    title: 'Components/Forms/Ant Text Input',
+    title: 'Components/Forms/Text Input',
     component: AntTextInput,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
@@ -17,8 +16,7 @@ const meta: Meta<typeof AntTextInput> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ColorType),
-            table: {defaultValue: {summary: ColorType.neutral}},
+            options: Object.values(TextInputColorType)
         },
         size: {
             control: {type: 'radio'},

@@ -8,10 +8,6 @@ const meta: Meta<typeof AntInputLabel> = {
     component: AntInputLabel,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
-        args: {
-            description:
-                'Additional attributes will be forwarded directly. This way you can access the default events.',
-        },
         label: {
             control: 'text'
         },

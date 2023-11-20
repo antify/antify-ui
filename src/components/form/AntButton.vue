@@ -6,18 +6,18 @@ export default {
 
 <script lang="ts" setup>
 /**
- * Notes:
- * If skeleton is true, the whole content of the button get rendered and the skeleton just overlays about it.
- * This gives the ability to show the correct size of the button but just in skeleton state.
+ * TODO:: - summary height with border is not correct
+ *  - not outlined version has no border
  */
+
 import type {IconDefinition} from '@fortawesome/fontawesome-common-types';
 import {computed, onMounted} from 'vue';
 import {LocationAsRelativeRaw} from 'vue-router';
-import AntSkeleton from '../elements/AntSkeleton.vue';
-import AntSpinner from '../elements/AntSpinner.vue';
+import AntSkeleton from '../AntSkeleton.vue';
+import AntSpinner from '../AntSpinner.vue';
 import Grouped from '../../enums/Grouped.enum';
 import Size from '../../enums/Size.enum';
-import {ButtonColorType, ButtonType} from "../../types/AntButton.type";
+import {ButtonColorType, ButtonType} from "./__types/AntButton.type";
 import {handleEnumValidation} from "../../handler";
 
 const emit = defineEmits(['click']);
@@ -35,8 +35,9 @@ const props = withDefaults(defineProps<{
   readonly?: boolean;
   expanded?: boolean;
   submit?: boolean;
+  bordered?: boolean;
 }>(), {
-  colorType: ButtonColorType.neutralLight,
+  colorType: ButtonColorType.base,
   disabled: false,
   outlined: false,
   skeleton: false,
@@ -45,7 +46,8 @@ const props = withDefaults(defineProps<{
   grouped: Grouped.none,
   readonly: false,
   expanded: false,
-  submit: false
+  submit: false,
+  bordered: true
 });
 
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
@@ -57,44 +59,71 @@ const groupedClassList = computed(() => ({
 }));
 const classes = computed(() => {
   const classes = {
-    'transition-all inline-flex items-center relative': true,
+    'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !props.skeleton,
     'cursor-default': props.skeleton || props.readonly,
     'focus:ring-2': props.size === Size.sm && hasAction.value,
     'focus:ring-4': props.size === Size.md && hasAction.value,
     'w-full': props.expanded,
+    'invisible': props.skeleton,
+    'bg-neutral-lightest': props.outlined,
     ...groupedClassList.value
   };
+  const hasActionVariants = {
+    'base': 'focus:ring-primary/25',
+    'danger': 'focus:ring-danger/25',
+    'info': 'focus:ring-info/25',
+    'primary': 'focus:ring-primary/25',
+    'secondary': 'focus:ring-secondary/25',
+    'success': 'focus:ring-success/25',
+    'warning': 'focus:ring-warning/25',
+  };
+  const notOutlinedVariants = {
+    'base': 'text-neutral-light-font bg-neutral-light',
+    'danger': 'text-danger-font bg-danger',
+    'info': 'text-info-font bg-info',
+    'primary': 'text-primary-font bg-primary',
+    'secondary': 'text-secondary-font bg-secondary',
+    'success': 'text-success-font bg-success',
+    'warning': 'text-warning-font bg-warning',
+  };
+  const outlinedAndWithActionVariants = {
+    'base': 'hover:bg-neutral-light',
+    'danger': 'hover:bg-danger',
+    'info': 'hover:bg-info',
+    'primary': 'hover:bg-primary',
+    'secondary': 'hover:bg-secondary',
+    'success': 'hover:bg-success',
+    'warning': 'hover:bg-warning',
+  };
+  const outlinedVariants = {
+    'base': 'text-neutral-light-font border-neutral-light focus:border-primary',
+    'danger': 'text-danger border-danger',
+    'info': 'text-info border-info',
+    'primary': 'text-primary border-primary',
+    'secondary': 'text-secondary border-secondary',
+    'success': 'text-success border-success',
+    'warning': 'text-warning border-warning',
+  };
 
-  classes[`focus:ring-${props.colorType}/25`] = hasAction.value;
-  classes[`text-${props.colorType}-font bg-${props.colorType}`] = !props.outlined;
-  classes[`bg-neutral-lightest`] = props.outlined;
-  classes[`text-${props.colorType}`] = props.outlined && props.colorType !== ButtonColorType.neutralLight;
-  // The neutral light version would have text-neutral-light but this its to bright. Use text-neutral instead.
-  classes[`text-neutral`] = props.outlined && props.colorType === ButtonColorType.neutralLight;
-  classes[`hover:bg-${props.colorType}`] = props.outlined && hasAction.value;
+  classes[hasActionVariants[props.colorType]] = hasAction.value;
+  classes[notOutlinedVariants[props.colorType]] = !props.outlined;
+  classes[outlinedVariants[props.colorType]] = props.outlined;
+  classes[outlinedAndWithActionVariants[props.colorType]] = props.outlined && hasAction.value;
+  classes[`border -m-px`] = props.outlined && props.bordered;
 
   return classes;
 });
-const buttonContentClasses = computed(() => {
-  const classes = {
-    'd-block w-full inline-flex items-center justify-center transition-colors font-medium': true,
-    'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
-    'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
-    'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': hasAction.value,
-    'hover:bg-white/75': props.outlined && hasAction.value,
-    'hover:bg-black/25': !props.outlined && hasAction.value,
-    // Make sure, nothing shimmer through the skeleton
-    'invisible': props.skeleton,
-    ...groupedClassList.value
-  }
-
-  // Using outline instead of borders, because border are added to the size of the button. This makes the
-  // outline button variant 2px bigger thant the not outlined one.
-  classes[`outline outline-offset-[-1px] outline-${props.colorType}`] = props.outlined;
-
-  return classes;
-});
+const buttonContentClasses = computed(() => ({
+  'd-block w-full inline-flex items-center justify-center transition-colors font-medium': true,
+  'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
+  'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
+  'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': hasAction.value,
+  'hover:bg-white/75': props.outlined && hasAction.value,
+  'hover:bg-black/25': !props.outlined && hasAction.value,
+  // Make sure, nothing shimmer through the skeleton
+  'invisible': props.skeleton
+}));
 const iconClasses = computed(() => ({
   'h-4': props.size === Size.sm,
   'h-5': props.size === Size.md,
@@ -114,23 +143,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <component
-      :is="to ? 'router-link' : 'button'"
-      :class="classes"
-      :type="type"
-      :to="to"
-      :disabled="disabled || undefined"
-      @click="() => !props.readonly ? $emit('click') : null"
-  >
+  <div class="relative inline-flex">
     <AntSkeleton
         v-if="skeleton"
-        :absolute="true"
         :grouped="grouped"
+        rounded
+        absolute
     />
 
-    <span
-        :class="buttonContentClasses"
+    <component
+        :is="to !== undefined ? 'router-link' : 'button'"
+        :class="classes"
+        :type="type"
+        :to="to"
+        :disabled="disabled || undefined"
+        @click="() => !props.readonly ? $emit('click') : null"
     >
+      <span
+          :class="buttonContentClasses"
+      >
       <AntSpinner
           v-if="spinner"
           :size="size"
@@ -156,5 +187,6 @@ onMounted(() => {
         <fa-icon v-if="iconRight" :icon="iconRight" :class="iconClasses"/>
       </slot>
     </span>
-  </component>
+    </component>
+  </div>
 </template>

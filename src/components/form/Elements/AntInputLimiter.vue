@@ -7,20 +7,20 @@ export default {
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import Size from '../../../enums/Size.enum'
-import AntSkeleton from "../../elements/AntSkeleton.vue";
-import {ColorType} from "../../../enums/ColorType.enum";
+import AntSkeleton from "../../AntSkeleton.vue";
 import {handleEnumValidation} from "../../../handler";
+import {InputLimiterColorType} from "./types/AntInputLimiter.type";
 
 const props = withDefaults(defineProps<{
   value: number;
   maxValue: number;
-  colorType?: ColorType;
+  colorType?: InputLimiterColorType;
   size?: Size;
   skeleton?: boolean;
 }>(), {
   skeleton: false,
   size: Size.md,
-  colorType: ColorType.neutral
+  colorType: InputLimiterColorType.base
 });
 const classes = computed(() => {
   const classes = {
@@ -36,7 +36,7 @@ const classes = computed(() => {
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
+  handleEnumValidation(props.colorType, InputLimiterColorType, 'InputLimiterColorType');
 });
 </script>
 
@@ -48,7 +48,8 @@ onMounted(() => {
 
     <AntSkeleton
         v-if="skeleton"
-        :absolute="true"
+        absolute
+        rounded
     />
   </div>
 </template>

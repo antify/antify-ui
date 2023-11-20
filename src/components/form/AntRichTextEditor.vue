@@ -12,7 +12,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Heading from '@tiptap/extension-heading';
 import AntButton from './AntButton.vue';
-import AntSkeleton from '../elements/AntSkeleton.vue';
+import AntSkeleton from '../AntSkeleton.vue';
 import { generateId } from '../../utils/helper';
 
 const emit = defineEmits(['update:data']);

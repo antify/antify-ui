@@ -7,18 +7,18 @@ export default {
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import Size from '../../../enums/Size.enum'
-import AntSkeleton from "../../elements/AntSkeleton.vue";
-import {ColorType} from "../../../enums/ColorType.enum";
+import AntSkeleton from "../../AntSkeleton.vue";
 import {handleEnumValidation} from "../../../handler";
+import {InputDescriptionColorType} from "./types/AntInputDescription.type";
 
 const props = withDefaults(defineProps<{
-  colorType?: ColorType,
+  colorType?: InputDescriptionColorType,
   size?: Size;
   skeleton?: boolean;
 }>(), {
   skeleton: false,
   size: Size.md,
-  colorType: ColorType.neutral
+  colorType: InputDescriptionColorType.base
 });
 
 const classes = computed(() => {
@@ -26,15 +26,23 @@ const classes = computed(() => {
     'relative font-regular inline-block transition-color': true,
     'text-xs': props.size === Size.sm,
     'text-sm': props.size === Size.md,
-  };
+  }, variants = {};
 
-  classes[`text-${props.colorType}`] = true;
+  variants[InputDescriptionColorType.base] = 'text-neutral';
+  variants[InputDescriptionColorType.primary] = 'text-primary';
+  variants[InputDescriptionColorType.secondary] = 'text-secondary';
+  variants[InputDescriptionColorType.danger] = 'text-danger';
+  variants[InputDescriptionColorType.info] = 'text-info';
+  variants[InputDescriptionColorType.success] = 'text-success';
+  variants[InputDescriptionColorType.warning] = 'text-warning';
+
+  classes[variants[props.colorType]] = true;
 
   return classes;
 });
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
+  handleEnumValidation(props.colorType, InputDescriptionColorType, 'InputDescriptionColorType');
 });
 </script>
 
@@ -48,7 +56,8 @@ onMounted(() => {
 
     <AntSkeleton
         v-if="skeleton"
-        :absolute="true"
+        absolute
+        rounded
     />
   </div>
 </template>

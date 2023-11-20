@@ -9,7 +9,7 @@ import {ref, computed, onMounted, onUnmounted} from 'vue';
 import {faArrowsUpDown, faCheck} from '@fortawesome/free-solid-svg-icons';
 import {SelectOption} from '../../types/SelectOption.type';
 import {generateId} from '../../utils/helper';
-import AntSkeleton from '../elements/AntSkeleton.vue';
+import AntSkeleton from '../AntSkeleton.vue';
 
 const emit = defineEmits(['update:value', 'selectOption']);
 const props =

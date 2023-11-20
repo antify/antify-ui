@@ -7,7 +7,7 @@ export default {
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { generateId } from '../../../utils/helper';
-import AntSkeleton from '../../elements/AntSkeleton.vue';
+import AntSkeleton from '../../AntSkeleton.vue';
 
 const emit = defineEmits(['update:checked']);
 

@@ -6,7 +6,7 @@ import {ColorType} from "../../../enums/ColorType.enum";
 import {useValidator} from "@antify/validate";
 
 const meta: Meta<typeof AntNumberInput> = {
-    title: 'Components/Forms/Ant Number Input',
+    title: 'Components/Forms/Number Input',
     component: AntNumberInput,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
@@ -20,8 +20,7 @@ const meta: Meta<typeof AntNumberInput> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ColorType),
-            table: {defaultValue: {summary: ColorType.neutral}},
+            options: Object.values(ColorType)
         },
         size: {
             control: {type: 'radio'},

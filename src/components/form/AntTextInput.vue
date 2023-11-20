@@ -10,9 +10,8 @@ import {computed, onMounted} from 'vue';
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import Size from '../../enums/Size.enum'
-import {ColorType} from "../../enums/ColorType.enum";
 import {Validator} from '@antify/validate'
-import {Type} from '../../types/AntTextInput.type'
+import {TextInputColorType, Type} from './__types/AntTextInput.type'
 import {handleEnumValidation} from "../../handler";
 
 const emit = defineEmits(['update:value']);
@@ -22,7 +21,7 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   description?: string;
   size?: Size;
-  colorType?: ColorType;
+  colorType?: TextInputColorType;
   disabled?: boolean;
   skeleton?: boolean;
   validator?: Validator;
@@ -30,7 +29,7 @@ const props = withDefaults(defineProps<{
   limiter?: boolean;
   max?: number;
 }>(), {
-  colorType: ColorType.neutral,
+  colorType: TextInputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
@@ -44,7 +43,7 @@ const _value = computed<number | null>({
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
+  handleEnumValidation(props.colorType, TextInputColorType, 'TextInputColorType');
   handleEnumValidation(props.type, Type, 'Type');
 });
 </script>
@@ -68,7 +67,7 @@ onMounted(() => {
         :size="size"
         :skeleton="skeleton"
         :disabled="disabled"
-        :placeholder="placeholder || label"
+        :placeholder="placeholder !== undefined ? placeholder : label"
         :show-icon="false"
         :validator="validator"
         v-bind="$attrs"

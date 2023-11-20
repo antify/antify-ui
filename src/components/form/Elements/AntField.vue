@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'AntInputLabel',
+  name: 'AntField',
 };
 </script>
 
@@ -9,51 +9,62 @@ import {onMounted, computed} from 'vue';
 import Size from '../../../enums/Size.enum'
 import AntInputLabel from "./AntInputLabel.vue";
 import AntInputDescription from "./AntInputDescription.vue";
-import {ColorType} from "../../../enums/ColorType.enum";
 import {Validator} from "@antify/validate";
 import {handleEnumValidation} from "../../../handler";
 import AntInputLimiter from "./AntInputLimiter.vue";
+import {FieldColorType} from "./types/AntField.type";
 
 const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
   size?: Size;
-  colorType?: ColorType;
+  colorType?: FieldColorType;
   skeleton?: boolean;
   validator?: Validator;
   limiterValue?: number;
   limiterMaxValue?: number;
+  labelFor?: string;
+  showMessageOnError?: boolean;
+  expanded?: boolean;
 }>(), {
-  colorType: ColorType.neutral,
+  colorType: FieldColorType.base,
   skeleton: false,
   size: Size.md,
+  showMessageOnError: true,
+  expanded: true
 });
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
+  handleEnumValidation(props.colorType, FieldColorType, 'FieldColorType');
 });
 
-const _colorType = computed(() => props.validator?.hasErrors() ? ColorType.danger : props.colorType)
+const _colorType = computed(() => props.validator?.hasErrors() ? FieldColorType.danger : props.colorType)
 const errors = computed(() => props.validator?.getErrors() || [])
 </script>
 
 <template>
-  <div class="flex flex-col items-start gap-1.5">
+  <div
+      class="flex flex-col items-start gap-1.5"
+      :class="{'w-full': expanded}"
+  >
     <AntInputLabel
-        v-if="label"
         :label="label"
         :size="size"
         :skeleton="skeleton"
+        :for="labelFor"
+        @clickContent="$emit('clickLabel')"
     >
       <div class="w-full">
         <slot/>
       </div>
     </AntInputLabel>
 
-    <div class="flex justify-between w-full">
+    <div
+        v-if="showMessageOnError && (description || errors.length > 0)"
+        class="flex justify-between w-full"
+    >
       <AntInputDescription
-          v-if="description || errors"
           :size="size"
           :skeleton="skeleton"
           :color-type="_colorType"

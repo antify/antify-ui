@@ -13,7 +13,7 @@ import AntBaseInput from './Elements/AntBaseInput.vue'
 import Size from '../../enums/Size.enum'
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {ColorType} from "../../enums/ColorType.enum";
-import {ButtonColorType} from "../../types/AntButton.type";
+import {ButtonColorType} from "./__types/AntButton.type";
 
 const emit = defineEmits(['update:value']);
 const props = withDefaults(defineProps<{

@@ -29,10 +29,10 @@ import AntContent from './components/layout/AntContent.vue';
 import AntDualContent from './components/layout/AntDualContent.vue';
 import AntHeader from './components/layout/AntHeader.vue';
 import AntLayout from './components/layout/AntLayout.vue';
-import AntModal from './components/layout/AntModal.vue';
+import AntModal from './components/AntModal.vue';
 import AntSidebar from './components/layout/AntSidebar.vue';
-import AntAccordionWidget from './components/layout/AntAccordionWidget/AntAccordionWidget.vue';
-import AntAccordionItem from './components/layout/AntAccordionWidget/AntAccordionItem.vue';
+import AntAccordion from './components/AntAccordion.vue';
+import AntAccordionItem from './components/AntAccordionItem.vue';
 import AntLoginLayout from './components/layout/AntLoginLayout.vue';
 import AntMediathek from './components/layout/AntMediathek/AntMediathek.vue';
 
@@ -44,14 +44,14 @@ import AntNavProfile from './components/navigation/AntNavProfile.vue';
 import AntTabs from './components/navigation/tabs/AntTabs.vue';
 
 import AntDragDropTable from './components/table/AntDragDropTable.vue';
-import AntPagination from './components/table/AntPagination.vue';
+import AntPagination from './components/AntPagination.vue';
 import AntTable from './components/table/AntTable.vue';
 
-import AntTag from './components/elements/AntTag.vue';
+import AntTag from './components/AntTag.vue';
 import AntBanner from './components/elements/AntBanner.vue';
 import AntToaster from './components/elements/AntToaster.vue';
 import AntLoader from './components/elements/AntLoader.vue';
-import AntSkeleton from './components/elements/AntSkeleton.vue';
+import AntSkeleton from './components/AntSkeleton.vue';
 
 import AntNotFound from './components/pages/AntNotFound.vue';
 
@@ -103,7 +103,7 @@ export const AntifyUi = {
     vue.component(AntToaster.name, AntToaster);
     vue.component(AntLoader.name, AntLoader);
     vue.component(AntSkeleton.name, AntSkeleton);
-    vue.component(AntAccordionWidget.name, AntAccordionWidget);
+    vue.component(AntAccordion.name, AntAccordion);
     vue.component(AntAccordionItem.name, AntAccordionItem);
     vue.component(AntLoginLayout.name, AntLoginLayout);
     vue.component(AntNotFound.name, AntNotFound);
@@ -158,7 +158,7 @@ export {
   AntToaster,
   AntLoader,
   AntSkeleton,
-  AntAccordionWidget,
+  AntAccordion,
   AntAccordionItem,
   AntLoginLayout,
   AntNotFound,

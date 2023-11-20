@@ -1,14 +1,15 @@
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../../enums/Size.enum';
-import {Type} from "../../../../types/AntBaseInput.type";
+import {BaseInputColorType, Type} from "../types/AntBaseInput.type";
 import AntBaseInput from "../AntBaseInput.vue";
+import AntButton from "../../AntButton.vue";
 import _Grouped from "../../../../enums/Grouped.enum";
-import {ColorType} from "../../../../enums/ColorType.enum";
 import {useValidator} from '@antify/validate';
 import {computed} from "vue";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 const meta: Meta<typeof AntBaseInput> = {
-    title: 'Components/Forms/Elements/Ant Base Input',
+    title: 'Components/Forms/Elements/Base Input',
     component: AntBaseInput,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
@@ -27,8 +28,7 @@ const meta: Meta<typeof AntBaseInput> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ColorType),
-            table: {defaultValue: {summary: ColorType.neutral}},
+            options: Object.values(BaseInputColorType)
         },
         size: {
             control: {type: 'radio'},
@@ -43,7 +43,7 @@ const meta: Meta<typeof AntBaseInput> = {
             control: {type: 'select'},
             options: Object.values(_Grouped),
             description: 'Where is this fields position in a group',
-            table: { defaultValue: {summary: _Grouped.none}},
+            table: {defaultValue: {summary: _Grouped.none}},
         },
         wrapperClass: {
             control: 'text',
@@ -54,8 +54,13 @@ const meta: Meta<typeof AntBaseInput> = {
         showIcon: {
             control: 'boolean',
             description:
-                'Some ColorTypes can has an icon. Control with this property if it get shown or not.',
+                'Some BaseInputColorTypes can has an icon. Control with this property if it get shown or not.',
             table: {type: {summary: 'Type'}},
+        },
+        iconLeft: {
+            control: {type: 'none'},
+            description:
+                'Will be displayed left to the input text.<br>Use Font-awesome Icons.',
         },
     },
 };
@@ -93,5 +98,75 @@ export const withValidator: Story = {
         ...Docs.args,
         value: "To long value",
         validator: useValidator((val: unknown) => val.length <= 10 || 'Max. 10 characters allowed')
+    },
+};
+
+export const IconLeft: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        iconLeft: faSearch,
+    },
+};
+
+export const Summary: Story = {
+    render: (args) => ({
+        components: {AntBaseInput, AntButton},
+        setup: () => {
+            const value = computed({
+                get() {
+                    return args.value;
+                },
+                set(val) {
+                    args.value = val;
+                }
+            });
+
+            return {args, value, faSearch}
+        },
+        template: `
+          <div class="p-4 pb-10 flex flex-col gap-2">
+            <div class="flex gap-2">
+              <AntBaseInput v-bind="args" v-model:value="value" color-type="base"/>
+              <AntBaseInput v-bind="args" v-model:value="value" color-type="info"/>
+              <AntBaseInput v-bind="args" v-model:value="value" color-type="success"/>
+              <AntBaseInput v-bind="args" v-model:value="value" color-type="warning"/>
+              <AntBaseInput v-bind="args" v-model:value="value" color-type="danger"/>
+            </div>
+
+            <div class="flex gap-2">
+              <AntBaseInput v-bind="args" value="A value" nullable color-type="base"/>
+              <AntBaseInput v-bind="args" value="A value" nullable color-type="info"/>
+              <AntBaseInput v-bind="args" value="A value" nullable color-type="success"/>
+              <AntBaseInput v-bind="args" value="A value" nullable color-type="warning"/>
+              <AntBaseInput v-bind="args" value="A value" nullable color-type="danger"/>
+            </div>
+
+            <div class="flex gap-2">
+              <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="base"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="info"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="success"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="warning"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="danger"/>
+            </div>
+
+            <div class="flex gap-2">
+              <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="base"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="info"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="success"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="warning"/>
+              <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="danger"/>
+            </div>
+
+            <div class="flex gap-[-2px]">
+              <AntBaseInput v-bind="args" v-model:value="value" grouped="left"/>
+              <AntBaseInput v-bind="args" v-model:value="value" grouped="center" color-type="danger"/>
+              <AntBaseInput v-bind="args" v-model:value="value" grouped="right" color-type="info"/>
+            </div>
+          </div>`,
+    }),
+    args: {
+        value: '',
+        placeholder: 'Placeholder'
     },
 };
