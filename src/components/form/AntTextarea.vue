@@ -22,8 +22,9 @@ import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../handler";
 import {classesToObjectSyntax} from "../../utils";
 import AntField from "./Elements/AntField.vue";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   value: string | null;
   size?: Size;
@@ -48,8 +49,10 @@ const props = withDefaults(defineProps<{
   showIcon: true,
   limiter: false
 });
-const icons = {};
 
+const _skeleton = useVModel(props, 'skeleton', emit);
+
+const icons = {};
 icons[TextareaColorType.info] = faCircleInfo;
 icons[TextareaColorType.warning] = faExclamationTriangle;
 icons[TextareaColorType.danger] = faExclamationCircle;
@@ -71,6 +74,7 @@ const inputClasses = computed(() => {
     'rounded-none': props.grouped === Grouped.center,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-md': props.grouped === Grouped.none,
+    'invisible': _skeleton.value
   };
   const variants = {}
 
@@ -108,7 +112,7 @@ onMounted(() => {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="skeleton"
+      :skeleton="_skeleton"
       :description="description"
       :colorType="colorType"
       :validator="validator"
@@ -120,7 +124,7 @@ onMounted(() => {
           v-model="_value"
           :class="inputClasses"
           :placeholder="placeholder !== undefined ? placeholder : label"
-          :disabled="disabled || skeleton"
+          :disabled="disabled || _skeleton"
           v-bind="$attrs"
       />
 
@@ -137,7 +141,7 @@ onMounted(() => {
       </div>
 
       <AntSkeleton
-          v-if="skeleton"
+          v-model="_skeleton"
           absolute
           :grouped="grouped"
           rounded

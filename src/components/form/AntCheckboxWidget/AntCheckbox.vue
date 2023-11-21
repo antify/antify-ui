@@ -79,16 +79,16 @@ const _checked = computed({
 
   <div v-else>
     <div class="flex justify-start w-full mb-1">
-      <AntSkeleton class="w-4 h-4 rounded-md" />
+      <AntSkeleton :model-value="loading" class="w-4 h-4 rounded-md" />
 
       <AntSkeleton
-        v-if="label || $slots['label']"
+        :model-value="label || $slots['label']"
         class="w-2/6 h-4 rounded-md ml-4"
       />
     </div>
 
     <AntSkeleton
-      v-if="description || $slots['description']"
+      :model-value="description || $slots['description']"
       class="w-4/6 h-4 rounded-md mt-1"
     />
   </div>

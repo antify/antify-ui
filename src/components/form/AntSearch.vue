@@ -11,8 +11,9 @@ import Size from '../../enums/Size.enum'
 import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../handler";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['update:value']);
+const emits = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   value: string | null;
   placeholder?: string;
@@ -29,13 +30,16 @@ const props = withDefaults(defineProps<{
   inputTimeout: 300,
   placeholder: "Search"
 });
+
+const _skeleton = useVModel(props, 'skeleton', emits)
+
 const timeout = ref<number>(0);
 // TODO:: implement query prop. Find a way to use vue router in Storybook.
 const _value = computed<number | null>({
   get: () => props.value,
   set: (val: number | null) => {
     if (val === null) {
-      return emit('update:value', val);
+      return emits('update:value', val);
     }
 
     if (timeout.value) {
@@ -43,7 +47,7 @@ const _value = computed<number | null>({
     }
 
     timeout.value = setTimeout(() => {
-      emit('update:value', val);
+      emits('update:value', val);
     }, props.inputTimeout);
   },
 });
@@ -58,7 +62,7 @@ onMounted(() => {
     v-model:value="_value"
     type="search"
     :size="size"
-    :skeleton="skeleton"
+    :skeleton="_skeleton"
     :disabled="disabled"
     :placeholder="placeholder"
     :validator="validator"

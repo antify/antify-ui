@@ -6,7 +6,9 @@ export default {
 
 <script lang="ts" setup>
 import AntSkeleton from "./AntSkeleton.vue";
+import { useVModel } from "@vueuse/core";
 
+const emits = defineEmits(['update:skeleton'])
 const props = withDefaults(
     defineProps<{
       skeleton?: boolean
@@ -14,15 +16,17 @@ const props = withDefaults(
       skeleton: false
     }
 )
+
+const _skeleton = useVModel(props, 'skeleton', emits);
 </script>
 
 <template>
   <div class="relative">
-    <AntSkeleton v-if="skeleton" absolute rounded/>
+    <AntSkeleton v-model="_skeleton" absolute rounded/>
 
     <div
         class="flex flex-col rounded-md bg-neutral-light gap-px relative border border-neutral-light overflow-hidden"
-        :class="{'invisible': skeleton}"
+        :class="{'invisible': _skeleton}"
     >
       <slot/>
     </div>

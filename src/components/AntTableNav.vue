@@ -13,7 +13,9 @@ import AntPagination from "./AntPagination.vue";
 import {computed, ref, watch} from "vue";
 import AntSelect from "./form/AntSelect.vue";
 import AntSkeleton from "./AntSkeleton.vue";
+import { useVModel } from "@vueuse/core";
 
+const emit = defineEmits(["update:page"])
 const props = withDefaults(
     defineProps<{
       page: number,
@@ -32,9 +34,12 @@ const props = withDefaults(
       validItemsPerPage: [20, 50, 100, 200]
     }
 )
-const emit = defineEmits(["update:page"])
+
 const route = useRoute()
 const router = useRouter()
+
+const _skeleton = useVModel(props, 'skeleton', emit);
+
 const itemsPerPageOptions = computed(() =>
     props.validItemsPerPage.map(item => ({
       label: item,
@@ -68,6 +73,7 @@ const itemsPerPage = computed({
   }
 })
 const fromItems = computed(() => (itemsPerPage.value * (page.value - 1)))
+
 const _fullWidth = ref(props.fullWidth)
 
 watch(() => props.fullWidth, () => {
@@ -90,19 +96,19 @@ watch(() => props.fullWidth, () => {
         v-if="_fullWidth"
         class="flex gap-2 items-center text-neutral-lightest-font text-sm">
       <span class="relative">
-        <AntSkeleton v-if="skeleton" rounded absolute />
+        <AntSkeleton v-model="_skeleton" rounded absolute />
         Items per page
       </span>
 
       <AntSelect
           v-model:value="itemsPerPage"
           :options="itemsPerPageOptions"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :expanded="false"
       />
 
       <div v-if="count !== null" class="flex gap-1 relative">
-        <AntSkeleton v-if="skeleton" rounded absolute />
+        <AntSkeleton v-model="_skeleton" rounded absolute />
 
         <span class="font-medium">{{ fromItems }} - {{ itemsPerPage * page }}</span>
         <span>of</span>
@@ -113,7 +119,7 @@ watch(() => props.fullWidth, () => {
     <AntPagination
         :pages="pages"
         :page-query="pageQuery"
-        :skeleton="skeleton"
+        :skeleton="_skeleton"
     />
   </div>
 </template>

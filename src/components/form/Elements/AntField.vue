@@ -13,7 +13,9 @@ import {Validator} from "@antify/validate";
 import {handleEnumValidation} from "../../../handler";
 import AntInputLimiter from "./AntInputLimiter.vue";
 import {FieldColorType} from "./types/AntField.type";
+import { useVModel } from "@vueuse/core";
 
+const emits = defineEmits(['update:skeleton']);
 const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
@@ -34,6 +36,8 @@ const props = withDefaults(defineProps<{
   expanded: true
 });
 
+const _skeleton = useVModel(props, 'skeleton', emits);
+
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
   handleEnumValidation(props.colorType, FieldColorType, 'FieldColorType');
@@ -51,7 +55,7 @@ const errors = computed(() => props.validator?.getErrors() || [])
     <AntInputLabel
         :label="label"
         :size="size"
-        :skeleton="skeleton"
+        :skeleton="_skeleton"
         :for="labelFor"
         @clickContent="$emit('clickLabel')"
     >
@@ -66,7 +70,7 @@ const errors = computed(() => props.validator?.getErrors() || [])
     >
       <AntInputDescription
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :color-type="_colorType"
       >
         <slot name="description">
@@ -92,7 +96,7 @@ const errors = computed(() => props.validator?.getErrors() || [])
           :max-value="limiterMaxValue"
           :color-type="_colorType"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
       >
         {{ limiterValue }}/{{ limiterMaxValue }}
       </AntInputLimiter>

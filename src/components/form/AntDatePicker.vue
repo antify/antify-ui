@@ -88,14 +88,19 @@ function validate() {
 
   <div v-else>
     <AntSkeleton
+      :model-value="loading"
       v-if="label || $slots['label']"
       class="w-2/6 h-4 rounded-md mb-1"
     />
 
-    <AntSkeleton class="w-full h-8 rounded-md" />
+    <AntSkeleton
+      :model-value="loading"
+      class="w-full h-8 rounded-md"
+    />
 
     <AntSkeleton
       v-if="description || $slots['description']"
+      :model-value="loading"
       class="w-4/6 h-4 rounded-md mt-1"
     />
   </div>

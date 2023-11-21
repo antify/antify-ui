@@ -15,7 +15,9 @@ import {faChevronRight, faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 import {ButtonColorType} from "./form/__types/AntButton.type";
 import Grouped from "../enums/Grouped.enum";
 import AntSkeleton from "./AntSkeleton.vue";
+import { useVModel } from "@vueuse/core";
 
+const emit = defineEmits(["update:page"])
 const props = withDefaults(
     defineProps<{
       pages: number,
@@ -27,9 +29,12 @@ const props = withDefaults(
       skeleton: false
     }
 )
-const emit = defineEmits(["update:page"])
+
 const router = useRouter()
 const route = useRoute()
+
+const _skeleton = useVModel(props, 'skeleton', emit);
+
 const page = computed({
   get() {
     const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1
@@ -107,11 +112,11 @@ const pagination = computed(() => {
 
 <template>
   <div class="inline-flex relative">
-    <AntSkeleton v-if="skeleton" rounded absolute/>
+    <AntSkeleton v-model="_skeleton" rounded absolute/>
 
     <div
         class="inline-flex gap-px"
-        :class="{'invisible': skeleton}"
+        :class="{'invisible': _skeleton}"
     >
       <AntButton
           :disabled="page === 1"

@@ -13,8 +13,9 @@ import Size from '../../enums/Size.enum'
 import {Validator} from '@antify/validate'
 import {TextInputColorType, Type} from './__types/AntTextInput.type'
 import {handleEnumValidation} from "../../handler";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   value: string;
   label?: string;
@@ -36,10 +37,9 @@ const props = withDefaults(defineProps<{
   type: Type.text,
   limiter: false
 });
-const _value = computed<number | null>({
-  get: () => props.value,
-  set: (val: number | null) => emit('update:value', val),
-});
+
+const _skeleton = useVModel(props, 'skeleton', emit);
+const _value = useVModel(props, 'value', emit);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
@@ -52,7 +52,7 @@ onMounted(() => {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="skeleton"
+      :skeleton="_skeleton"
       :description="description"
       :colorType="colorType"
       :validator="validator"
@@ -65,7 +65,7 @@ onMounted(() => {
         wrapper-class="flex-grow"
         :colorType="colorType"
         :size="size"
-        :skeleton="skeleton"
+        :skeleton="_skeleton"
         :disabled="disabled"
         :placeholder="placeholder !== undefined ? placeholder : label"
         :show-icon="false"

@@ -81,15 +81,17 @@ const _groupValue = computed({
   <div v-else class="w-full">
     <slot name="skeleton">
       <div class="flex justify-start w-full mb-1">
-        <AntSkeleton class="w-4 h-4 rounded-full" />
+        <AntSkeleton :model-value="loading" class="w-4 h-4 rounded-full" />
 
         <div class="w-full ml-3">
           <AntSkeleton
+            :model-value="loading"
             v-if="label || $slots['label']"
             class="w-2/6 h-4 rounded-md"
           />
 
           <AntSkeleton
+            :model-value="loading"
             v-if="description || $slots['description']"
             class="w-4/6 h-4 rounded-md mt-1"
           />

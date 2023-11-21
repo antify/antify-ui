@@ -19,8 +19,9 @@ import Grouped from '../../enums/Grouped.enum';
 import Size from '../../enums/Size.enum';
 import {ButtonColorType, ButtonType} from "./__types/AntButton.type";
 import {handleEnumValidation} from "../../handler";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['click']);
+const emits = defineEmits(['click', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   outlined?: boolean;
   size?: Size;
@@ -50,7 +51,9 @@ const props = withDefaults(defineProps<{
   bordered: true
 });
 
-const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
+const _skeleton = useVModel(props, 'skeleton', emits);
+
+const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
 const groupedClassList = computed(() => ({
   'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
   'rounded-none': props.grouped === Grouped.center,
@@ -60,12 +63,12 @@ const groupedClassList = computed(() => ({
 const classes = computed(() => {
   const classes = {
     'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
-    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !props.skeleton,
-    'cursor-default': props.skeleton || props.readonly,
+    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !_skeleton.value,
+    'cursor-default': _skeleton.value || props.readonly,
     'focus:ring-2': props.size === Size.sm && hasAction.value,
     'focus:ring-4': props.size === Size.md && hasAction.value,
     'w-full': props.expanded,
-    'invisible': props.skeleton,
+    'invisible': _skeleton.value,
     'bg-neutral-lightest': props.outlined,
     ...groupedClassList.value
   };
@@ -122,7 +125,7 @@ const buttonContentClasses = computed(() => ({
   'hover:bg-white/75': props.outlined && hasAction.value,
   'hover:bg-black/25': !props.outlined && hasAction.value,
   // Make sure, nothing shimmer through the skeleton
-  'invisible': props.skeleton
+  'invisible': _skeleton.value
 }));
 const iconClasses = computed(() => ({
   'h-4': props.size === Size.sm,
@@ -145,7 +148,7 @@ onMounted(() => {
 <template>
   <div class="relative inline-flex">
     <AntSkeleton
-        v-if="skeleton"
+        v-model="_skeleton"
         :grouped="grouped"
         rounded
         absolute
@@ -162,31 +165,31 @@ onMounted(() => {
       <span
           :class="buttonContentClasses"
       >
-      <AntSpinner
-          v-if="spinner"
-          :size="size"
-          :color-type="colorType"
-          :inverted="!outline"
-      />
+        <AntSpinner
+            v-if="spinner"
+            :size="size"
+            :color-type="colorType"
+            :inverted="!outline"
+        />
 
-      <slot
-          v-if="!spinner"
-          name="icon-left"
-      >
-        <fa-icon v-if="iconLeft" :icon="iconLeft" :class="iconClasses"/>
-      </slot>
+        <slot
+            v-if="!spinner"
+            name="icon-left"
+        >
+          <fa-icon v-if="iconLeft" :icon="iconLeft" :class="iconClasses"/>
+        </slot>
 
-      <slot
-          v-if="!spinner"
-      />
+        <slot
+            v-if="!spinner"
+        />
 
-      <slot
-          v-if="!spinner"
-          name="icon-right"
-      >
-        <fa-icon v-if="iconRight" :icon="iconRight" :class="iconClasses"/>
-      </slot>
-    </span>
+        <slot
+            v-if="!spinner"
+            name="icon-right"
+        >
+          <fa-icon v-if="iconRight" :icon="iconRight" :class="iconClasses"/>
+        </slot>
+      </span>
     </component>
   </div>
 </template>

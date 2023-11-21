@@ -14,7 +14,7 @@ const meta: Meta<typeof AntNumberInput> = {
             description:
                 'Additional attributes will be forwarded to the input directly. This way you can access the default input events.',
         },
-        value: {
+        modelValue: {
             control: {type: 'number'},
             table: {type: {summary: 'number|null'}},
         },
@@ -52,7 +52,7 @@ export const Docs: Story = {
 
             return {args, value};
         },
-        template: '<div class="p-4"><AntNumberInput v-bind="args" v-model:value="value" /></div>',
+        template: '<div class="p-4"><AntNumberInput v-bind="args" v-model="value" /></div>',
     }),
     args: {
         value: 0,

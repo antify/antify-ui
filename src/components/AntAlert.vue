@@ -18,7 +18,9 @@ import AntIcon from './AntIcon.vue';
 import AntTooltip from "./AntTooltip.vue";
 import {Position} from "../enums/PositionType.enum";
 import AntSkeleton from "./AntSkeleton.vue";
+import { useVModel } from "@vueuse/core";
 
+const emits = defineEmits(['update:skeleton']);
 const props = withDefaults(defineProps<{
   title: string,
   colorType?: AlertColorType,
@@ -32,6 +34,8 @@ const props = withDefaults(defineProps<{
   expanded: false,
   skeleton: false
 });
+
+const _skeleton = useVModel(props, 'skeleton', emits);
 
 const icons = {};
 
@@ -68,11 +72,11 @@ onMounted(() => {
 
 <template>
   <div :class="classes">
-    <AntSkeleton v-if="skeleton" absolute rounded/>
+    <AntSkeleton v-model="_skeleton" absolute rounded/>
 
     <div
         class="inline-flex items-center justify-between w-content gap-2.5"
-        :class="{'invisible': skeleton}"
+        :class="{'invisible': _skeleton}"
     >
       <div class="inline-flex items-center gap-2.5">
         <AntIcon

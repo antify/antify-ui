@@ -32,8 +32,10 @@ import {faChevronDown, faChevronUp, faMultiply} from "@fortawesome/free-solid-sv
 import AntSkeleton from "../AntSkeleton.vue";
 import {vOnClickOutside} from '@vueuse/components';
 import AntButton from "./AntButton.vue";
+import { useVModel } from "@vueuse/core";
+import { Ref } from "react";
 
-const emit = defineEmits(['update:value', 'update:focus']);
+const emit = defineEmits(['update:value', 'update:focus', 'update:skeleton']);
 const props = withDefaults(
     defineProps<{
       value: string | number | null;
@@ -63,6 +65,9 @@ const props = withDefaults(
       expanded: true
     }
 );
+
+const _skeleton: Ref<boolean> = useVModel(props, 'skeleton', emit);
+
 const isOpen = ref(false);
 const _value = computed({
   get: () => {
@@ -80,7 +85,7 @@ const inputClasses = computed(() => {
     'flex items-center transition-colors border-none outline relative focus:z-10': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
     // Skeleton
-    'invisible': props.skeleton,
+    'invisible': _skeleton.value,
     // Disabled
     'disabled:opacity-50 disabled:cursor-not-allowed': true,
     // Size
@@ -96,7 +101,8 @@ const inputClasses = computed(() => {
     // Open
     'shadow-md': isOpen.value,
     // Disabled
-    'opacity-50 cursor-not-allowed': props.disabled
+    'opacity-50 cursor-not-allowed': props.disabled,
+    'invisible': _skeleton.value
   };
 
   variants[ColorType.base] = 'outline-neutral-light focus:outline-primary bg-neutral-lightest focus:ring-primary/25';
@@ -379,7 +385,7 @@ function onClickRemoveButton() {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="skeleton"
+      :skeleton="_skeleton"
       :description="description"
       :color-type="colorType"
       :validator="validator"
@@ -394,11 +400,11 @@ function onClickRemoveButton() {
     >
       <div
           class="relative w-full"
-          :class="{'cursor-pointer': !skeleton}"
+          :class="{'cursor-pointer': !_skeleton}"
           v-on-click-outside="onClickOutside"
       >
         <AntSkeleton
-            v-if="skeleton"
+            v-model="_skeleton"
             absolute
             rounded
             :grouped="skeletonGrouped"
@@ -477,7 +483,7 @@ function onClickRemoveButton() {
           :color-type="_colorType"
           :grouped="[Grouped.left, Grouped.center].some(item => item === grouped) ? Grouped.center : Grouped.right"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           @click="onClickRemoveButton"
       />
     </div>

@@ -15,10 +15,11 @@ import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {ColorType} from "../../enums/ColorType.enum";
 import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../handler";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['update:value']);
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
-  value: number | null;
+  modelValue: number | null;
   label?: string;
   placeholder?: string;
   description?: string;
@@ -39,10 +40,9 @@ const props = withDefaults(defineProps<{
   steps: 1,
   limiter: false
 });
-const content = computed<number | null>({
-  get: () => props.value,
-  set: (val: number | null) => emit('update:value', val),
-});
+
+const _skeleton = useVModel(props, 'skeleton', emits)
+const content = useVModel(props, 'modelValue', emits);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'Size');
@@ -69,7 +69,7 @@ function add() {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="skeleton"
+      :skeleton="_skeleton"
       :description="description"
       :colorType="colorType"
       :validator="validator"
@@ -84,7 +84,7 @@ function add() {
           grouped="left"
           :colorType="colorType"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :disabled="disabled || (min !== undefined ? content <= min : false)"
           @click="subtract"
       />
@@ -96,7 +96,7 @@ function add() {
           wrapper-class="flex-grow"
           :colorType="colorType"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :min="min"
           :max="max"
           :disabled="disabled"
@@ -111,7 +111,7 @@ function add() {
           grouped="right"
           :color-type="colorType"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :disabled="disabled || (max !== undefined ? content >= max : false)"
           @click="add"
       />

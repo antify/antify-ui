@@ -10,7 +10,9 @@ import Size from '../../../enums/Size.enum'
 import AntSkeleton from "../../AntSkeleton.vue";
 import {handleEnumValidation} from "../../../handler";
 import {InputDescriptionColorType} from "./types/AntInputDescription.type";
+import { useVModel } from "@vueuse/core";
 
+const emits = defineEmits(['update:skeleton']);
 const props = withDefaults(defineProps<{
   colorType?: InputDescriptionColorType,
   size?: Size;
@@ -20,6 +22,8 @@ const props = withDefaults(defineProps<{
   size: Size.md,
   colorType: InputDescriptionColorType.base
 });
+
+const _skeleton = useVModel(props, 'skeleton', emits);
 
 const classes = computed(() => {
   const classes = {
@@ -50,12 +54,12 @@ onMounted(() => {
   <div
       :class="classes"
   >
-    <span :class="{'invisible': skeleton}">
+    <span :class="{'invisible': _skeleton}">
       <slot/>
     </span>
 
     <AntSkeleton
-        v-if="skeleton"
+        v-model="_skeleton"
         absolute
         rounded
     />

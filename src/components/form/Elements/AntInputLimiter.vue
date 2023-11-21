@@ -10,7 +10,9 @@ import Size from '../../../enums/Size.enum'
 import AntSkeleton from "../../AntSkeleton.vue";
 import {handleEnumValidation} from "../../../handler";
 import {InputLimiterColorType} from "./types/AntInputLimiter.type";
+import { useVModel } from "@vueuse/core";
 
+const emits = defineEmits(['update:skeleton']);
 const props = withDefaults(defineProps<{
   value: number;
   maxValue: number;
@@ -22,6 +24,9 @@ const props = withDefaults(defineProps<{
   size: Size.md,
   colorType: InputLimiterColorType.base
 });
+
+const _skeleton = useVModel(props, 'skeleton', emits);
+
 const classes = computed(() => {
   const classes = {
     'relative font-regular inline-block transition-color': true,
@@ -42,12 +47,12 @@ onMounted(() => {
 
 <template>
   <div :class="classes">
-    <span :class="{'invisible': skeleton}">
+    <span :class="{'invisible': _skeleton}">
         {{ value }}/{{ maxValue }}
     </span>
 
     <AntSkeleton
-        v-if="skeleton"
+        v-model="_skeleton"
         absolute
         rounded
     />

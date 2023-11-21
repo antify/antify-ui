@@ -14,8 +14,9 @@ import Size from '../../enums/Size.enum'
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {ColorType} from "../../enums/ColorType.enum";
 import {ButtonColorType} from "./__types/AntButton.type";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['update:value']);
+const emits = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   value: number;
   unit: string | IconDefinition;
@@ -33,12 +34,15 @@ const props = withDefaults(defineProps<{
   skeleton: false,
   size: Size.md,
 });
+
+const _skeleton = useVModel(props, 'skeleton', emits);
+
 const content = computed<string>({
   get: () => {
     return props.value as string;
   },
   set: (val: string) => {
-    emit('update:value', val);
+    emits('update:value', val);
   },
 });
 
@@ -60,7 +64,7 @@ onMounted(() => {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="skeleton"
+      :skeleton="_skeleton"
       :description="description"
       :colorType="colorType"
       :class="wrapperClass"
@@ -75,7 +79,7 @@ onMounted(() => {
           wrapper-class="flex-grow"
           :colorType="colorType"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :disabled="disabled"
           :placeholder="placeholder || label"
           :show-icon="false"
@@ -87,7 +91,7 @@ onMounted(() => {
           grouped="right"
           :color-type="colorType === ColorType.neutral ? ButtonColorType.neutralLight : colorType"
           :size="size"
-          :skeleton="skeleton"
+          :skeleton="_skeleton"
           :readonly="true"
       >
         <span v-if="typeof unit === 'string'">

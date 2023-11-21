@@ -22,8 +22,9 @@ import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../../handler";
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {classesToObjectSyntax} from "../../../utils";
+import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   value: string | number | null;
   size?: Size;
@@ -49,6 +50,9 @@ const props = withDefaults(defineProps<{
   default: false,
   nullable: false
 });
+
+const _skeleton = useVModel(props, 'skeleton', emit);
+
 const icons = {};
 
 icons[BaseInputColorType.info] = faCircleInfo;
@@ -76,6 +80,7 @@ const inputClasses = computed(() => {
     'rounded-none': props.grouped === Grouped.center,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-md': props.grouped === Grouped.none,
+    'invisible': _skeleton.value
   };
   const variants = {}
 
@@ -150,7 +155,7 @@ onMounted(() => {
         :class="inputClasses"
         :type="type"
         :placeholder="placeholder"
-        :disabled="disabled || skeleton"
+        :disabled="disabled || _skeleton"
         v-bind="$attrs"
     >
 
@@ -176,7 +181,7 @@ onMounted(() => {
     </div>
 
     <AntSkeleton
-        v-if="skeleton"
+        v-model="_skeleton"
         absolute
         :grouped="grouped"
         rounded
