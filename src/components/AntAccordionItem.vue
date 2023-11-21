@@ -8,12 +8,17 @@ export default {
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from "./AntIcon.vue";
 import {computed, ref, watch} from "vue";
+import AntTransitionCollapseHeight from "./transitions/AntTransitionCollapseHeight.vue";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   isOpen: boolean;
   label?: string;
-}>()
+  collapseTransition?: string;
+}>(), {
+  collapseTransition: 'slide'
+});
 const emit = defineEmits(['close', 'open']);
+
 // TODO:: Stehengeblieben: delays machen
 function onClick() {
   if (props.isOpen) {
@@ -39,38 +44,40 @@ function onClick() {
         </span>
 
         <AntIcon
-            :icon="isOpen ? faAngleDown : faAngleUp"
+            :icon="isOpen ? faAngleUp : faAngleDown"
             :class="{'text-primary-font': isOpen}"
         />
       </div>
     </slot>
   </div>
 
-  <div
-      v-if="isOpen"
-      class="bg-white overflow-hidden"
-  >
-    <transition name="bounce">
-      <div
-          v-if="isOpen"
-          class="p-2.5 bg-neutral-lightest"
-      >
-        <slot/>
-      </div>
-    </transition>
-  </div>
+  <AntTransitionCollapseHeight>
+    <div
+        v-show="isOpen"
+        class="bg-white overflow-hidden -mt-px"
+    >
+      <transition name="bounce">
+        <div
+            v-show="isOpen"
+            class="p-2.5 bg-neutral-lightest"
+        >
+          <slot/>
+        </div>
+      </transition>
+    </div>
+  </AntTransitionCollapseHeight>
 </template>
 
 <style scoped>
 .bounce-enter-active {
-  animation: bounce-in .4s;
+  animation: bounce .6s;
 }
 
 .bounce-leave-active {
-  animation: bounce-in .4s reverse;
+  animation: bounce .6s reverse;
 }
 
-@keyframes bounce-in {
+@keyframes bounce {
   0% {
     transform: translateY(-100%);
     opacity: 0;
@@ -82,6 +89,23 @@ function onClick() {
   100% {
     transform: translateY(0%);
     opacity: 1;
+  }
+}
+
+.slide-enter-active {
+  animation: slide 1s;
+}
+
+.slide-leave-active {
+  animation: slide 1s reverse;
+}
+
+@keyframes slide {
+  0% {
+  //transform: translateY(-100%); max-height: 0; opacity: 0;
+  }
+  100% {
+  //transform: translateY(0%); max-height: 100%; opacity: 1;
   }
 }
 </style>
