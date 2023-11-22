@@ -34,10 +34,10 @@ const _tooltipClasses = computed(() => {
     "absolute w-max inline-flex": true,
 
     // Position
-    "bottom-0 mb-[50%] pb-3.5": props.position === Position.top,
-    "top-0 mt-[50%] pt-3.5": props.position === Position.bottom,
-    "right-0 mr-[100%] pr-3.5": props.position === Position.left,
-    "left-0 ml-[100%] pl-3.5": props.position === Position.right,
+    "bottom-full pb-3.5": props.position === Position.top,
+    "top-full pt-3.5": props.position === Position.bottom,
+    "right-full pr-3.5": props.position === Position.left,
+    "left-full pl-3.5": props.position === Position.right,
 
     ...classes
   };
@@ -120,13 +120,13 @@ function onMouseLeave() {
 </script>
 
 <template>
-  <div class="relative inline-flex justify-center items-end"
+  <div class="relative inline-flex justify-center items-center"
        @mouseover="onMouseOver"
        @mouseleave="onMouseLeave"
   >
     <slot/>
 
-    <div v-if="visible" :class="_tooltipClasses" class="bg-info">
+    <div v-if="visible" :class="_tooltipClasses">
       <div
           class="shadow-lg text-sm relative inline-flex flex-col relative"
       >
