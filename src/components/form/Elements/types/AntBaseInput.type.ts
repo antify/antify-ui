@@ -12,6 +12,7 @@ export enum Type {
     time = 'time',
     url = 'url',
     week = 'week',
+    range = 'range',
 }
 export enum BaseInputColorType {
     base = 'base',

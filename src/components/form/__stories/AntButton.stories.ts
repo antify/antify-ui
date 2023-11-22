@@ -58,7 +58,7 @@ export const Docs: Story = {
         setup() {
             return {args};
         },
-        template: '<div class="p-4"><AntButton v-bind="args">Button</AntButton></div>',
+        template: '<AntButton v-bind="args">Button</AntButton>',
     }),
     args: {},
 };
@@ -77,7 +77,7 @@ export const IconOnly: Story = {
         setup() {
             return {args};
         },
-        template: '<div class="p-4"><AntButton v-bind="args"></AntButton></div>',
+        template: '<AntButton v-bind="args"></AntButton>',
     }),
     args: {
         ...Docs.args,
