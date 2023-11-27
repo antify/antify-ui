@@ -1,4 +1,4 @@
-import AntTabs from '../AntTabs.vue';
+import AntTabs from '../AntTabsDeprecated.vue';
 
 export default {
   title: 'Components/Layout/Ant Tabs',

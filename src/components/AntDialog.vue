@@ -15,7 +15,7 @@ import {
   faCircleInfo,
   faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
-import { DialogColorTypes } from "./__types/AntDialogTypes";
+import { DialogColorTypes } from "./__types/AntDialog.types";
 
 const emits = defineEmits(['update:open', 'close']);
 const props = withDefaults(defineProps<{

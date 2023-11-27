@@ -1,6 +1,6 @@
 import AntDualContent from '../AntDualContent.vue';
 import AntInput from '../../form/AntInput.vue';
-import AntTabs from '../../navigation/tabs/AntTabs.vue';
+import AntTabsDeprecated from '../../navigation/tabs/AntTabsDeprecated.vue';
 import AntTable from '../../table/AntTable.vue';
 import AntButton from '../../form/AntButton.vue';
 import { SingleHeader } from '../../table/__stories/AntTable.stories';
@@ -64,7 +64,7 @@ export const Simple = (args: any) => ({
 });
 
 export const Complex = (args: any) => ({
-  components: { AntDualContent, AntInput, AntTabs, AntTable, AntButton },
+  components: { AntDualContent, AntInput, AntTabsDeprecated, AntTable, AntButton },
   setup() {
     return {
       args,
@@ -80,7 +80,7 @@ export const Complex = (args: any) => ({
   template: `
   <AntDualContent>
     <template #mainHead>
-      <AntTabs :tabs="tabs" class="px-4"/>
+      <AntTabsDeprecated :tabs="tabs" class="px-4"/>
     </template>
 
     <template #mainBody>

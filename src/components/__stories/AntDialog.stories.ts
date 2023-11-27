@@ -2,7 +2,7 @@ import AntDialog from "../AntDialog.vue";
 import { Meta, StoryObj } from "@storybook/vue3";
 import { computed } from "vue";
 import AntButton from "../form/AntButton.vue";
-import { DialogColorTypes } from "../__types/AntDialogTypes";
+import { DialogColorTypes } from "../__types/AntDialog.types";
 
 const meta: Meta<typeof  AntDialog> = {
   title: 'Components/Dialog',
@@ -12,6 +12,9 @@ const meta: Meta<typeof  AntDialog> = {
     colorType: {
       control: {type: 'select'},
       options: Object.values(DialogColorTypes),
+    },
+    title: {
+      control: 'text'
     }
   }
 }

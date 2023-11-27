@@ -41,7 +41,7 @@ import AntMediathekItem from './components/layout/AntMediathek/AntMediathekItem.
 import AntNavigation from './components/navigation/AntNavigation.vue';
 import AntNavItem from './components/navigation/AntNavItem.vue';
 import AntNavProfile from './components/navigation/AntNavProfile.vue';
-import AntTabs from './components/navigation/tabs/AntTabs.vue';
+import AntTabs from './components/navigation/tabs/AntTabsDeprecated.vue';
 
 import AntDragDropTable from './components/table/AntDragDropTable.vue';
 import AntPagination from './components/AntPagination.vue';
