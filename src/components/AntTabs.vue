@@ -24,7 +24,7 @@ const currentActive = useVModel(props, 'modelValue', emits);
 
 const containerClasses = computed(() => {
   return {
-    'flex bg-neutral-light gap-px transition-all': true,
+    'flex bg-neutral-light gap-px transition-all h-full': true,
     'w-fit': !props.expanded,
     'w-full': props.expanded,
   };
@@ -50,7 +50,7 @@ function clickTab(tabItem) {
         :active="currentActive === tabItem.id"
         :expanded="expanded"
       >
-        <slot name="content"></slot>
+        <slot name="content" v-bind="{item: tabItem, isActive: currentActive === tabItem.id}"></slot>
       </AntTabItem>
     </slot>
   </div>

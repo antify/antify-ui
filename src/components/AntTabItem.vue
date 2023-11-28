@@ -37,13 +37,13 @@ const containerClasses = computed(() => {
     :class="containerClasses"
   >
     <slot name="prependIconSlot">
-      <AntIcon :icon="prependIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
+      <AntIcon v-if="prependIcon" :icon="prependIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
     </slot>
 
     <slot>{{ label }}</slot>
 
     <slot name="appendIconSlot">
-      <AntIcon :icon="appendIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
+      <AntIcon v-if="appendIcon" :icon="appendIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
     </slot>
   </div>
 
@@ -53,13 +53,13 @@ const containerClasses = computed(() => {
     :class="containerClasses"
   >
     <slot name="prependIconSlot">
-      <AntIcon :icon="prependIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
+      <AntIcon v-if="prependIcon" :icon="prependIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
     </slot>
 
     <slot>{{ label }}</slot>
 
     <slot name="appendIconSlot">
-      <AntIcon :icon="appendIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
+      <AntIcon v-if="appendIcon" :icon="appendIcon" :color-type="active ? IconColorType.primary: IconColorType.base"/>
     </slot>
   </router-link>
 </template>

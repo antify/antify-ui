@@ -102,21 +102,21 @@ export const Overview: Story = {
           appendIcon: faUserCircle,
           prependIcon: faUserCircle,
           label: 'My account',
-          to: '#'
+          to: '/#'
         },
         {
           id: '2',
           prependIcon: faUserCircle,
           appendIcon: faUserCircle,
           label: 'Downloads',
-          to: '#'
+          to: '/#'
         },
         {
           id: '3',
           appendIcon: faUserCircle,
           prependIcon: faUserCircle,
           label: 'Messages',
-          to: '#'
+          to: '/#'
         },
       ]
 
@@ -131,15 +131,23 @@ export const Overview: Story = {
       }
     },
     template: `
+      <div>Default:</div>
       <div class="flex flex-col gap-3 flex-nowrap">
         <AntTabs v-model="value_1" :tab-items="tabItems_1"/>
         <AntTabs v-model="value_2" :tab-items="tabItems_2"/>
         <AntTabs v-model="value_3" :tab-items="tabItems_3"/>
       </div>
-      
-      <div class="flex flex-col gap-3 flex-nowrap mt-8">
+
+      <div class="mt-8">Expanded:</div>
+      <div class="flex flex-col gap-3 flex-nowrap">
         <AntTabs v-model="value_1" :tab-items="tabItems_1" expanded separators/>
         <AntTabs v-model="value_2" :tab-items="tabItems_2" expanded separators/>
+        <AntTabs v-model="value_3" :tab-items="tabItems_3" expanded separators/>
+      </div>
+      
+      <div class="mt-8">Larger container:</div>
+      
+      <div class="h-16 bg-primary">
         <AntTabs v-model="value_3" :tab-items="tabItems_3" expanded separators/>
       </div>
     `

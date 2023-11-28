@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [],
+  routes: [{
+    name: 'test',
+    redirect: '/#',
+    path: '/#',
+  }],
 });
 
 setup((app) => {
@@ -33,6 +37,7 @@ export const parameters = {
       date: /Date$/,
     },
     expanded: true,
+    sort: 'alpha'
   },
   layout: 'fullscreen',
 };
