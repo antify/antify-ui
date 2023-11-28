@@ -7,7 +7,6 @@ export default {
 <script setup lang="ts">
 import { ref, useSlots, watch } from "vue";
 import AntButton from "./form/AntButton.vue";
-import { ColorType } from "../enums/ColorType.enum";
 import AntIcon from "./AntIcon.vue";
 import {
   faCircleCheck,
@@ -16,6 +15,7 @@ import {
   faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
 import { DialogColorTypes } from "./__types/AntDialog.types";
+import { IconSize } from "./__types/AntIcon.types";
 
 const emits = defineEmits(['update:open', 'close']);
 const props = withDefaults(defineProps<{
@@ -83,10 +83,10 @@ function closeDialog() {
 
           <div class="bg-neutral-lightest p-2.5 grow flex items-center gap-2.5 text-sm">
             <slot name="icon">
-              <AntIcon v-if="colorType === DialogColorTypes.info" :icon="faCircleInfo" :color-type="colorType" class="px-2.5 w-8 h-8" />
-              <AntIcon v-if="colorType === DialogColorTypes.success" :icon="faCircleCheck" :color-type="colorType" class="px-2.5 w-8 h-8" />
-              <AntIcon v-if="colorType === DialogColorTypes.warning" :icon="faTriangleExclamation" :color-type="colorType" class="px-2.5 w-8 h-8" />
-              <AntIcon v-if="colorType === DialogColorTypes.danger" :icon="faCircleExclamation" :color-type="colorType" class="px-2.5 w-8 h-8" />
+              <AntIcon v-if="colorType === DialogColorTypes.info" :size="IconSize.xl3" :icon="faCircleInfo" :color-type="colorType" class="px-2.5 w-8 h-8" />
+              <AntIcon v-if="colorType === DialogColorTypes.success" :size="IconSize.xl3" :icon="faCircleCheck" :color-type="colorType" class="px-2.5 w-8 h-8" />
+              <AntIcon v-if="colorType === DialogColorTypes.warning" :size="IconSize.xl3" :icon="faTriangleExclamation" :color-type="colorType" class="px-2.5 w-8 h-8" />
+              <AntIcon v-if="colorType === DialogColorTypes.danger" :size="IconSize.xl3" :icon="faCircleExclamation" :color-type="colorType" class="px-2.5 w-8 h-8" />
             </slot>
 
             <slot/>

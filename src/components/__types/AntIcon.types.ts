@@ -8,3 +8,9 @@ export enum IconColorType {
     success = 'success',
     warning = 'warning',
 }
+
+export enum IconSize {
+    sm = 'sm',
+    md = 'md',
+    xl3 = '3xl'
+}
