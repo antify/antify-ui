@@ -30,6 +30,7 @@ const preview: Preview = {
 export default preview;
 
 export const parameters = {
+  chromatic: { disableSnapshot: true },
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {

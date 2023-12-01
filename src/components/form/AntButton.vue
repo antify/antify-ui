@@ -37,6 +37,7 @@ const props = withDefaults(defineProps<{
   expanded?: boolean;
   submit?: boolean;
   bordered?: boolean;
+  noFocus?: boolean;
 }>(), {
   colorType: ButtonColorType.base,
   disabled: false,
@@ -48,7 +49,8 @@ const props = withDefaults(defineProps<{
   readonly: false,
   expanded: false,
   submit: false,
-  bordered: true
+  bordered: true,
+  noFocus: false,
 });
 
 const _skeleton = useVModel(props, 'skeleton', emits);
@@ -65,8 +67,8 @@ const classes = computed(() => {
     'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !_skeleton.value,
     'cursor-default': _skeleton.value || props.readonly,
-    'focus:ring-2': props.size === Size.sm && hasAction.value,
-    'focus:ring-4': props.size === Size.md && hasAction.value,
+    'focus:ring-2': props.size === Size.sm && hasAction.value && !props.noFocus,
+    'focus:ring-4': props.size === Size.md && hasAction.value && !props.noFocus,
     'w-full': props.expanded,
     'invisible': _skeleton.value,
     'bg-neutral-lightest': props.outlined,
@@ -161,6 +163,7 @@ onMounted(() => {
         :to="to"
         :disabled="disabled || undefined"
         @click="() => !props.readonly ? $emit('click') : null"
+        :tabindex="noFocus ? '-1' : '0'"
     >
       <span
           :class="buttonContentClasses"

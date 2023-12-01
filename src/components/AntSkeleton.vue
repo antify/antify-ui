@@ -61,7 +61,7 @@ watch(value, (val) => {
   } else if (!blockUnShow.value) {
     show.value = false;
   }
-});
+}, { immediate: true });
 </script>
 
 <template>
