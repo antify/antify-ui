@@ -6,17 +6,17 @@ export default {
 
 <script setup lang="ts">
 
-import AntField from "./Elements/AntField.vue";
-import AntButton from "./AntButton.vue";
-import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
-import Size from "../../enums/Size.enum";
-import {computed, onMounted, ref, watch} from "vue";
-import {useVModel} from "@vueuse/core";
-import AntSkeleton from "../AntSkeleton.vue";
-import {Validator} from "@antify/validate";
-import {SwitcherOption} from "./__types/AntSwitcher.type";
-import {ColorType, InputColorType} from "../../enums";
-import Grouped from "../../enums/Grouped.enum";
+import AntField from './Elements/AntField.vue';
+import AntButton from './AntButton.vue';
+import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import Size from '../../enums/Size.enum';
+import {useVModel} from '@vueuse/core';
+import AntSkeleton from '../AntSkeleton.vue';
+import {Validator} from '@antify/validate';
+import {SwitcherOption} from './__types/AntSwitcher.type';
+import {ColorType, InputColorType} from '../../enums';
+import Grouped from '../../enums/Grouped.enum';
+import { computed } from 'vue';
 
 const emits = defineEmits(['update:modelValue', 'update:skeleton'])
 const props = withDefaults(defineProps<{
