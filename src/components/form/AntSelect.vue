@@ -23,7 +23,6 @@ import AntField from "./Elements/AntField.vue";
 import {SelectOption} from './__types/AntSelect.type';
 import {computed, onMounted, ref, watch, nextTick} from 'vue';
 import Size from "../../enums/Size.enum";
-import {ColorType} from "../../enums/ColorType.enum";
 import {Validator} from "@antify/validate";
 import {handleEnumValidation} from "../../handler";
 import Grouped from "../../enums/Grouped.enum";
@@ -32,19 +31,18 @@ import {faChevronDown, faChevronUp, faMultiply} from "@fortawesome/free-solid-sv
 import AntSkeleton from "../AntSkeleton.vue";
 import {vOnClickOutside} from '@vueuse/components';
 import AntButton from "./AntButton.vue";
-import { useVModel } from "@vueuse/core";
-import { Ref } from "react";
+import {useVModel} from "@vueuse/core";
+import {ColorType, InputColorType} from "../../enums";
 
-const emit = defineEmits(['update:value', 'update:focus', 'update:skeleton']);
 const props = withDefaults(
     defineProps<{
-      value: string | number | null;
-      options?: SelectOption[];
+      modelValue: string | number | null;
+      options: SelectOption[];
       label?: string;
       description?: string;
       placeholder?: string;
       size?: Size;
-      colorType?: ColorType;
+      colorType?: InputColorType;
       disabled?: boolean;
       skeleton?: boolean;
       validator?: Validator;
@@ -55,7 +53,7 @@ const props = withDefaults(
       showMessageOnError?: boolean;
       expanded?: boolean;
     }>(), {
-      colorType: ColorType.base,
+      colorType: InputColorType.base,
       grouped: Grouped.none,
       size: Size.md,
       disabled: false,
@@ -65,25 +63,31 @@ const props = withDefaults(
       expanded: true
     }
 );
+const emit = defineEmits(['update:modelValue', 'update:skeleton']);
 
 const _skeleton: Ref<boolean> = useVModel(props, 'skeleton', emit);
-
 const isOpen = ref(false);
-const _value = computed({
-  get: () => {
-    return props.value;
-  },
-  set: (val: string) => {
+const _modelValue = computed({
+  get: () => props.modelValue,
+  set: (val: string | number | null) => {
     props.validator?.validate(val);
-    emit('update:value', val);
+    emit('update:modelValue', val);
   },
 });
-const valueLabel = computed(() => props.options.find(option => option.value === _value.value)?.label || null);
+const valueLabel = computed(() => props.options.find(option => option.value === _modelValue.value)?.label || null);
 const inputClasses = computed(() => {
-  const variants = {};
-  const classes = {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'outline-neutral-light focus:outline-primary bg-neutral-lightest focus:ring-primary/25',
+    [InputColorType.success]: 'outline-success focus:outline-success bg-success-lighter focus:ring-success/25',
+    [InputColorType.info]: 'outline-info focus:outline-info bg-info-lighter focus:ring-info/25',
+    [InputColorType.warning]: 'outline-warning focus:outline-warning bg-warning-lighter focus:ring-warning/25',
+    [InputColorType.danger]: 'outline-danger focus:outline-danger bg-danger-lighter focus:ring-danger/25',
+  };
+
+  return {
     'flex items-center transition-colors border-none outline relative focus:z-10': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
+    [variants[_colorType.value]]: true,
     // Skeleton
     'invisible': _skeleton.value,
     // Disabled
@@ -96,125 +100,90 @@ const inputClasses = computed(() => {
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-none': props.grouped === Grouped.center,
     'rounded-md': props.grouped === Grouped.none,
-    'rounded-tr-none rounded-br-none': props.nullable && _value.value !== null,
+    'rounded-tr-none rounded-br-none': props.nullable && _modelValue.value !== null,
     'rounded-bl-none rounded-br-none': isOpen.value,
     // Open
     'shadow-md': isOpen.value,
     // Disabled
     'opacity-50 cursor-not-allowed': props.disabled,
-    'invisible': _skeleton.value
   };
-
-  variants[ColorType.base] = 'outline-neutral-light focus:outline-primary bg-neutral-lightest focus:ring-primary/25';
-  variants[ColorType.primary] = 'outline-primary focus:outline-primary bg-primary-lighter focus:ring-primary/25';
-  variants[ColorType.secondary] = 'outline-secondary focus:outline-secondary bg-secondary-lighter focus:ring-secondary/25';
-  variants[ColorType.success] = 'outline-success focus:outline-success bg-success-lighter focus:ring-success/25';
-  variants[ColorType.info] = 'outline-info focus:outline-info bg-info-lighter focus:ring-info/25';
-  variants[ColorType.warning] = 'outline-warning focus:outline-warning bg-warning-lighter focus:ring-warning/25';
-  variants[ColorType.danger] = 'outline-danger focus:outline-danger bg-danger-lighter focus:ring-danger/25';
-
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
 });
 const dropdownClasses = computed(() => {
-  const classes = {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'bg-neutral-light border-neutral-light',
+    [InputColorType.success]: 'bg-success border-success',
+    [InputColorType.info]: 'bg-info border-info',
+    [InputColorType.warning]: 'bg-warning border-warning',
+    [InputColorType.danger]: 'bg-danger border-danger',
+  };
+
+  return {
     'absolute w-full border flex flex-col gap-px outline-none -mt-px overflow-hidden shadow-md z-40': true,
     'rounded-bl-md rounded-br-md': true,
+    [variants[_colorType.value]]: true,
     // Size
     'text-xs': props.size === Size.sm,
     'text-sm': props.size === Size.md,
   };
-  const variants = {};
-
-  variants[ColorType.base] = 'bg-neutral-light border-neutral-light';
-  variants[ColorType.primary] = 'bg-primary border-primary';
-  variants[ColorType.secondary] = 'bg-secondary border-secondary';
-  variants[ColorType.success] = 'bg-success border-success';
-  variants[ColorType.info] = 'bg-info border-info';
-  variants[ColorType.warning] = 'bg-warning border-warning';
-  variants[ColorType.danger] = 'bg-danger border-danger';
-
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
 });
 const dropDownItemClasses = computed(() => {
-  const classes = {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'bg-neutral-lightest text-neutral-lightest-font',
+    [InputColorType.success]: 'bg-success-lighter border-success-lighter-font',
+    [InputColorType.info]: 'bg-info-lighter border-info-lighter-font',
+    [InputColorType.warning]: 'bg-warning-lighter border-warning-lighter-font',
+    [InputColorType.danger]: 'bg-danger-lighter border-danger-lighter-font',
+  };
+
+  return {
     'select-none text-ellipsis overflow-hidden whitespace-nowrap': true,
+    [variants[_colorType.value]]: true,
     // Size
     'p-1.5': props.size === Size.sm,
     'p-2.5': props.size === Size.md,
   };
-  const variants = {};
-
-  variants[ColorType.base] = 'bg-neutral-lightest text-neutral-lightest-font';
-  variants[ColorType.primary] = 'bg-primary-lighter border-primary-lighter-font';
-  variants[ColorType.secondary] = 'bg-secondary-lighter border-secondary-lighter-font';
-  variants[ColorType.success] = 'bg-success-lighter border-success-lighter-font';
-  variants[ColorType.info] = 'bg-info-lighter border-info-lighter-font';
-  variants[ColorType.warning] = 'bg-warning-lighter border-warning-lighter-font';
-  variants[ColorType.danger] = 'bg-danger-lighter border-danger-lighter-font';
-
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
 });
 const placeholderClasses = computed(() => {
-  const classes = {
-    'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'text-neutral',
+    [InputColorType.success]: 'text-success-dark',
+    [InputColorType.info]: 'text-info-dark',
+    [InputColorType.warning]: 'text-warning-dark',
+    [InputColorType.danger]: 'text-danger-dark',
   };
-  const variants = {};
 
-  variants[ColorType.base] = 'text-neutral';
-  variants[ColorType.primary] = 'text-primary-dark';
-  variants[ColorType.secondary] = 'text-secondary-dark';
-  variants[ColorType.success] = 'text-success-dark';
-  variants[ColorType.info] = 'text-info-dark';
-  variants[ColorType.warning] = 'text-warning-dark';
-  variants[ColorType.danger] = 'text-danger-dark';
-
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
+  return {
+    'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true,
+    [variants[_colorType.value]]: true,
+  };
 });
 const inputValueClasses = computed(() => {
-  const classes = {
-    'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'text-neutral-lightest-font',
+    [InputColorType.success]: 'text-success-lighter-font',
+    [InputColorType.info]: 'text-info-lighter-font',
+    [InputColorType.warning]: 'text-warning-lighter-font',
+    [InputColorType.danger]: 'text-danger-lighter-font',
   };
-  const variants = {};
-
-  variants[ColorType.base] = 'text-neutral-lightest-font';
-  variants[ColorType.primary] = 'text-primary-lighter-font';
-  variants[ColorType.secondary] = 'text-secondary-lighter-font';
-  variants[ColorType.success] = 'text-success-lighter-font';
-  variants[ColorType.info] = 'text-info-lighter-font';
-  variants[ColorType.warning] = 'text-warning-lighter-font';
-  variants[ColorType.danger] = 'text-danger-lighter-font';
-
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
+  return {
+    'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true,
+    [variants[_colorType.value]]: true,
+  };
 });
 const arrowClasses = computed(() => {
-  const classes = {},
-      variants = {};
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'text-neutral-lightest-font',
+    [InputColorType.success]: 'text-success-lighter-font',
+    [InputColorType.info]: 'text-info-lighter-font',
+    [InputColorType.warning]: 'text-warning-lighter-font',
+    [InputColorType.danger]: 'text-danger-lighter-font',
+  };
 
-  variants[ColorType.base] = 'text-neutral-lightest-font';
-  variants[ColorType.primary] = 'text-primary-lighter-font';
-  variants[ColorType.secondary] = 'text-secondary-lighter-font';
-  variants[ColorType.success] = 'text-success-lighter-font';
-  variants[ColorType.info] = 'text-info-lighter-font';
-  variants[ColorType.warning] = 'text-warning-lighter-font';
-  variants[ColorType.danger] = 'text-danger-lighter-font';
-
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
+  return {[variants[_colorType.value]]: true};
 });
-const _colorType = computed(() => props.validator?.hasErrors() ? ColorType.danger : props.colorType);
+const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 const skeletonGrouped = computed(() => {
-  if (!props.nullable || (props.nullable && _value.value === null)) {
+  if (!props.nullable || (props.nullable && _modelValue.value === null)) {
     return props.grouped;
   }
 
@@ -226,16 +195,16 @@ const skeletonGrouped = computed(() => {
 });
 const inputRef = ref<HTMLElement | null>(null);
 const dropDownRef = ref<HTMLElement | null>(null);
-const focusedDropDownItem = ref(null);
+const focusedDropDownItem = ref<string | number | null>(null);
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
-  handleEnumValidation(props.grouped, Grouped, 'Grouped');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.grouped, Grouped, 'grouped');
 
-  props.validator?.validate(_value.value);
+  props.validator?.validate(_modelValue.value);
 
-  focusedDropDownItem.value = _value.value;
+  focusedDropDownItem.value = _modelValue.value;
 });
 watch(isOpen, (val) => {
   nextTick(() => {
@@ -244,30 +213,17 @@ watch(isOpen, (val) => {
     }
   });
 });
-watch(() => props.focus, (val) => {
-  if (val) {
-    inputRef.value?.focus();
-    emit('update:focus', false);
-  }
-})
 
-function getActiveDropDownItemClasses(option) {
-  const classes = {},
-      variants = {};
+function getActiveDropDownItemClasses(option: SelectOption) {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'bg-neutral-lightest/25',
+    [InputColorType.success]: 'bg-success-lighter/25',
+    [InputColorType.info]: 'bg-info-lighter/25',
+    [InputColorType.warning]: 'bg-warning-lighter/25',
+    [InputColorType.danger]: 'bg-danger-lighter/25',
+  };
 
-  variants[ColorType.base] = 'bg-neutral-lightest/25';
-  variants[ColorType.primary] = 'bg-primary-lighter/25';
-  variants[ColorType.secondary] = 'bg-secondary-lighter/25';
-  variants[ColorType.success] = 'bg-success-lighter/25';
-  variants[ColorType.info] = 'bg-info-lighter/25';
-  variants[ColorType.warning] = 'bg-warning-lighter/25';
-  variants[ColorType.danger] = 'bg-danger-lighter/25';
-
-  if (option.value === focusedDropDownItem.value) {
-    classes[variants[_colorType.value]] = true;
-  }
-
-  return classes;
+  return option.value === focusedDropDownItem.value ? {[variants[_colorType.value]]: true} : {};
 }
 
 function onClickOutside() {
@@ -279,10 +235,10 @@ function onClickOutside() {
   inputRef.value?.focus();
 }
 
-function onKeyDownDropDown(e) {
+function onKeyDownDropDown(e: KeyboardEvent) {
   if (e.key === 'Enter') {
     isOpen.value = false;
-    _value.value = focusedDropDownItem.value;
+    _modelValue.value = focusedDropDownItem.value;
     inputRef.value?.focus();
   }
 
@@ -293,19 +249,21 @@ function onKeyDownDropDown(e) {
 
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
     const index = props.options.findIndex(option => option.value === focusedDropDownItem.value);
+    const option = props.options[index + 1];
 
     if (index === -1) {
       focusedDropDownItem.value = props.options[0].value
-    } else if (props.options[index + 1] !== undefined) {
-      focusedDropDownItem.value = props.options[index + 1].value
+    } else if (option !== undefined) {
+      focusedDropDownItem.value = option.value
     }
   }
 
   if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
     const index = props.options.findIndex(option => option.value === focusedDropDownItem.value);
+    const option = props.options[index - 1];
 
-    if (props.options[index - 1] !== undefined) {
-      focusedDropDownItem.value = props.options[index - 1].value
+    if (option !== undefined) {
+      focusedDropDownItem.value = option.value
     }
   }
 
@@ -314,7 +272,7 @@ function onKeyDownDropDown(e) {
   }
 }
 
-function onKeyDownInput(e) {
+function onKeyDownInput(e: KeyboardEvent) {
   if (e.key === 'Enter') {
     isOpen.value = true;
     inputRef.value?.blur();
@@ -326,20 +284,22 @@ function onKeyDownInput(e) {
   }
 
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-    const index = props.options.findIndex(option => option.value === _value.value);
+    const index = props.options.findIndex(option => option.value === _modelValue.value);
+    const option = props.options[index + 1];
 
     if (index === -1) {
-      _value.value = props.options[0].value;
-    } else if (props.options[index + 1] !== undefined) {
-      _value.value = props.options[index + 1].value;
+      _modelValue.value = props.options[0].value;
+    } else if (option !== undefined) {
+      _modelValue.value = option.value;
     }
   }
 
   if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-    const index = props.options.findIndex(option => option.value === _value.value);
+    const index = props.options.findIndex(option => option.value === _modelValue.value);
+    const option = props.options[index - 1];
 
-    if (props.options[index - 1] !== undefined) {
-      _value.value = props.options[index - 1].value;
+    if (option !== undefined) {
+      _modelValue.value = option.value;
     }
   }
 }
@@ -348,12 +308,12 @@ function onFocusInInput() {
   inputRef.value?.addEventListener('keydown', onKeyDownInput);
 }
 
-function onFocusOutInput(e) {
+function onFocusOutInput(e: FocusEvent) {
   e.preventDefault();
   inputRef.value?.removeEventListener('keydown', onKeyDownInput);
 }
 
-function onClickSelectInput(e) {
+function onClickSelectInput(e: MouseEvent) {
   e.preventDefault();
 
   if (props.disabled) {
@@ -367,17 +327,17 @@ function onClickSelectInput(e) {
   isOpen.value = !isOpen.value;
 }
 
-function onClickDropDownItem(e, value) {
+function onClickDropDownItem(e: MouseEvent, value: string | number | null) {
   e.preventDefault();
-  inputRef.value.focus();
+  inputRef.value?.focus();
 
   isOpen.value = false;
-  _value.value = value;
+  _modelValue.value = value;
 }
 
 function onClickRemoveButton() {
   inputRef.value?.focus();
-  _value.value = null;
+  _modelValue.value = null;
 }
 </script>
 
@@ -410,7 +370,7 @@ function onClickRemoveButton() {
             :grouped="skeletonGrouped"
         />
 
-        <input type="hidden" :name="name" v-model="_value">
+        <input type="hidden" :name="name" v-model="_modelValue">
 
         <!-- Input -->
         <div
@@ -423,14 +383,14 @@ function onClickRemoveButton() {
             v-bind="$attrs"
         >
           <div
-              v-if="_value === null && placeholder !== undefined"
+              v-if="_modelValue === null && placeholder !== undefined"
               :class="placeholderClasses"
           >
             {{ placeholder }}
           </div>
 
           <div
-              v-else-if="_value === null && label !== undefined"
+              v-else-if="_modelValue === null && label !== undefined"
               :class="placeholderClasses"
           >
             {{ label }}
@@ -478,9 +438,9 @@ function onClickRemoveButton() {
       </div>
 
       <AntButton
-          v-if="nullable && _value !== null"
+          v-if="nullable && _modelValue !== null"
           :icon-left="faMultiply"
-          :color-type="_colorType"
+          :color-type="_colorType as unknown as ColorType"
           :grouped="[Grouped.left, Grouped.center].some(item => item === grouped) ? Grouped.center : Grouped.right"
           :size="size"
           :skeleton="_skeleton"

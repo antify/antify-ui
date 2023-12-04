@@ -1,6 +1,6 @@
 /**
  * Convert html class syntax given as undefined, string ("text-base bg-primary") or
- * object syntax ({"text-base bg-primary": true}) always to object syntax.
+ * object syntax ({"text-base bg-primary": true}) always to object syntax ({"text-base bg-primary": true}).
  *
  * @param classes
  */
@@ -13,9 +13,7 @@ export function classesToObjectSyntax(classes: string | undefined | Record<strin
         return {};
     }
 
-    const classesAsObject = {};
-
-    classesAsObject[classes] = true;
-
-    return classesAsObject;
+    return {
+        [classes]: true,
+    };
 }

@@ -17,15 +17,16 @@ import AntSkeleton from '../AntSkeleton.vue';
 import AntSpinner from '../AntSpinner.vue';
 import Grouped from '../../enums/Grouped.enum';
 import Size from '../../enums/Size.enum';
-import {ButtonColorType, ButtonType} from "./__types/AntButton.type";
 import {handleEnumValidation} from "../../handler";
-import { useVModel } from "@vueuse/core";
+import {useVModel} from "@vueuse/core";
+import {ColorType} from "../../enums";
+import {ButtonType} from "./__types";
 
 const emits = defineEmits(['click', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   outlined?: boolean;
   size?: Size;
-  colorType?: ButtonColorType;
+  colorType?: ColorType;
   iconLeft?: IconDefinition;
   iconRight?: IconDefinition;
   to?: LocationAsRelativeRaw | string;
@@ -39,7 +40,7 @@ const props = withDefaults(defineProps<{
   bordered?: boolean;
   noFocus?: boolean;
 }>(), {
-  colorType: ButtonColorType.base,
+  colorType: ColorType.base,
   disabled: false,
   outlined: false,
   skeleton: false,
@@ -63,17 +64,6 @@ const groupedClassList = computed(() => ({
   'rounded-md': props.grouped === Grouped.none,
 }));
 const classes = computed(() => {
-  const classes = {
-    'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
-    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !_skeleton.value,
-    'cursor-default': _skeleton.value || props.readonly,
-    'focus:ring-2': props.size === Size.sm && hasAction.value && !props.noFocus,
-    'focus:ring-4': props.size === Size.md && hasAction.value && !props.noFocus,
-    'w-full': props.expanded,
-    'invisible': _skeleton.value,
-    'bg-neutral-lightest': props.outlined,
-    ...groupedClassList.value
-  };
   const hasActionVariants = {
     'base': 'focus:ring-primary/25',
     'danger': 'focus:ring-danger/25',
@@ -111,13 +101,22 @@ const classes = computed(() => {
     'warning': 'text-warning border-warning',
   };
 
-  classes[hasActionVariants[props.colorType]] = hasAction.value;
-  classes[notOutlinedVariants[props.colorType]] = !props.outlined;
-  classes[outlinedVariants[props.colorType]] = props.outlined;
-  classes[outlinedAndWithActionVariants[props.colorType]] = props.outlined && hasAction.value;
-  classes[`border -m-px`] = props.outlined && props.bordered;
-
-  return classes;
+  return {
+    'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
+    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !_skeleton.value,
+    'cursor-default': _skeleton.value || props.readonly,
+    'focus:ring-2': props.size === Size.sm && hasAction.value,
+    'focus:ring-4': props.size === Size.md && hasAction.value,
+    'w-full': props.expanded,
+    'invisible': _skeleton.value,
+    'bg-neutral-lightest': props.outlined,
+    ...groupedClassList.value,
+    'border -m-px': props.outlined && props.bordered,
+    [hasActionVariants[props.colorType]]: hasAction.value,
+    [notOutlinedVariants[props.colorType]]: !props.outlined,
+    [outlinedVariants[props.colorType]]: props.outlined,
+    [outlinedAndWithActionVariants[props.colorType]]: props.outlined && hasAction.value,
+  };
 });
 const buttonContentClasses = computed(() => ({
   'd-block w-full inline-flex items-center justify-center transition-colors font-medium': true,
@@ -142,8 +141,8 @@ const type = computed(() => {
 });
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ButtonColorType, 'ColorType');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, ColorType, 'colorType');
 });
 </script>
 
@@ -172,7 +171,7 @@ onMounted(() => {
             v-if="spinner"
             :size="size"
             :color-type="colorType"
-            :inverted="!outline"
+            :inverted="!outlined"
         />
 
         <slot

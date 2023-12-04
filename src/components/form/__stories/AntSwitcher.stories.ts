@@ -3,7 +3,8 @@ import { Meta, StoryObj } from "@storybook/vue3";
 import { computed, ref } from "vue";
 import Size from "../../../enums/Size.enum";
 import { useValidator } from "@antify/validate";
-import { SwitcherColorType, SwitcherOption } from "../__types/AntSwitcher.type";
+import { SwitcherOption } from "../__types/AntSwitcher.type";
+import {InputColorType} from "../../../enums";
 
 const meta: Meta<typeof AntSwitcher> = {
   title: 'Components/Forms/Switcher',
@@ -28,7 +29,7 @@ type SwitcherOption = {
     },
     colorType: {
       control: { type: 'select' },
-      options: Object.values(SwitcherColorType),
+      options: Object.values(InputColorType),
     },
     size: {
       control: { type: 'select' },
@@ -112,44 +113,44 @@ export const Summary: Story = {
 
       const skeleton = ref(true);
 
-      return { args, value, SwitcherColorType, skeleton }
+      return { args, value, InputColorType, skeleton }
     },
     template: `
       <div class="flex flex-col gap-5 ">
       <div class="flex gap-2.5">
-        <AntSwitcher v-bind="args" v-model="value" :color-type="SwitcherColorType.base"/>
-        <AntSwitcher v-bind="args" v-model="value" :color-type="SwitcherColorType.info"/>
-        <AntSwitcher v-bind="args" v-model="value" :color-type="SwitcherColorType.success"/>
-        <AntSwitcher v-bind="args" v-model="value" :color-type="SwitcherColorType.warning"/>
-        <AntSwitcher v-bind="args" v-model="value" :color-type="SwitcherColorType.danger"/>
+        <AntSwitcher v-bind="args" v-model="value" :color-type="InputColorType.base"/>
+        <AntSwitcher v-bind="args" v-model="value" :color-type="InputColorType.info"/>
+        <AntSwitcher v-bind="args" v-model="value" :color-type="InputColorType.success"/>
+        <AntSwitcher v-bind="args" v-model="value" :color-type="InputColorType.warning"/>
+        <AntSwitcher v-bind="args" v-model="value" :color-type="InputColorType.danger"/>
       </div>
       <div class="flex gap-2.5">
-        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="SwitcherColorType.base"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="SwitcherColorType.info"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="SwitcherColorType.success"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="SwitcherColorType.warning"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="SwitcherColorType.danger"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="InputColorType.base"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="InputColorType.info"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="InputColorType.success"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="InputColorType.warning"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" :color-type="InputColorType.danger"/>
       </div>
       <div class="flex gap-2.5">
-        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.base"/>
-        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.info"/>
-        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.success"/>
-        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.warning"/>
-        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.danger"/>
+        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.base"/>
+        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.info"/>
+        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.success"/>
+        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.warning"/>
+        <AntSwitcher v-bind="args" v-model="value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.danger"/>
       </div>
       <div class="flex gap-2.5">
-        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.base"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.info"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.success"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.warning"/>
-        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.danger"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.base"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.info"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.success"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.warning"/>
+        <AntSwitcher v-bind="args" v-model="value" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.danger"/>
       </div>
       <div class="flex gap-2.5">
-        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.base"/>
-        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.info"/>
-        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.success"/>
-        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.warning"/>
-        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="SwitcherColorType.danger"/>
+        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.base"/>
+        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.info"/>
+        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.success"/>
+        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.warning"/>
+        <AntSwitcher v-bind="args" v-model="value" :skeleton="true" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" :color-type="InputColorType.danger"/>
       </div>
       </div>
     `

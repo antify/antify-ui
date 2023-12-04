@@ -1,4 +1,4 @@
-export enum Type {
+export enum BaseInputType {
     date = 'date',
     datetime = 'datetime',
     email = 'email',
@@ -13,11 +13,4 @@ export enum Type {
     url = 'url',
     week = 'week',
     range = 'range',
-}
-export enum BaseInputColorType {
-    base = 'base',
-    danger = 'danger',
-    info = 'info',
-    success = 'success',
-    warning = 'warning',
 }

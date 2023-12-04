@@ -2,9 +2,9 @@ import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../enums/Size.enum';
 import AntSelect from "../AntSelect.vue";
 import {computed} from 'vue';
-import {ColorType} from "../../../enums/ColorType.enum";
 import {useValidator} from "@antify/validate";
 import {SelectOption} from "../__types/AntSelect.type";
+import {InputColorType} from "../../../enums";
 
 const meta: Meta<typeof AntSelect> = {
     title: 'Components/Forms/Select',
@@ -15,7 +15,7 @@ const meta: Meta<typeof AntSelect> = {
             description:
                 'Additional attributes will be forwarded to the input directly. This way you can access the default input events.',
         },
-        value: {
+        modelValue: {
             table: {type: {summary: 'string|null'}},
         },
         options: {
@@ -29,7 +29,7 @@ const meta: Meta<typeof AntSelect> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ColorType),
+            options: Object.values(InputColorType),
         },
         size: {
             control: {type: 'radio'},
@@ -69,21 +69,18 @@ export const Docs: Story = {
     render: (args) => ({
         components: {AntSelect},
         setup() {
-            const value = computed({
-                get() {
-                    return args.value;
-                },
-                set(val) {
-                    args.value = val;
-                }
+            const modelValue = computed({
+                get: () => args.modelValue,
+                set: (val) => args.modelValue = val
             })
 
-            return {args, value};
+            return {args, modelValue};
         },
-        template: '<div class="p-4 "><AntSelect v-bind="args" v-model:value="value" /></div>',
+        template: `
+          <AntSelect v-bind="args" v-model="modelValue"/>`,
     }),
     args: {
-        value: null,
+        modelValue: null,
         label: 'Label',
         options,
         description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
@@ -103,7 +100,7 @@ export const nullable: Story = {
     render: Docs.render,
     args: {
         ...Docs.args,
-        value: '1',
+        modelValue: '1',
         nullable: true
     },
 };
@@ -136,15 +133,15 @@ export const ellipsisText: Story = {
         template: `
           <div class="px-4 pt-4 pb-72 flex gap-2.5">
             <div class="w-1/6 flex flex-col gap-2.5 border border-info border-dotted">
-              <AntSelect v-bind="args" v-model:value="value"/>
+              <AntSelect v-bind="args" v-model="modelValue"/>
               <AntSelect v-bind="args" value="5"/>
             </div>
             <div class="w-2/6 flex flex-row gap-2.5 border border-info border-dotted">
-              <AntSelect v-bind="args" v-model:value="value"/>
+              <AntSelect v-bind="args" v-model="modelValue"/>
               <AntSelect v-bind="args" value="5"/>
             </div>
             <div class="flex flex-row gap-2.5 border border-info border-dotted">
-              <AntSelect v-bind="args" wrapper-class="w-1/6" v-model:value="value"/>
+              <AntSelect v-bind="args" wrapper-class="w-1/6" v-model="modelValue"/>
               <AntSelect v-bind="args" wrapper-class="w-1/6" value="5"/>
             </div>
           </div>
@@ -164,7 +161,8 @@ export const summary: Story = {
         template: `
           <div class="p-4 flex flex-col gap-2.5">
             <div class="flex w-2/5 gap-2.5">
-              <AntSelect v-bind="args" :value="null" placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"/>
+              <AntSelect v-bind="args" :value="null"
+                         placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr"/>
               <AntSelect v-bind="args" value="5"/>
             </div>
             <div class="flex gap-2.5">

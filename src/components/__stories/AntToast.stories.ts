@@ -1,6 +1,6 @@
 import AntToast from '../AntToast.vue';
 import {Meta, StoryObj} from "@storybook/vue3";
-import {ToastColorType} from "../../types/AntToast.type";
+import {InputColorType} from "../../enums";
 
 const meta: Meta<typeof AntToast> = {
     title: 'Components/Toast',
@@ -9,7 +9,7 @@ const meta: Meta<typeof AntToast> = {
     argTypes: {
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ToastColorType),
+            options: Object.values(InputColorType),
         }
     },
 };

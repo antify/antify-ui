@@ -6,7 +6,6 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted, useSlots} from 'vue';
-import {ToastColorType} from "../types/AntToast.type";
 import {handleEnumValidation} from "../handler";
 import {
   faCheckCircle,
@@ -16,42 +15,46 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AntIcon from './AntIcon.vue';
 import AntButton from './form/AntButton.vue';
-import {ButtonColorType} from "./form/__types/AntButton.type";
+import {ColorType, InputColorType} from "../enums";
 
 const props = withDefaults(defineProps<{
   title: string,
-  colorType?: ToastColorType,
+  colorType?: InputColorType,
   showUndo?: boolean,
   icon?: boolean
 }>(), {
-  colorType: ToastColorType.neutral,
+  colorType: InputColorType.base,
   showUndo: false,
   icon: true
 });
 
-const icons = {};
-
-icons[ToastColorType.neutral] = faInfoCircle;
-icons[ToastColorType.info] = faInfoCircle;
-icons[ToastColorType.danger] = faExclamationCircle;
-icons[ToastColorType.warning] = faExclamationTriangle;
-icons[ToastColorType.success] = faCheckCircle;
+const icons = {
+  [InputColorType.base]: faInfoCircle,
+  [InputColorType.info]: faInfoCircle,
+  [InputColorType.danger]: faExclamationCircle,
+  [InputColorType.warning]: faExclamationTriangle,
+  [InputColorType.success]: faCheckCircle,
+};
 
 const _icon = computed(() => icons[props.colorType]);
 const classes = computed(() => {
-  const classes = {
-    'inline-flex flex-col gap-2.5 rounded-md p-2.5 border transition-colors': true,
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'bg-neutral-lighter border-neutral text-neutral',
+    [InputColorType.danger]: 'bg-danger-lighter border-danger text-danger',
+    [InputColorType.info]: 'bg-info-lighter border-info text-info',
+    [InputColorType.success]: 'bg-success-lighter border-success text-success',
+    [InputColorType.warning]: 'bg-warning-lighter border-warning text-warning',
   };
 
-  classes[`bg-${props.colorType}-lighter`] = true;
-  classes[`border-${props.colorType}`] = true;
-  classes[`text-${props.colorType}`] = true;
-
-  return classes;
+  return {
+    'inline-flex flex-col gap-2.5 rounded-md p-2.5 border transition-colors': true,
+    [variants[props.colorType]]: true,
+  };
 });
 const hasDefaultSlot = computed(() => useSlots()['default'] || false);
+
 onMounted(() => {
-  handleEnumValidation(props.colorType, ToastColorType, 'ColorType');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 </script>
 
@@ -59,7 +62,11 @@ onMounted(() => {
   <div :class="classes">
     <div class="inline-flex items-center justify-between w-content gap-2.5">
       <div class="inline-flex items-center gap-2.5">
-        <AntIcon v-if="icon" :icon="_icon"/>
+        <AntIcon
+            v-if="icon"
+            :icon="_icon"
+            :color-type="props.colorType"
+        />
 
         <div :class="{'font-semibold': hasDefaultSlot}">
           <slot name="title">
@@ -71,6 +78,7 @@ onMounted(() => {
       <AntIcon
           :icon="faXmark"
           class="cursor-pointer"
+          :color-type="props.colorType"
           @click="() => $emit('close')"
       />
     </div>
@@ -81,7 +89,7 @@ onMounted(() => {
 
     <div v-if="showUndo" class="flex justify-end">
       <AntButton
-          :color-type="props.colorType === ToastColorType.neutralLightest ? ButtonColorType.neutralDark : props.colorType"
+          :color-type="props.colorType"
           @click="() => $emit('undo')"
       >
         undo

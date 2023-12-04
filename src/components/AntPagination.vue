@@ -12,10 +12,10 @@ import {useRouter, useRoute} from "vue-router"
 import {computed} from "vue";
 import AntButton from "./form/AntButton.vue";
 import {faChevronRight, faChevronLeft} from "@fortawesome/free-solid-svg-icons";
-import {ButtonColorType} from "./form/__types/AntButton.type";
 import Grouped from "../enums/Grouped.enum";
 import AntSkeleton from "./AntSkeleton.vue";
 import { useVModel } from "@vueuse/core";
+import {ColorType} from "../enums";
 
 const emit = defineEmits(["update:page"])
 const props = withDefaults(
@@ -128,7 +128,7 @@ const pagination = computed(() => {
 
       <AntButton
           v-for="pageObj in pagination"
-          :color-type="pageObj === page ? ButtonColorType.primary : ButtonColorType.base"
+          :color-type="pageObj === page ? ColorType.primary : ColorType.base"
           :class="{'text-primary': pageObj === page}"
           :disabled="pageObj === '...'"
           :grouped="Grouped.center"

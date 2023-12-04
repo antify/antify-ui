@@ -6,57 +6,44 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {computed, onMounted} from 'vue';
+import {onMounted} from 'vue';
 import AntButton from './AntButton.vue'
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import Size from '../../enums/Size.enum'
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {ColorType} from "../../enums/ColorType.enum";
-import {ButtonColorType} from "./__types/AntButton.type";
-import { useVModel } from "@vueuse/core";
+import {useVModel} from "@vueuse/core";
+import {ColorType, InputColorType} from "../../enums";
+import Grouped from "../../enums/Grouped.enum";
+import {BaseInputType} from "./Elements/__types";
+import {handleEnumValidation} from "../../handler";
 
-const emits = defineEmits(['update:value', 'update:skeleton']);
+// TODO:: implement missing validator
 const props = withDefaults(defineProps<{
-  value: number;
+  modelValue: number | null;
   unit: string | IconDefinition;
   label?: string;
   placeholder?: string;
   description?: string;
   size?: Size;
-  colorType?: ColorType;
+  colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
   wrapperClass?: string | Record<string, boolean>;
 }>(), {
-  colorType: ColorType.neutral,
+  colorType: InputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
 });
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 
 const _skeleton = useVModel(props, 'skeleton', emits);
-
-const content = computed<string>({
-  get: () => {
-    return props.value as string;
-  },
-  set: (val: string) => {
-    emits('update:value', val);
-  },
-});
+const _modelValue = useVModel(props, 'modelValue', emits);
 
 onMounted(() => {
-  const allowedSizes = Object.values(Size);
-  const allowedColorTypes = Object.values(ColorType);
-
-  if (allowedSizes.indexOf(props.size) === -1) {
-    throw Error(`Size ${props.size} not allowed. Use one of ${allowedSizes.join(' | ')}`);
-  }
-
-  if (allowedColorTypes.indexOf(props.colorType) === -1) {
-    throw Error(`ColorType ${props.colorType} not allowed. Use one of ${allowedColorTypes.join(' | ')}`);
-  }
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.size, Size, 'size');
 });
 </script>
 
@@ -73,11 +60,11 @@ onMounted(() => {
         class="flex relative"
     >
       <AntBaseInput
-          v-model:value="content"
-          type="number"
-          grouped="left"
+          v-model:value="_modelValue"
+          :type="BaseInputType.number"
+          :grouped="Grouped.left"
           wrapper-class="flex-grow"
-          :colorType="colorType"
+          :color-type="colorType"
           :size="size"
           :skeleton="_skeleton"
           :disabled="disabled"
@@ -88,14 +75,14 @@ onMounted(() => {
 
       <AntButton
           :icon-left="typeof unit === 'object' ? unit : undefined"
-          grouped="right"
-          :color-type="colorType === ColorType.neutral ? ButtonColorType.neutralLight : colorType"
+          :grouped="Grouped.right"
+          :color-type="colorType as unknown as ColorType"
           :size="size"
           :skeleton="_skeleton"
           :readonly="true"
       >
         <span v-if="typeof unit === 'string'">
-          {{unit}}
+          {{ unit }}
         </span>
       </AntButton>
     </div>

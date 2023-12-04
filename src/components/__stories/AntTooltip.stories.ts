@@ -2,7 +2,7 @@ import AntTooltip from '../AntTooltip.vue';
 import AntButton from '../form/AntButton.vue';
 import {Meta, StoryObj} from "@storybook/vue3";
 import {Position} from "../../enums/PositionType.enum";
-import {TooltipColorType} from "../../types/AntTooltip.type";
+import {InputColorType} from "../../enums";
 
 const meta: Meta<typeof AntTooltip> = {
     title: 'Components/Tooltip',
@@ -15,7 +15,7 @@ const meta: Meta<typeof AntTooltip> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(TooltipColorType),
+            options: Object.values(InputColorType),
         }
     },
 };

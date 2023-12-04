@@ -8,13 +8,15 @@ export default {
 
 import AntField from "./Elements/AntField.vue";
 import AntButton from "./AntButton.vue";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import Size from "../../enums/Size.enum";
-import { computed, onMounted, ref, watch } from "vue";
-import { useVModel } from "@vueuse/core";
+import {computed, onMounted, ref, watch} from "vue";
+import {useVModel} from "@vueuse/core";
 import AntSkeleton from "../AntSkeleton.vue";
-import { Validator } from "@antify/validate";
-import { SwitcherColorType, SwitcherOption } from "./__types/AntSwitcher.type";
+import {Validator} from "@antify/validate";
+import {SwitcherOption} from "./__types/AntSwitcher.type";
+import {ColorType, InputColorType} from "../../enums";
+import Grouped from "../../enums/Grouped.enum";
 
 const emits = defineEmits(['update:modelValue', 'update:skeleton'])
 const props = withDefaults(defineProps<{
@@ -23,11 +25,11 @@ const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
   skeleton?: boolean;
-  colorType?: SwitcherColorType,
+  colorType?: InputColorType;
   validator?: Validator;
   size?: Size,
 }>(), {
-  colorType: SwitcherColorType.base,
+  colorType: InputColorType.base,
   size: Size.md
 });
 
@@ -50,7 +52,7 @@ const model: ComputedRef<string | SwitcherOption> = computed({
 
 const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
 
-const _colorType = computed(() => props.validator?.hasErrors() ? SwitcherColorType.danger : props.colorType);
+const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
 watch(model, () => props.validator?.validate(model.value.value));
 
@@ -59,17 +61,17 @@ onMounted(() => {
 });
 
 const containerClasses = computed(() => {
-  const classes =  {
+  const classes = {
     'flex relative ring-primary/25 rounded-md outline-none': true,
     'focus-within:ring-2': props.size === Size.sm && hasAction.value,
     'focus-within:ring-4': props.size === Size.md && hasAction.value,
   };
   const colorVariant = {
-    [SwitcherColorType.base]: 'focus-within:ring-primary-lightest',
-    [SwitcherColorType.danger]: 'focus-within:ring-danger-lightest',
-    [SwitcherColorType.info]: 'focus-within:ring-info-lightest',
-    [SwitcherColorType.success]: 'focus-within:ring-success-lightest',
-    [SwitcherColorType.warning]: 'focus-within:ring-warning-lightest',
+    [InputColorType.base]: 'focus-within:ring-primary-lightest',
+    [InputColorType.danger]: 'focus-within:ring-danger-lightest',
+    [InputColorType.info]: 'focus-within:ring-info-lightest',
+    [InputColorType.success]: 'focus-within:ring-success-lightest',
+    [InputColorType.warning]: 'focus-within:ring-warning-lightest',
   };
 
   classes[colorVariant[_colorType.value]] = hasAction.value;
@@ -121,75 +123,75 @@ function nextOption() {
 
 <template>
   <AntField
-    :label="label"
-    :size="size"
-    :skeleton="_skeleton"
-    :description="description"
-    :colorType="colorType"
-    :validator="validator"
-    label-for="noop"
+      :label="label"
+      :size="size"
+      :skeleton="_skeleton"
+      :description="description"
+      :colorType="colorType"
+      :validator="validator"
+      label-for="noop"
   >
     <div
-      :class="containerClasses"
-      tabindex="0"
-      @keydown.left.prevent="prevOption()"
-      @keydown.right.prevent="nextOption()"
+        :class="containerClasses"
+        tabindex="0"
+        @keydown.left.prevent="prevOption()"
+        @keydown.right.prevent="nextOption()"
     >
       <AntButton
-        :icon-left="faChevronLeft"
-        grouped="left"
-        no-focus
-        @click="prevOption"
-        :color-type="_colorType"
-        :size="size"
-        :skeleton="_skeleton"
+          :icon-left="faChevronLeft"
+          :grouped="Grouped.left"
+          no-focus
+          @click="prevOption"
+          :color-type="_colorType as unknown as ColorType"
+          :size="size"
+          :skeleton="_skeleton"
       />
 
       <div class="grow relative">
         <div
-          :class="itemClasses"
-          class="switcher-content"
+            :class="itemClasses"
+            class="switcher-content"
         >
           {{ typeof model === 'string' ? model : model.label }}
         </div>
 
         <AntSkeleton
-          v-model="_skeleton"
-          absolute
-          grouped="center"
-          rounded
+            v-model="_skeleton"
+            absolute
+            :grouped="Grouped.center"
+            rounded
         />
       </div>
 
       <AntButton
-        :icon-left="faChevronRight"
-        grouped="right"
-        no-focus
-        @click="nextOption"
-        :color-type="_colorType"
-        :size="size"
-        :skeleton="_skeleton"
+          :icon-left="faChevronRight"
+          :grouped="Grouped.right"
+          no-focus
+          @click="nextOption"
+          :color-type="_colorType as unknown as ColorType"
+          :size="size"
+          :skeleton="_skeleton"
       />
     </div>
   </AntField>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .switcher-content {
   position: relative;
+}
 
-  &:before {
-    content: '';
+.switcher-content:before {
+  content: '';
 
-    position: absolute;
+  position: absolute;
 
-    inset: 0;
+  inset: 0;
 
-    border-top: 1px;
-    border-bottom: 1px;
-    border-style: solid;
+  border-top: 1px;
+  border-bottom: 1px;
+  border-style: solid;
 
-    border-color: inherit;
-  }
+  border-color: inherit;
 }
 </style>

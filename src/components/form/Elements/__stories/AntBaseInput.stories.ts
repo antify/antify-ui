@@ -1,12 +1,13 @@
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../../enums/Size.enum';
-import {BaseInputColorType, Type} from "../types/AntBaseInput.type";
+import {BaseInputType} from "../__types/AntBaseInput.type";
 import AntBaseInput from "../AntBaseInput.vue";
 import AntButton from "../../AntButton.vue";
 import _Grouped from "../../../../enums/Grouped.enum";
 import {useValidator} from '@antify/validate';
 import {computed} from "vue";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import {InputColorType} from "../../../../enums";
 
 const meta: Meta<typeof AntBaseInput> = {
     title: 'Components/Forms/Elements/Base Input',
@@ -23,12 +24,12 @@ const meta: Meta<typeof AntBaseInput> = {
         },
         type: {
             control: {type: 'select'},
-            options: Object.values(Type),
-            table: {defaultValue: {summary: Type.text}},
+            options: Object.values(BaseInputType),
+            table: {defaultValue: {summary: BaseInputType.text}},
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(BaseInputColorType)
+            options: Object.values(InputColorType)
         },
         size: {
             control: {type: 'radio'},
@@ -54,7 +55,7 @@ const meta: Meta<typeof AntBaseInput> = {
         showIcon: {
             control: 'boolean',
             description:
-                'Some BaseInputColorTypes can has an icon. Control with this property if it get shown or not.',
+                'Some InputColorTypes can has an icon. Control with this property if it get shown or not.',
             table: {type: {summary: 'Type'}},
         },
         iconLeft: {

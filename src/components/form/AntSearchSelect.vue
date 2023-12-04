@@ -7,9 +7,9 @@ export default {
 <script lang="ts" setup>
 import {ref, computed, onMounted, onUnmounted} from 'vue';
 import {faArrowsUpDown, faCheck} from '@fortawesome/free-solid-svg-icons';
-import {SelectOption} from '../../types/SelectOption.type';
 import {generateId} from '../../utils/helper';
 import AntSkeleton from '../AntSkeleton.vue';
+import {SelectOption} from "./__types";
 
 const emit = defineEmits(['update:value', 'selectOption']);
 const props =
@@ -61,7 +61,7 @@ function hideOnClick(event: Event) {
 }
 
 function selectOption(option: SelectOption) {
-  _value.value = option.value;
+  _value.value = option.value as string;
   filterValue.value = option.label;
 
   emit('selectOption', option);

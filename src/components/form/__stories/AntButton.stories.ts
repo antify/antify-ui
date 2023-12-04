@@ -3,7 +3,7 @@ import {faCaretRight, faCaretLeft, faPlus} from '@fortawesome/free-solid-svg-ico
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../enums/Size.enum';
 import _Grouped from '../../../enums/Grouped.enum';
-import {ButtonColorType} from "../__types/AntButton.type";
+import {ColorType} from "../../../enums";
 
 const meta: Meta<typeof AntButton> = {
     title: 'Components/Forms/Button',
@@ -12,20 +12,17 @@ const meta: Meta<typeof AntButton> = {
     argTypes: {
         colorType: {
             control: {type: 'select'},
-            options: Object.values(ButtonColorType),
-            table: {defaultValue: {summary: ButtonColorType.neutralLight}},
+            options: Object.values(ColorType),
         },
         grouped: {
             control: {type: 'select'},
             options: Object.values(_Grouped),
             description: 'Where is this fields position in a group',
-            table: {defaultValue: {summary: _Grouped.none}},
         },
         size: {
             control: {type: 'radio'},
             options: Object.values(Size),
             description: 'Defines the size of the button',
-            table: {defaultValue: {summary: Size.md}},
         },
         iconLeft: {
             control: {type: 'none'},

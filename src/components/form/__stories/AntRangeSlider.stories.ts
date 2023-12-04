@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/vue3";
 import AntRangeSlider from "../AntRangeSlider.vue";
 import { ref } from "vue";
-import { RangeColorType } from "../__types/AntRangeSlider.type";
+import {InputColorType} from "../../../enums";
 
 const meta: Meta<typeof AntRangeSlider> = {
-  title: 'Components/Forms/RangeSlider',
+  title: 'Components/Forms/Range Slider',
   component: AntRangeSlider,
   parameters: {
     docs: {
@@ -23,7 +23,7 @@ const meta: Meta<typeof AntRangeSlider> = {
     },
     colorType: {
       control: { type: 'select' },
-      options: Object.values(RangeColorType)
+      options: Object.values(InputColorType)
     },
   }
 };

@@ -6,14 +6,16 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {computed, onMounted} from 'vue';
+import {onMounted} from 'vue';
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import Size from '../../enums/Size.enum'
 import {Validator} from '@antify/validate'
-import {TextInputColorType, Type} from './__types/AntTextInput.type'
+import {TextInputType} from './__types/AntTextInput.type'
 import {handleEnumValidation} from "../../handler";
 import { useVModel } from "@vueuse/core";
+import {InputColorType} from "../../enums";
+import {BaseInputType} from "./Elements/__types";
 
 const emit = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{
@@ -22,19 +24,19 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   description?: string;
   size?: Size;
-  colorType?: TextInputColorType;
+  colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
   validator?: Validator;
-  type?: Type;
+  type?: TextInputType;
   limiter?: boolean;
   max?: number;
 }>(), {
-  colorType: TextInputColorType.base,
+  colorType: InputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
-  type: Type.text,
+  type: TextInputType.text,
   limiter: false
 });
 
@@ -42,9 +44,9 @@ const _skeleton = useVModel(props, 'skeleton', emit);
 const _value = useVModel(props, 'value', emit);
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, TextInputColorType, 'TextInputColorType');
-  handleEnumValidation(props.type, Type, 'Type');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.type, TextInputType, 'Type');
 });
 </script>
 
@@ -61,7 +63,7 @@ onMounted(() => {
   >
     <AntBaseInput
         v-model:value="_value"
-        :type="type"
+        :type="type as unknown as BaseInputType"
         wrapper-class="flex-grow"
         :colorType="colorType"
         :size="size"

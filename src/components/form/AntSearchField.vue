@@ -19,7 +19,7 @@ const props =
   }>();
 
 const _id = ref(props.id ? props.id : generateId(40));
-const timeout = ref<number>(0);
+const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const content = computed<string>({
   get: () => {

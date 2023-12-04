@@ -6,7 +6,6 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted, useSlots} from 'vue';
-import {AlertColorType} from "../types/AntAlert.type";
 import {handleEnumValidation} from "../handler";
 import {
   faCheckCircle, faCircleQuestion,
@@ -19,17 +18,18 @@ import AntTooltip from "./AntTooltip.vue";
 import {Position} from "../enums/PositionType.enum";
 import AntSkeleton from "./AntSkeleton.vue";
 import { useVModel } from "@vueuse/core";
+import {InputColorType} from "../enums";
 
 const emits = defineEmits(['update:skeleton']);
 const props = withDefaults(defineProps<{
   title: string,
-  colorType?: AlertColorType,
+  colorType?: InputColorType,
   icon?: boolean,
   expanded?: boolean,
   questionMarkText?: string,
   skeleton?: boolean
 }>(), {
-  colorType: AlertColorType.neutral,
+  colorType: InputColorType.base,
   icon: true,
   expanded: false,
   skeleton: false
@@ -37,36 +37,35 @@ const props = withDefaults(defineProps<{
 
 const _skeleton = useVModel(props, 'skeleton', emits);
 
-const icons = {};
-
-icons[AlertColorType.neutral] = faInfoCircle;
-icons[AlertColorType.info] = faInfoCircle;
-icons[AlertColorType.danger] = faExclamationCircle;
-icons[AlertColorType.warning] = faExclamationTriangle;
-icons[AlertColorType.success] = faCheckCircle;
+const icons = {
+  [InputColorType.base]: faInfoCircle,
+  [InputColorType.info]: faInfoCircle,
+  [InputColorType.danger]: faExclamationCircle,
+  [InputColorType.warning]: faExclamationTriangle,
+  [InputColorType.success]: faCheckCircle,
+};
 
 const _icon = computed(() => icons[props.colorType]);
 const classes = computed(() => {
-  const classes = {
-    'inline-flex flex-col gap-2.5 rounded-md p-2.5 transition-colors text-sm relative': true,
-    'w-full': props.expanded
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.danger]: 'bg-danger-lighter text-danger',
+    [InputColorType.info]: 'bg-info-lighter text-info',
+    [InputColorType.base]: 'bg-neutral-lighter text-neutral',
+    [InputColorType.success]: 'bg-success-lighter text-success',
+    [InputColorType.warning]: 'bg-warning-lighter text-warning',
   };
-  const variants = {}
 
-  variants[AlertColorType.danger] = 'bg-danger-lighter text-danger';
-  variants[AlertColorType.info] = 'bg-info-lighter text-info';
-  variants[AlertColorType.neutral] = 'bg-neutral-lighter text-neutral';
-  variants[AlertColorType.success] = 'bg-success-lighter text-success';
-  variants[AlertColorType.warning] = 'bg-warning-lighter text-warning';
-  classes[variants[props.colorType]] = true;
-
-  return classes;
+  return {
+    'inline-flex flex-col gap-2.5 rounded-md p-2.5 transition-colors text-sm relative': true,
+    'w-full': props.expanded,
+    [variants[props.colorType]]: true,
+  };
 });
 const hasDefaultSlot = computed(() => useSlots()['default'] || false);
 const hasQuestionMark = computed(() => (useSlots()['question-mark-text'] || false) || props.questionMarkText);
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, AlertColorType, 'ColorType');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 </script>
 

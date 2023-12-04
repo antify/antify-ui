@@ -8,17 +8,17 @@ export default {
 import {computed, onMounted, ref} from 'vue';
 import {handleEnumValidation} from "../handler";
 import {Position} from "../enums/PositionType.enum";
-import {TooltipColorType} from "../types/AntTooltip.type";
+import {InputColorType} from "../enums";
 
 const props = withDefaults(defineProps<{
   content?: string,
   position?: Position,
   tooltipClasses?: string | object,
-  colorType?: TooltipColorType
+  colorType?: InputColorType
 }>(), {
   position: Position.left,
   tooltipClasses: {},
-  colorType: TooltipColorType.neutral
+  colorType: InputColorType.base
 });
 const visible = ref(false);
 const _tooltipClasses = computed(() => {
@@ -32,13 +32,11 @@ const _tooltipClasses = computed(() => {
 
   return {
     "absolute w-max inline-flex": true,
-
     // Position
     "bottom-full pb-3.5": props.position === Position.top,
     "top-full pt-3.5": props.position === Position.bottom,
     "right-full pr-3.5": props.position === Position.left,
     "left-full pl-3.5": props.position === Position.right,
-
     ...classes
   };
 });
@@ -61,42 +59,42 @@ const itemContainerClasses = computed(() => {
   }
 });
 const contentClasses = computed(() => {
-  const classes = {};
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'text-neutral-lightest-font bg-neutral-lightest border-neutral-light',
+    [InputColorType.danger]: 'text-danger-font bg-danger border-danger',
+    [InputColorType.info]: 'text-info-font bg-info border-info',
+    [InputColorType.success]: 'text-success-font bg-success border-success',
+    [InputColorType.warning]: 'text-warning-font bg-warning border-warning',
+  };
 
-  if (props.colorType === TooltipColorType.neutral) {
-    classes["text-neutral-lightest-font bg-neutral-lightest border-neutral-light"] = true;
-  } else {
-    classes[`text-${props.colorType}-font bg-${props.colorType} border-${props.colorType}`] = true;
-  }
-
-  return classes;
+  return {[variants[props.colorType]]: true};
 });
 const svgPathClasses = computed(() => {
-  const classes = {};
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'fill-neutral-lightest stroke-neutral-lightest',
+    [InputColorType.danger]: 'fill-danger stroke-danger',
+    [InputColorType.info]: 'fill-info stroke-info',
+    [InputColorType.success]: 'fill-success stroke-success',
+    [InputColorType.warning]: 'fill-warning stroke-warning',
+  };
 
-  if (props.colorType === TooltipColorType.neutral) {
-    classes["fill-neutral-lightest stroke-neutral-lightest"] = true;
-  } else {
-    classes[`fill-${props.colorType} stroke-${props.colorType}`] = true;
-  }
-
-  return classes;
+  return {[variants[props.colorType]]: true};
 });
 const arrowSvgPathClasses = computed(() => {
-  const classes = {};
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'stroke-neutral-light',
+    [InputColorType.danger]: 'stroke-danger',
+    [InputColorType.info]: 'stroke-info',
+    [InputColorType.success]: 'stroke-success',
+    [InputColorType.warning]: 'stroke-warning',
+  };
 
-  if (props.colorType === TooltipColorType.neutral) {
-    classes["stroke-neutral-light"] = true;
-  } else {
-    classes[`stroke-${props.colorType}`] = true;
-  }
-
-  return classes;
+  return {[variants[props.colorType]]: true};
 });
 
 onMounted(() => {
   handleEnumValidation(props.position, Position, 'Position')
-  handleEnumValidation(props.colorType, TooltipColorType, 'ColorType')
+  handleEnumValidation(props.colorType, InputColorType, 'colorType')
 });
 
 /**
@@ -104,6 +102,7 @@ onMounted(() => {
  * before showing the tooltip content.
  */
 const delayVisible = ref(visible.value);
+
 function onMouseOver() {
   delayVisible.value = true;
 
@@ -113,6 +112,7 @@ function onMouseOver() {
     }
   }, 300)
 }
+
 function onMouseLeave() {
   delayVisible.value = false
   visible.value = false

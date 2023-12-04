@@ -3,7 +3,7 @@ import AntBaseInput from '../AntBaseInput.vue';
 import {Meta, StoryObj} from "@storybook/vue3";
 import Size from '../../../../enums/Size.enum';
 import {computed} from "vue";
-import {FieldColorType} from "../types/AntField.type";
+import {InputColorType} from "../../../../enums";
 
 const meta: Meta<typeof AntField> = {
     title: 'Components/Forms/Elements/Field',
@@ -16,7 +16,7 @@ const meta: Meta<typeof AntField> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(FieldColorType)
+            options: Object.values(InputColorType)
         },
         skeleton: {
             control: 'boolean',

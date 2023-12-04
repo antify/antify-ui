@@ -26,54 +26,58 @@ const classes = computed(() => ({
   'w-5 h-5': props.size === Size.md,
 }));
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, ColorType, 'colorType');
 });
 const circleClass = computed(() => {
-  const classes = {}, invertedVariants = {}, notInvertedVariants = {};
+  const invertedVariants: Record<ColorType, string> = {
+    [ColorType.base]: 'fill-neutral',
+    [ColorType.primary]: 'fill-primary-dark',
+    [ColorType.secondary]: 'fill-secondary-dark',
+    [ColorType.danger]: 'fill-danger-dark',
+    [ColorType.info]: 'fill-info-dark',
+    [ColorType.success]: 'fill-success-dark',
+    [ColorType.warning]: 'fill-warning-dark',
+  };
+  const notInvertedVariants: Record<ColorType, string> = {
+    [ColorType.base]: 'fill-neutral-lighter',
+    [ColorType.primary]: 'fill-primary-lighter',
+    [ColorType.secondary]: 'fill-secondary-lighter',
+    [ColorType.danger]: 'fill-danger-lighter',
+    [ColorType.info]: 'fill-info-lighter',
+    [ColorType.success]: 'fill-success-lighter',
+    [ColorType.warning]: 'fill-warning-lighter',
+  };
 
-  invertedVariants[ColorType.base] = 'fill-neutral';
-  invertedVariants[ColorType.primary] = 'fill-primary-dark';
-  invertedVariants[ColorType.secondary] = 'fill-secondary-dark';
-  invertedVariants[ColorType.danger] = 'fill-danger-dark';
-  invertedVariants[ColorType.info] = 'fill-info-dark';
-  invertedVariants[ColorType.success] = 'fill-success-dark';
-  invertedVariants[ColorType.warning] = 'fill-warning-dark';
-  classes[invertedVariants[props.colorType]] = props.inverted;
-
-  notInvertedVariants[ColorType.base] = 'fill-neutral-lighter';
-  notInvertedVariants[ColorType.primary] = 'fill-primary-lighter';
-  notInvertedVariants[ColorType.secondary] = 'fill-secondary-lighter';
-  notInvertedVariants[ColorType.danger] = 'fill-danger-lighter';
-  notInvertedVariants[ColorType.info] = 'fill-info-lighter';
-  notInvertedVariants[ColorType.success] = 'fill-success-lighter';
-  notInvertedVariants[ColorType.warning] = 'fill-warning-lighter';
-  classes[notInvertedVariants[props.colorType]] = !props.inverted;
-
-  return classes;
+  return {
+    [invertedVariants[props.colorType]]: props.inverted,
+    [notInvertedVariants[props.colorType]]: !props.inverted,
+  };
 });
 const spinningElementClass = computed(() => {
-  const classes = {}, invertedVariants = {}, notInvertedVariants = {};
+  const invertedVariants: Record<ColorType, string> = {
+    [ColorType.base]: 'fill-neutral-lighter',
+    [ColorType.primary]: 'fill-primary-lighter',
+    [ColorType.secondary]: 'fill-secondary-lighter',
+    [ColorType.danger]: 'fill-danger-lighter',
+    [ColorType.info]: 'fill-info-lighter',
+    [ColorType.success]: 'fill-success-lighter',
+    [ColorType.warning]: 'fill-warning-lighter',
+  };
+  const notInvertedVariants: Record<ColorType, string> = {
+    [ColorType.base]: 'fill-neutral',
+    [ColorType.primary]: 'fill-primary',
+    [ColorType.secondary]: 'fill-secondary',
+    [ColorType.danger]: 'fill-danger',
+    [ColorType.info]: 'fill-info',
+    [ColorType.success]: 'fill-success',
+    [ColorType.warning]: 'fill-warning',
+  };
 
-  invertedVariants[ColorType.base] = 'fill-neutral-lighter';
-  invertedVariants[ColorType.primary] = 'fill-primary-lighter';
-  invertedVariants[ColorType.secondary] = 'fill-secondary-lighter';
-  invertedVariants[ColorType.danger] = 'fill-danger-lighter';
-  invertedVariants[ColorType.info] = 'fill-info-lighter';
-  invertedVariants[ColorType.success] = 'fill-success-lighter';
-  invertedVariants[ColorType.warning] = 'fill-warning-lighter';
-  classes[invertedVariants[props.colorType]] = props.inverted;
-
-  notInvertedVariants[ColorType.base] = 'fill-neutral';
-  notInvertedVariants[ColorType.primary] = 'fill-primary';
-  notInvertedVariants[ColorType.secondary] = 'fill-secondary';
-  notInvertedVariants[ColorType.danger] = 'fill-danger';
-  notInvertedVariants[ColorType.info] = 'fill-info';
-  notInvertedVariants[ColorType.success] = 'fill-success';
-  notInvertedVariants[ColorType.warning] = 'fill-warning';
-  classes[notInvertedVariants[props.colorType]] = !props.inverted;
-
-  return classes;
+  return {
+    [invertedVariants[props.colorType]]: props.inverted,
+    [notInvertedVariants[props.colorType]]: !props.inverted,
+  };
 });
 </script>
 

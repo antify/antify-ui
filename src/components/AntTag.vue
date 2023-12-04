@@ -25,15 +25,21 @@ const props = withDefaults(defineProps<{
 });
 
 const classes = computed(() => {
-  const classes = {
+  const variants: Record<TagColorType, string> = {
+    [TagColorType.danger]: 'bg-danger text-danger-font',
+    [TagColorType.info]: 'bg-info text-info-font',
+    [TagColorType.neutralLight]: 'bg-neutral-light text-neutral-light-font',
+    [TagColorType.neutralLightest]: 'bg-neutral-lightest text-neutral-lightest-font',
+    [TagColorType.success]: 'bg-success text-success-font',
+    [TagColorType.warning]: 'bg-warning text-warning-font',
+  };
+
+  return {
     "rounded-md inline-flex items-center": true,
     "px-1.5 py-1 text-sm gap-1.5": props.size === Size.md,
     "px-1 py-0.5 text-xs  gap-1": props.size === Size.sm,
+    [variants[props.colorType]]: true,
   };
-
-  classes[`bg-${props.colorType} text-${props.colorType}-font`] = true
-
-  return classes;
 });
 const iconClasses = computed(() => ({
   'h-3': props.size === Size.sm,
@@ -41,8 +47,8 @@ const iconClasses = computed(() => ({
 }));
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, TagColorType, 'ColorType');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, TagColorType, 'colorType');
 });
 </script>
 

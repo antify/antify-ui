@@ -11,7 +11,7 @@ import AntSkeleton from "../../AntSkeleton.vue";
 import {handleEnumValidation} from "../../../handler";
 import { useVModel } from "@vueuse/core";
 
-const emits = defineEmits(['update:skeleton']);
+const emits = defineEmits(['update:skeleton', 'clickContent']);
 const props = withDefaults(defineProps<{
   label?: string;
   size?: Size;
@@ -30,7 +30,7 @@ const classes = computed(() => ({
 }));
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
+  handleEnumValidation(props.size, Size, 'size');
 });
 </script>
 

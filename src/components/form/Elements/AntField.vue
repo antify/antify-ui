@@ -12,15 +12,15 @@ import AntInputDescription from "./AntInputDescription.vue";
 import {Validator} from "@antify/validate";
 import {handleEnumValidation} from "../../../handler";
 import AntInputLimiter from "./AntInputLimiter.vue";
-import {FieldColorType} from "./types/AntField.type";
-import { useVModel } from "@vueuse/core";
+import {useVModel} from "@vueuse/core";
+import {InputColorType} from "../../../enums";
 
-const emits = defineEmits(['update:skeleton']);
+const emits = defineEmits(['update:skeleton', 'clickLabel']);
 const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
   size?: Size;
-  colorType?: FieldColorType;
+  colorType?: InputColorType;
   skeleton?: boolean;
   validator?: Validator;
   limiterValue?: number;
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<{
   showMessageOnError?: boolean;
   expanded?: boolean;
 }>(), {
-  colorType: FieldColorType.base,
+  colorType: InputColorType.base,
   skeleton: false,
   size: Size.md,
   showMessageOnError: true,
@@ -39,11 +39,11 @@ const props = withDefaults(defineProps<{
 const _skeleton = useVModel(props, 'skeleton', emits);
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, FieldColorType, 'FieldColorType');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 
-const _colorType = computed(() => props.validator?.hasErrors() ? FieldColorType.danger : props.colorType)
+const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType)
 const errors = computed(() => props.validator?.getErrors() || [])
 </script>
 

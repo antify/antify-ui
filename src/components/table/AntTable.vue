@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
-import { AntSkeleton } from "../../index";
+import AntSkeleton from "../../components/AntSkeleton.vue";
 
 defineProps<{
   headers: TableHeader[];

@@ -11,22 +11,27 @@ export default {
 import AntField from "./Elements/AntField.vue";
 import { Validator } from "@antify/validate";
 import { useVModel } from "@vueuse/core";
-import { RangeColorType } from "./__types/AntRangeSlider.type";
 import { computed } from "vue";
+import {InputColorType} from "../../enums";
+import {onMounted} from "vue/dist/vue";
+import {handleEnumValidation} from "../../handler";
+import Size from "../../enums/Size.enum";
 
 const emits = defineEmits(['update:modelValue', 'update:skeleton'])
 const props = withDefaults(defineProps<{
   modelValue: number | number[] | undefined;
   label?: string;
   description?: string;
-  colorType?: RangeColorType;
+  colorType?: InputColorType;
+  size?: Size,
   disabled?: boolean;
   skeleton?: boolean;
   validator?: Validator;
   min?: number;
   max?: number;
 }>(), {
-  colorType: RangeColorType.base,
+  colorType: InputColorType.base,
+  size: Size.md,
   disabled: false,
   skeleton: false,
   limiter: false
@@ -35,25 +40,29 @@ const props = withDefaults(defineProps<{
 const value = useVModel(props, 'modelValue', emits);
 const _skeleton = useVModel(props, 'skeleton', emits);
 
-const _colorType = computed(() => props.validator?.hasErrors() ? RangeColorType.danger : props.colorType);
-
+const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 const inputClasses = computed(() => {
-  const classes = {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'text-neutral-base',
+    [InputColorType.danger]: 'text-danger-base',
+    [InputColorType.info]: 'text-info-base',
+    [InputColorType.success]: 'text-success-base',
+    [InputColorType.warning]: 'text-warning-base',
+  };
+
+  return {
     'ant-range-slider transition-colors relative border-none w-full focus:z-10 h-2 bg-neutral-light rounded-md outline-none': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
-
-    'invisible': _skeleton.value
+    'invisible': _skeleton.value,
+    [variants[_colorType.value]]: true
   };
-  const variants = {}
+});
 
-  variants[RangeColorType.base] = ' text-neutral-base';
-  variants[RangeColorType.danger] = ' text-danger-base';
-  variants[RangeColorType.info] = ' text-info-base';
-  variants[RangeColorType.success] = ' text-success-base';
-  variants[RangeColorType.warning] = ' text-warning-base';
-  classes[variants[_colorType.value]] = true;
+onMounted(() => {
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.size, Size, 'size');
 
-  return classes;
+  props.validator?.validate(props.modelValue);
 });
 </script>
 
@@ -78,27 +87,26 @@ const inputClasses = computed(() => {
   </AntField>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .ant-range-slider {
   -webkit-appearance: none;
+}
 
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border-radius: 100%;
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border: 1px solid #CBD5E1;
-    cursor: pointer;
-  }
+.ant-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border-radius: 100%;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 1px solid #CBD5E1;
+  cursor: pointer;
+}
 
-  &::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #04AA6D;
-    cursor: pointer;
-  }
-
+.ant-range-slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
 }
 </style>

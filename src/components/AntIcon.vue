@@ -8,7 +8,7 @@ export default {
 import {computed, onMounted} from 'vue';
 import {handleEnumValidation} from "../handler";
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import { IconColorType, IconSize } from "./__types/AntIcon.types";
+import {IconColorType, IconSize} from "./__types/AntIcon.types";
 
 const props = withDefaults(defineProps<{
   icon: IconDefinition;
@@ -20,24 +20,24 @@ const props = withDefaults(defineProps<{
 });
 
 const containerClasses = computed(() => {
-  const classes = {
+  const variants: Record<IconColorType, string> = {
+    [IconColorType.base]: 'text-neutral-lightest-font',
+    [IconColorType.neutral]: 'text-neutral',
+    [IconColorType.primary]: 'text-primary',
+    [IconColorType.secondary]: 'text-secondary',
+    [IconColorType.danger]: 'text-danger',
+    [IconColorType.info]: 'text-info',
+    [IconColorType.success]: 'text-success',
+    [IconColorType.warning]: 'text-warning',
+  };
+
+  return {
     'inline-flex items-center justify-center': true,
     'w-4 h-4': props.size === IconSize.sm,
     'w-5 h-5': props.size === IconSize.md,
     'w-9 h-9': props.size === IconSize.xl3,
-  }, variants = {};
-
-  variants[IconColorType.base] = 'text-neutral-lightest-font';
-  variants[IconColorType.neutral] = 'text-neutral';
-  variants[IconColorType.primary] = 'text-primary';
-  variants[IconColorType.secondary] = 'text-secondary';
-  variants[IconColorType.danger] = 'text-danger';
-  variants[IconColorType.info] = 'text-info';
-  variants[IconColorType.success] = 'text-success';
-  variants[IconColorType.warning] = 'text-warning';
-  classes[variants[props.colorType]] = true;
-
-  return classes;
+    [variants[props.colorType]]: true,
+  };
 });
 
 // TODO:: replace with/height with font-size
@@ -49,7 +49,7 @@ const iconClasses = computed(() => ({
 }));
 
 onMounted(() => {
-  handleEnumValidation(props.size, IconSize, 'Size');
+  handleEnumValidation(props.size, IconSize, 'size');
   handleEnumValidation(props.colorType, IconColorType, 'IconColorType');
 });
 </script>

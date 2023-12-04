@@ -22,43 +22,45 @@ const props = withDefaults(defineProps<{
 });
 
 const classes = computed(() => {
-  const classes = {'text-sm transition-colors inline-block w-full': true},
-      variants = {};
+  const variants: Record<ListGroupItemColorType, string> = {
+    [ListGroupItemColorType.danger]: 'bg-danger text-danger-font',
+    [ListGroupItemColorType.info]: 'bg-info text-info-font',
+    [ListGroupItemColorType.neutralDark]: 'bg-neutral-dark text-neutral-dark-font',
+    [ListGroupItemColorType.neutralLight]: 'bg-neutral-light text-neutral-light-font',
+    [ListGroupItemColorType.neutralLightest]: 'bg-neutral-lightest text-neutral-lightest-font',
+    [ListGroupItemColorType.primary]: 'bg-primary text-primary-font',
+    [ListGroupItemColorType.secondary]: 'bg-secondary text-secondary-font',
+    [ListGroupItemColorType.success]: 'bg-success text-success-font',
+    [ListGroupItemColorType.warning]: 'bg-warning text-warning-font',
+  };
 
-  variants[ListGroupItemColorType.danger] = 'bg-danger text-danger-font';
-  variants[ListGroupItemColorType.info] = 'bg-info text-info-font';
-  variants[ListGroupItemColorType.neutralDark] = 'bg-neutral-dark text-neutral-dark-font';
-  variants[ListGroupItemColorType.neutralLight] = 'bg-neutral-light text-neutral-light-font';
-  variants[ListGroupItemColorType.neutralLightest] = 'bg-neutral-lightest text-neutral-lightest-font';
-  variants[ListGroupItemColorType.primary] = 'bg-primary text-primary-font';
-  variants[ListGroupItemColorType.secondary] = 'bg-secondary text-secondary-font';
-  variants[ListGroupItemColorType.success] = 'bg-success text-success-font';
-  variants[ListGroupItemColorType.warning] = 'bg-warning text-warning-font';
-  classes[variants[props.colorType]] = true;
-
-  return classes;
+  return {
+    'text-sm transition-colors inline-block w-full': true,
+    [variants[props.colorType]]: true,
+  };
 });
 const contentWrapperClasses = computed(() => {
-  const classes = {'w-full p-2.5 flex gap-2.5 items-center justify-between': true},
-      variants = {};
+  const variants: Record<ListGroupItemColorType, string> = {
+   [ListGroupItemColorType.danger]: 'text-danger-font',
+   [ListGroupItemColorType.info]: 'text-info-font',
+   [ListGroupItemColorType.neutralDark]: 'text-neutral-dark-font',
+   [ListGroupItemColorType.neutralLight]: 'text-neutral-light-font',
+   [ListGroupItemColorType.neutralLightest]: 'text-neutral-lightest-font',
+   [ListGroupItemColorType.primary]: 'text-primary-font',
+   [ListGroupItemColorType.secondary]: 'text-secondary-font',
+   [ListGroupItemColorType.success]: 'text-success-font',
+   [ListGroupItemColorType.warning]: 'text-warning-font',
+  };
 
-  variants[ListGroupItemColorType.danger] = 'text-danger-font';
-  variants[ListGroupItemColorType.info] = 'text-info-font';
-  variants[ListGroupItemColorType.neutralDark] = 'text-neutral-dark-font';
-  variants[ListGroupItemColorType.neutralLight] = 'text-neutral-light-font';
-  variants[ListGroupItemColorType.neutralLightest] = 'text-neutral-lightest-font';
-  variants[ListGroupItemColorType.primary] = 'text-primary-font';
-  variants[ListGroupItemColorType.secondary] = 'text-secondary-font';
-  variants[ListGroupItemColorType.success] = 'text-success-font';
-  variants[ListGroupItemColorType.warning] = 'text-warning-font';
-  classes[variants[props.colorType]] = props.to !== undefined;
-  classes[`hover:bg-neutral-darkest/25 cursor-pointer transition-colors`] = props.to !== undefined;
-
-  return classes;
+  return {
+    'w-full p-2.5 flex gap-2.5 items-center justify-between': true,
+    'hover:bg-neutral-darkest/25 cursor-pointer transition-colors': props.to !== undefined,
+    [variants[props.colorType]]: props.to !== undefined
+  };
 });
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, ListGroupItemColorType, 'ColorType');
+  handleEnumValidation(props.colorType, ListGroupItemColorType, 'colorType');
 });
 </script>
 

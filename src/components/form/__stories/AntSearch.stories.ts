@@ -20,6 +20,9 @@ const meta: Meta<typeof AntSearch> = {
             description:
                 'Read and write the value into url as urldecoded string. Using the given string as query name.',
         },
+        placeholder: {
+            table: {defaultValue: {summary: 'Search'}},
+        },
     },
 };
 
@@ -42,7 +45,10 @@ export const Docs: Story = {
 
             return {args, value};
         },
-        template: '<div class="p-4"><AntSearch v-bind="args" v-model:value="value" /><div class="text-xs mt-4">Reactive value: {{value}}</div></div>',
+        template: `
+          <AntSearch v-bind="args" v-model="value"/>
+          <div class="text-xs mt-4">Reactive value: {{ value }}</div>
+        `,
     }),
     args: {
         value: "",

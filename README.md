@@ -1,10 +1,6 @@
 # Antify UI
 
-Antify UI is a Tailwind based components library for use in Antify (Vue 3 / Nuxt 3) projects.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+Antify UI is a Tailwind based vue 3 component library
 
 # Installation Progress
 

@@ -1,6 +1,6 @@
 import AntAlert from '../AntAlert.vue';
 import {Meta, StoryObj} from "@storybook/vue3";
-import {AlertColorType} from "../../types/AntAlert.type";
+import {InputColorType} from "../../enums";
 
 const meta: Meta<typeof AntAlert> = {
     title: 'Components/Alert',
@@ -9,7 +9,7 @@ const meta: Meta<typeof AntAlert> = {
     argTypes: {
         colorType: {
             control: {type: 'select'},
-            options: Object.values(AlertColorType),
+            options: Object.values(InputColorType),
         }
     },
 };

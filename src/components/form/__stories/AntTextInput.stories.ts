@@ -3,7 +3,8 @@ import Size from '../../../enums/Size.enum';
 import AntTextInput from "../AntTextInput.vue";
 import {computed} from 'vue';
 import {useValidator} from "@antify/validate";
-import {TextInputColorType, Type} from "../__types/AntTextInput.type";
+import {TextInputType} from "../__types/AntTextInput.type";
+import {InputColorType} from "../../../enums";
 
 const meta: Meta<typeof AntTextInput> = {
     title: 'Components/Forms/Text Input',
@@ -16,7 +17,7 @@ const meta: Meta<typeof AntTextInput> = {
         },
         colorType: {
             control: {type: 'select'},
-            options: Object.values(TextInputColorType)
+            options: Object.values(InputColorType)
         },
         size: {
             control: {type: 'radio'},
@@ -28,8 +29,8 @@ const meta: Meta<typeof AntTextInput> = {
         },
         type: {
             control: {type: 'select'},
-            options: Object.values(Type),
-            table: {defaultValue: {summary: Type.text}},
+            options: Object.values(TextInputType),
+            table: {defaultValue: {summary: TextInputType.text}},
         },
     },
 };

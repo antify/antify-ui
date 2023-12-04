@@ -11,6 +11,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+// @ts-nocheck
+// TODO:: fix typescript errors
 /**
  * @param {HTMLElement} element
  */
@@ -20,7 +22,8 @@ function beforeEnter(element) {
       element.style.height = '0px';
     }
 
-    element.style.display = null;
+    element.style.display = '';
+    // element.style.display = null;
   });
 }
 
@@ -39,7 +42,8 @@ function enter(element) {
  * @param {HTMLElement} element
  */
 function afterEnter(element) {
-  element.style.height = null;
+  element.style.height = '';
+  // element.style.height = null;
 }
 
 /**
@@ -68,7 +72,8 @@ function leave(element) {
  * @param {HTMLElement} element
  */
 function afterLeave(element) {
-  element.style.height = null;
+  element.style.height = '';
+  // element.style.height = null;
 }
 </script>
 

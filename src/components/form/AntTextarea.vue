@@ -10,7 +10,6 @@ import {computed, onMounted, watch} from 'vue';
 import Size from '../../enums/Size.enum'
 import AntSkeleton from "../AntSkeleton.vue";
 import AntIcon from "../AntIcon.vue";
-import {TextareaColorType} from "./__types/AntTextarea.type";
 import Grouped from "../../enums/Grouped.enum";
 import {
   faExclamationTriangle,
@@ -23,12 +22,14 @@ import {handleEnumValidation} from "../../handler";
 import {classesToObjectSyntax} from "../../utils";
 import AntField from "./Elements/AntField.vue";
 import { useVModel } from "@vueuse/core";
+import {InputColorType} from "../../enums";
+import {IconColorType, IconSize} from "../__types";
 
-const emit = defineEmits(['update:value', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
-  value: string | null;
+  modelValue: string;
   size?: Size;
-  colorType?: TextareaColorType;
+  colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
   grouped?: Grouped;
@@ -41,7 +42,7 @@ const props = withDefaults(defineProps<{
   limiter?: boolean;
   max?: number;
 }>(), {
-  colorType: TextareaColorType.base,
+  colorType: InputColorType.base,
   disabled: false,
   size: Size.md,
   skeleton: false,
@@ -51,18 +52,29 @@ const props = withDefaults(defineProps<{
 });
 
 const _skeleton = useVModel(props, 'skeleton', emit);
+const _modelValue = useVModel(props, 'modelValue', emit);
 
-const icons = {};
-icons[TextareaColorType.info] = faCircleInfo;
-icons[TextareaColorType.warning] = faExclamationTriangle;
-icons[TextareaColorType.danger] = faExclamationCircle;
-icons[TextareaColorType.success] = faCircleCheck;
+const icons = {
+  [InputColorType.info]: faCircleInfo,
+  [InputColorType.warning]: faExclamationTriangle,
+  [InputColorType.danger]: faExclamationCircle,
+  [InputColorType.success]: faCircleCheck,
+  [InputColorType.base]: null,
+};
 
 const inputClasses = computed(() => {
-  const classes = {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'outline-neutral-light focus:outline-primary focus:ring-primary/25 bg-neutral-lightest placeholder:text-neutral',
+    [InputColorType.danger]: 'outline-danger focus:outline-danger focus:ring-danger/25 bg-danger-lighter placeholder:text-danger-dark',
+    [InputColorType.info]: 'outline-info focus:outline-info focus:ring-info/25 bg-info-lighter placeholder:text-info-dark',
+    [InputColorType.success]: 'outline-success focus:outline-success focus:ring-success/25 bg-success-lighter placeholder:text-success-dark',
+    [InputColorType.warning]: 'outline-warning focus:outline-warning focus:ring-warning/25 bg-warning-lighter placeholder:text-warning-dark',
+  };
+  return {
     'block transition-colors relative border-none outline w-full focus:z-10': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
+    [variants[props.colorType]]: true,
     // Size
     'focus:ring-2 p-1.5 text-xs': props.size === Size.sm,
     'focus:ring-4 p-2.5 text-sm': props.size === Size.md,
@@ -76,35 +88,20 @@ const inputClasses = computed(() => {
     'rounded-md': props.grouped === Grouped.none,
     'invisible': _skeleton.value
   };
-  const variants = {}
-
-  variants[TextareaColorType.base] = 'outline-neutral-light focus:outline-primary focus:ring-primary/25 bg-neutral-lightest placeholder:text-neutral';
-  variants[TextareaColorType.danger] = 'outline-danger focus:outline-danger focus:ring-danger/25 bg-danger-lighter placeholder:text-danger-dark';
-  variants[TextareaColorType.info] = 'outline-info focus:outline-info focus:ring-info/25 bg-info-lighter placeholder:text-info-dark';
-  variants[TextareaColorType.success] = 'outline-success focus:outline-success focus:ring-success/25 bg-success-lighter placeholder:text-success-dark';
-  variants[TextareaColorType.warning] = 'outline-warning focus:outline-warning focus:ring-warning/25 bg-warning-lighter placeholder:text-warning-dark';
-  classes[variants[_colorType.value]] = true;
-
-  return classes;
 });
 const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
-const icon = computed(() => (icons[_colorType.value] || false));
-const _value = computed<string | null>({
-  get: () => props.value,
-  set: (val: string | null) => {
-    emit('update:value', val);
-  },
-});
-const _colorType = computed(() => props.validator?.hasErrors() ? TextareaColorType.danger : props.colorType);
+const icon = computed(() => icons[_colorType.value]);
 
-watch(_value, (val) => props.validator?.validate(val));
+const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+
+watch(_modelValue, (val) => props.validator?.validate(val));
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, TextareaColorType, 'TextareaColorType');
-  handleEnumValidation(props.grouped, Grouped, 'Grouped');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.grouped, Grouped, 'grouped');
 
-  props.validator?.validate(props.value);
+  props.validator?.validate(props.modelValue);
 });
 </script>
 
@@ -117,11 +114,11 @@ onMounted(() => {
       :colorType="colorType"
       :validator="validator"
       :limiter-max-value="limiter && max !== undefined ? max : undefined"
-      :limiter-value="limiter ? _value.length : undefined"
+      :limiter-value="limiter ? _modelValue.length : undefined"
   >
     <div class="block relative w-full" :class="{...{'-mr-px': grouped !== Grouped.none}, ..._wrapperClass}">
       <textarea
-          v-model="_value"
+          v-model="_modelValue"
           :class="inputClasses"
           :placeholder="placeholder !== undefined ? placeholder : label"
           :disabled="disabled || _skeleton"
@@ -135,8 +132,8 @@ onMounted(() => {
       >
         <AntIcon
             :icon="icon"
-            :size="size"
-            :color-type="_colorType"
+            :size="size as unknown as IconSize"
+            :color-type="_colorType as unknown as IconColorType"
         />
       </div>
 

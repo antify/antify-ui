@@ -41,24 +41,32 @@ export const Docs: Story = {
     render: (args) => ({
         components: {AntNumberInput},
         setup() {
-            const value = computed({
+            const modelValue = computed({
                 get() {
-                    return args.value;
+                    return args.modelValue;
                 },
                 set(val) {
-                    args.value = val;
+                    args.modelValue = val;
                 }
             })
 
-            return {args, value};
+            return {args, modelValue};
         },
-        template: '<div class="p-4"><AntNumberInput v-bind="args" v-model="value" /></div>',
+        template: '<div class="p-4"><AntNumberInput v-bind="args" v-model="modelValue" /></div>',
     }),
     args: {
-        value: 0,
+        modelValue: 0,
         steps: 1,
         label: 'Label',
         description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
+    },
+};
+
+export const withoutValue: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        modelValue: null
     },
 };
 
@@ -77,7 +85,7 @@ export const limited: Story = {
     render: Docs.render,
     args: {
         ...Docs.args,
-        value: 50,
+        modelValue: 50,
         limiter: true,
         max: 10,
         validator: useValidator([

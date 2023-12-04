@@ -12,19 +12,20 @@ import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import Size from '../../enums/Size.enum'
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-import {ColorType} from "../../enums/ColorType.enum";
+import {ColorType, InputColorType} from "../../enums/ColorType.enum";
 import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../handler";
-import { useVModel } from "@vueuse/core";
+import {useVModel} from "@vueuse/core";
+import Grouped from "../../enums/Grouped.enum";
+import {BaseInputType} from "./Elements/__types";
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   modelValue: number | null;
   label?: string;
   placeholder?: string;
   description?: string;
   size?: Size;
-  colorType?: ColorType;
+  colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
   steps?: number;
@@ -33,35 +34,75 @@ const props = withDefaults(defineProps<{
   validator?: Validator;
   limiter?: boolean;
 }>(), {
-  colorType: ColorType.base,
+  colorType: InputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
   steps: 1,
   limiter: false
 });
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 
 const _skeleton = useVModel(props, 'skeleton', emits)
-const content = useVModel(props, 'modelValue', emits);
+const _modelValue = useVModel(props, 'modelValue', emits);
+const isPrevButtonDisabled = computed(() => {
+  if (props.disabled) {
+    return true;
+  }
+
+  if (_modelValue.value === null) {
+    return true;
+  }
+
+  if (props.min !== undefined && props.min !== null) {
+    return _modelValue.value <= props.min;
+  }
+
+  return false;
+});
+const isNextButtonDisabled = computed(() => {
+  if (props.disabled) {
+    return true;
+  }
+
+  if (_modelValue.value === null) {
+    return true;
+  }
+
+  if (props.max !== undefined && props.max !== null) {
+    return _modelValue.value >= props.max;
+  }
+
+  return false;
+});
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-  handleEnumValidation(props.colorType, ColorType, 'ColorType');
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 
 function subtract() {
-  if (content.value - props.steps > props.max) {
-    content.value = props.max;
+  if (_modelValue.value === null) {
+    return _modelValue.value = props.max || 0;
   }
 
-  content.value -= props.steps;
+  if (props.max !== undefined && _modelValue.value - props.steps > props.max) {
+    return _modelValue.value = props.max;
+  }
+
+  _modelValue.value -= props.steps;
 }
+
 function add() {
-  if (content.value + props.steps < props.min) {
-    content.value = props.min;
+  if (_modelValue.value === null) {
+    return _modelValue.value = props.min || 0;
   }
 
-  content.value += props.steps;
+  if (props.min !== undefined && _modelValue.value + props.steps < props.min) {
+    return _modelValue.value = props.min;
+  }
+
+  _modelValue.value += props.steps;
 }
 </script>
 
@@ -71,30 +112,30 @@ function add() {
       :size="size"
       :skeleton="_skeleton"
       :description="description"
-      :colorType="colorType"
+      :color-type="colorType"
       :validator="validator"
       :limiter-max-value="limiter && max !== undefined ? max : undefined"
-      :limiter-value="limiter && value !== undefined ? value : undefined"
+      :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
   >
     <div
         class="flex relative"
     >
       <AntButton
           :icon-left="faMinus"
-          grouped="left"
-          :colorType="colorType"
+          :grouped="Grouped.left"
+          :color-type="colorType as unknown as ColorType"
           :size="size"
           :skeleton="_skeleton"
-          :disabled="disabled || (min !== undefined ? content <= min : false)"
+          :disabled="isPrevButtonDisabled"
           @click="subtract"
       />
 
       <AntBaseInput
-          v-model:value.number="content"
-          type="number"
-          grouped="center"
+          v-model:value.number="_modelValue"
+          :type="BaseInputType.number"
+          :grouped="Grouped.center"
           wrapper-class="flex-grow"
-          :colorType="colorType"
+          :color-type="colorType"
           :size="size"
           :skeleton="_skeleton"
           :min="min"
@@ -108,11 +149,11 @@ function add() {
 
       <AntButton
           :icon-left="faPlus"
-          grouped="right"
-          :color-type="colorType"
+          :grouped="Grouped.right"
+          :color-type="colorType as unknown as ColorType"
           :size="size"
           :skeleton="_skeleton"
-          :disabled="disabled || (max !== undefined ? content >= max : false)"
+          :disabled="isNextButtonDisabled"
           @click="add"
       />
     </div>

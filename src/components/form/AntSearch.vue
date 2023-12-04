@@ -11,12 +11,16 @@ import Size from '../../enums/Size.enum'
 import {Validator} from '@antify/validate'
 import {handleEnumValidation} from "../../handler";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import { useVModel } from "@vueuse/core";
+import {useVModel} from "@vueuse/core";
+import {BaseInputType} from "./Elements/__types";
+import AntField from "./Elements/AntField.vue";
 
-const emits = defineEmits(['update:value', 'update:skeleton']);
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
-  value: string | null;
+  modelValue: string | null;
+  label?: string;
   placeholder?: string;
+  description?: string;
   size?: Size;
   disabled?: boolean;
   skeleton?: boolean;
@@ -31,15 +35,15 @@ const props = withDefaults(defineProps<{
   placeholder: "Search"
 });
 
-const _skeleton = useVModel(props, 'skeleton', emits)
+const _skeleton = useVModel(props, 'skeleton', emits);
+const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
-const timeout = ref<number>(0);
 // TODO:: implement query prop. Find a way to use vue router in Storybook.
-const _value = computed<number | null>({
-  get: () => props.value,
-  set: (val: number | null) => {
+const _value = computed<string | null>({
+  get: () => props.modelValue,
+  set: (val: string | null) => {
     if (val === null) {
-      return emits('update:value', val);
+      return emits('update:modelValue', val);
     }
 
     if (timeout.value) {
@@ -47,27 +51,33 @@ const _value = computed<number | null>({
     }
 
     timeout.value = setTimeout(() => {
-      emits('update:value', val);
+      emits('update:modelValue', val);
     }, props.inputTimeout);
   },
 });
 
-onMounted(() => {
-  handleEnumValidation(props.size, Size, 'Size');
-});
+onMounted(() => handleEnumValidation(props.size, Size, 'size'));
 </script>
 
 <template>
-  <AntBaseInput
-    v-model:value="_value"
-    type="search"
-    :size="size"
-    :skeleton="_skeleton"
-    :disabled="disabled"
-    :placeholder="placeholder"
-    :validator="validator"
-    :icon-left="faSearch"
-    nullable
-    v-bind="$attrs"
-  />
+  <AntField
+      :label="label"
+      :size="size"
+      :skeleton="_skeleton"
+      :description="description"
+      :validator="validator"
+  >
+    <AntBaseInput
+        v-model:value="_value"
+        :type="BaseInputType.search"
+        :size="size"
+        :skeleton="_skeleton"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        :validator="validator"
+        :icon-left="faSearch"
+        nullable
+        v-bind="$attrs"
+    />
+  </AntField>
 </template>
