@@ -6,9 +6,9 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import Size from '../enums/Size.enum'
-import {handleEnumValidation} from "../handler";
-import {ColorType} from "../enums/ColorType.enum";
+import {Size} from '../enums/Size.enum'
+import {handleEnumValidation} from '../handler';
+import {ColorType} from '../enums/ColorType.enum';
 
 const props = withDefaults(defineProps<{
   colorType?: ColorType,

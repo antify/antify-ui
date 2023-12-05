@@ -13,9 +13,9 @@ export default {
  * Solution is using margin only (calc(50% + 0.625rem)) and not padding.
  */
 import {computed, onMounted} from 'vue';
-import {handleEnumValidation} from "../handler";
-import {Position} from "../enums/PositionType.enum";
-import {classesToObjectSyntax} from "../utils";
+import {handleEnumValidation} from '../handler';
+import {Position} from '../enums';
+import {classesToObjectSyntax} from '../utils';
 import {vOnClickOutside} from '@vueuse/components';
 import {onKeyStroke} from '@vueuse/core';
 
@@ -28,62 +28,49 @@ const props = withDefaults(defineProps<{
   showDropdown: false,
   contentPadding: true,
   position: Position.bottom,
-  dropdownClasses: {},
+  dropdownClasses: '',
 });
 const emit = defineEmits(['update:showDropdown']);
 
-const _dropdownClasses = computed(() => {
-  let classes = classesToObjectSyntax(props.dropdownClasses);
-
-  return {
-    "absolute min-w-[10rem]": true,
-    "bottom-0 left-0 mb-[50%] pb-2.5": props.position === Position.top,
-    "top-0 left-0 mt-[50%] pt-2.5": props.position === Position.bottom,
-    "right-0 top-0 mr-[100%] pr-2.5": props.position === Position.left,
-    "left-0 top-0 ml-[100%] pl-2.5": props.position === Position.right,
-    ...classes
-  };
-});
-const classes = computed(() => {
-  return {
-    'z-10 absolute flex': true,
-    'top-0 left-0 right-0 -m-[2.5px] justify-start': props.position === Position.bottom,
-    'bottom-0 left-0 right-0 -m-[2.5px] justify-center': props.position === Position.top,
-    'top-0 left-0 bottom-0 -ml-[2.5px]  items-end pb-1': props.position === Position.right,
-    'top-0 right-0 bottom-0 -mr-[2.5px] items-end pb-1': props.position === Position.left,
-  };
-});
+const _dropdownClasses = computed(() => ({
+  'absolute min-w-[10rem]': true,
+  'bottom-0 left-0 mb-[50%] pb-2.5': props.position === Position.top,
+  'top-0 left-0 mt-[50%] pt-2.5': props.position === Position.bottom,
+  'right-0 top-0 mr-[100%] pr-2.5': props.position === Position.left,
+  'left-0 top-0 ml-[100%] pl-2.5': props.position === Position.right,
+  ...classesToObjectSyntax(props.dropdownClasses)
+}));
 
 onMounted(() => {
   handleEnumValidation(props.position, Position, 'Position')
 });
-onKeyStroke('Escape', (e) => {
+onKeyStroke('Escape', (e: KeyboardEvent) => {
   if (props.showDropdown) {
     e.preventDefault();
     emit('update:showDropdown', false);
   }
 });
 
-function onClickOutside(e) {
+function onClickOutside() {
   emit('update:showDropdown', false);
 }
 </script>
 
 <template>
   <div
-      class="relative inline-flex justify-center items-end"
-      v-on-click-outside="onClickOutside"
+    class="relative inline-flex justify-center items-end"
+    v-on-click-outside="onClickOutside"
   >
     <slot/>
 
     <transition name="bounce">
       <div
-          v-if="showDropdown"
-          :class="_dropdownClasses"
+        v-if="showDropdown"
+        :class="_dropdownClasses"
       >
         <div
-            class="shadow-lg border border-neutral-light rounded-md text-sm relative inline-flex flex-col relative bg-neutral-lightest text-neutral-lightest-font w-full"
-            :class="{'p-2.5': contentPadding}"
+          class="shadow-lg border border-neutral-light rounded-md text-sm relative inline-flex flex-col relative bg-neutral-lightest text-neutral-lightest-font w-full"
+          :class="{'p-2.5': contentPadding}"
         >
           <slot name="content"/>
         </div>

@@ -10,14 +10,14 @@ import {computed, onMounted} from 'vue';
 import AntButton from './AntButton.vue'
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
-import Size from '../../enums/Size.enum'
+import {Size} from '../../enums/Size.enum'
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-import {ColorType, InputColorType} from "../../enums/ColorType.enum";
+import {ColorType, InputColorType} from '../../enums/ColorType.enum';
 import {Validator} from '@antify/validate'
-import {handleEnumValidation} from "../../handler";
-import {useVModel} from "@vueuse/core";
-import Grouped from "../../enums/Grouped.enum";
-import {BaseInputType} from "./Elements/__types";
+import {handleEnumValidation} from '../../handler';
+import {useVModel} from '@vueuse/core';
+import {Grouped} from '../../enums/Grouped.enum';
+import {BaseInputType} from './Elements/__types';
 
 const props = withDefaults(defineProps<{
   modelValue: number | null;

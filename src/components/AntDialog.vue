@@ -5,36 +5,42 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, useSlots, watch } from "vue";
-import AntButton from "./form/AntButton.vue";
-import AntIcon from "./AntIcon.vue";
+// TODO:: remove ts ignore
+// @ts-nocheck
+import {ref, watch} from 'vue';
+import AntButton from './form/AntButton.vue';
+import AntIcon from './AntIcon.vue';
 import {
-  faCircleCheck,
-  faCircleExclamation,
-  faCircleInfo,
-  faTriangleExclamation
-} from "@fortawesome/free-solid-svg-icons";
-import { DialogColorTypes } from "./__types/AntDialog.types";
-import { IconSize } from "./__types/AntIcon.types";
+  faCheckCircle,
+  faExclamationCircle,
+  faExclamationTriangle,
+  faInfoCircle, IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+import {ColorType, InputColorType} from '../enums';
+import {IconColorType, IconSize} from './__types';
 
-const emits = defineEmits(['update:open', 'close']);
+const emit = defineEmits(['update:open', 'close']);
 const props = withDefaults(defineProps<{
   title?: string,
   open: boolean,
   buttonText?: string,
-  colorType?: DialogColorTypes
+  colorType?: InputColorType
 }>(), {
-  colorType: DialogColorTypes.base
-})
-
+  colorType: InputColorType.base
+});
 
 const openDialog = ref(props.open);
 const openBackground = ref(props.open);
+const icons = {
+  [InputColorType.base]: null,
+  [InputColorType.info]: faInfoCircle,
+  [InputColorType.danger]: faExclamationCircle,
+  [InputColorType.warning]: faExclamationTriangle,
+  [InputColorType.success]: faCheckCircle,
+};
 
 watch(() => props.open, (val) => {
-  console.log(props.open);
-
-  function onKeydown(e) {
+  function onKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape') {
       emit('update:open', false);
     }
@@ -52,10 +58,9 @@ watch(() => props.open, (val) => {
 });
 
 function closeDialog() {
-  emits('update:open', false);
-  emits('close');
+  emit('update:open', false);
+  emit('close');
 }
-
 </script>
 
 <template>
@@ -83,10 +88,13 @@ function closeDialog() {
 
           <div class="bg-neutral-lightest p-2.5 grow flex items-center gap-2.5 text-sm">
             <slot name="icon">
-              <AntIcon v-if="colorType === DialogColorTypes.info" :size="IconSize.xl3" :icon="faCircleInfo" :color-type="colorType" class="px-2.5 w-8 h-8" />
-              <AntIcon v-if="colorType === DialogColorTypes.success" :size="IconSize.xl3" :icon="faCircleCheck" :color-type="colorType" class="px-2.5 w-8 h-8" />
-              <AntIcon v-if="colorType === DialogColorTypes.warning" :size="IconSize.xl3" :icon="faTriangleExclamation" :color-type="colorType" class="px-2.5 w-8 h-8" />
-              <AntIcon v-if="colorType === DialogColorTypes.danger" :size="IconSize.xl3" :icon="faCircleExclamation" :color-type="colorType" class="px-2.5 w-8 h-8" />
+              <AntIcon
+                v-if="icons[colorType]"
+                :size="IconSize.xl3"
+                :icon="icons[colorType] as unknown as IconDefinition"
+                :color-type="colorType as unknown as IconColorType"
+                class="px-2.5 w-8 h-8"
+              />
             </slot>
 
             <slot/>
@@ -97,10 +105,10 @@ function closeDialog() {
           >
             <slot name="footer" v-bind="{close: closeDialog}">
               <AntButton
-                :color-type="colorType"
+                :color-type="colorType as unknown as ColorType"
                 @click="closeDialog()"
               >
-                {{buttonText}}
+                {{ buttonText }}
               </AntButton>
             </slot>
           </div>
@@ -109,7 +117,6 @@ function closeDialog() {
     </div>
   </transition>
 </template>
-
 
 <style scoped>
 .fade-leave-active {
@@ -128,15 +135,19 @@ function closeDialog() {
 .bounce-enter-active {
   animation: bounce-in .4s;
 }
+
 .bounce-leave-active {
   animation: bounce-in .4s reverse;
 }
+
 .bounce-slow-enter-active {
   animation: bounce-in .6s;
 }
+
 .bounce-slow-leave-active {
   animation: bounce-in .4s reverse;
 }
+
 @keyframes bounce-in {
   0% {
     transform: scale(0);

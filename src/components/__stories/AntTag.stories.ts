@@ -1,8 +1,8 @@
 import AntTag from '../AntTag.vue';
-import {Meta, StoryObj} from "@storybook/vue3";
-import Size from '../../enums/Size.enum';
-import {TagColorType} from "../../types/AntTag.type";
-import {faTag} from "@fortawesome/free-solid-svg-icons";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Size} from '../../enums/Size.enum';
+import {TagColorType} from '../../types/AntTag.type';
+import {faTag} from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof AntTag> = {
     title: 'Components/Tag',
@@ -34,7 +34,7 @@ export const Docs: Story = {
         components: {AntTag},
         setup() {
             function logClick() {
-                console.log("Clicked close icon")
+                console.log('Clicked close icon')
             }
 
             return {args, logClick};

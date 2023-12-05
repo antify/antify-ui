@@ -1,7 +1,7 @@
 import AntInputLabel from '../AntInputLabel.vue';
-import {Meta, StoryObj} from "@storybook/vue3";
-import Size from '../../../../enums/Size.enum';
-import AntBaseInput from "../AntBaseInput.vue";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Size} from '../../../../enums/Size.enum';
+import AntBaseInput from '../AntBaseInput.vue';
 
 const meta: Meta<typeof AntInputLabel> = {
     title: 'Components/Forms/Elements/Ant Input Label',

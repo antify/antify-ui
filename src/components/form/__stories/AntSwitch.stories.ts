@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/vue3";
-import AntSwitch from "../AntSwitch.vue";
-import { computed } from "vue";
+import {Meta, StoryObj} from '@storybook/vue3';
+import AntSwitch from '../AntSwitch.vue';
+import {computed} from 'vue';
 
 const meta: Meta<typeof AntSwitch> = {
   title: 'Components/Forms/Switch',
@@ -16,12 +16,10 @@ export const Docs: Story = {
     components: {AntSwitch},
     setup() {
       const value = computed({
-        get() {
-          return args.modelValue
-        },
-        set(val)  {
-          args.modelValue = val;
-        }
+        // @ts-ignore
+        get: () => args.modelValue,
+        // @ts-ignore
+        set: (val) => args.modelValue = val
       })
 
       return {args, value}

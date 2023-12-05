@@ -1,4 +1,5 @@
-import { RouteLocationRaw } from 'vue-router';
+import {RouteLocationRaw} from 'vue-router';
+
 export enum ROW_TYPES {
   TEXT,
   IMAGE,

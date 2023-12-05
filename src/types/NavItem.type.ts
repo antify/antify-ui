@@ -1,10 +1,10 @@
-import { RouteLocationRaw } from 'vue-router';
+import {RouteLocationRaw} from 'vue-router';
 
 export type NavItem = {
-  icon?: Object;
-  label: String;
+  icon?: object;
+  label: string;
   route?: RouteLocationRaw;
-  active: Boolean;
+  active: boolean;
   subItems?: NavItem[];
   clickHandler?: (payload: MouseEvent) => void;
 };

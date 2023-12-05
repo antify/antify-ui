@@ -1,6 +1,6 @@
 import AntSearchSelect from '../AntSearchSelect.vue';
 import { ref } from 'vue';
-import { SelectOption } from '../../../types/SelectOption.type';
+import {SelectOption} from '../__types';
 
 export default {
   title: 'Components/Forms/Ant Search Select',
@@ -40,7 +40,7 @@ export const Simple = (args: any) => ({
   },
   template: `
   <AntSearchSelect v-bind="args" v-model:value="value"/>
-  
+
   <span class="text-gray-500 text-xs mt-80 block">Reactive value: {{value}}</span>
   `,
 });

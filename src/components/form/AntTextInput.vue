@@ -9,13 +9,13 @@ export default {
 import {onMounted} from 'vue';
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
-import Size from '../../enums/Size.enum'
+import {Size} from '../../enums/Size.enum'
 import {Validator} from '@antify/validate'
 import {TextInputType} from './__types/AntTextInput.type'
-import {handleEnumValidation} from "../../handler";
-import { useVModel } from "@vueuse/core";
-import {InputColorType} from "../../enums";
-import {BaseInputType} from "./Elements/__types";
+import {handleEnumValidation} from '../../handler';
+import { useVModel } from '@vueuse/core';
+import {InputColorType} from '../../enums';
+import {BaseInputType} from './Elements/__types';
 
 const emit = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{

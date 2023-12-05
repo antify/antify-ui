@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from "@storybook/vue3";
-import AntTabs from "../AntTabs.vue";
-import { computed, ref } from "vue";
-import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import {Meta, StoryObj} from '@storybook/vue3';
+import AntTabs from '../AntTabs.vue';
+import {computed, ref} from 'vue';
+import {faUserCircle} from '@fortawesome/free-regular-svg-icons';
 
 const meta: Meta<typeof AntTabs> = {
   title: 'Components/Tabs',
   component: AntTabs,
-  parameters: { controls: { sort: 'requiredFirst' } },
-  decorators: [() => ({ template: '<div class="p-4 bg-neutral-light"><story /></div>' })],
+  parameters: {controls: {sort: 'requiredFirst'}},
+  decorators: [() => ({template: '<div class="p-4 bg-neutral-light"><story /></div>'})],
   argTypes: {
     modelValue: {
       control: 'text',
@@ -26,24 +26,19 @@ type Story = StoryObj<typeof AntTabs>;
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntTabs },
+    components: {AntTabs},
     setup() {
-      const value = computed({
-        get() {
-          return args.modelValue;
-        },
-        set(val) {
-          args.modelValue = val;
-        }
-      })
+      const modelValue = computed({
+        // @ts-ignore
+        get: () => args.modelValue,
+        // @ts-ignore
+        set: (val) => args.modelValue = val
+      });
 
-      return {
-        args,
-        value
-      }
+      return {args, modelValue};
     },
     template: `
-      <AntTabs v-bind="args" v-model="value"/>
+      <AntTabs v-bind="args" v-model="modelValue"/>
     `
   }),
   args: {
@@ -70,7 +65,7 @@ export const Docs: Story = {
 
 export const Overview: Story = {
   render: (args) => ({
-    components: { AntTabs },
+    components: {AntTabs},
     setup() {
       const value_1 = ref();
       const value_2 = ref();
@@ -144,9 +139,9 @@ export const Overview: Story = {
         <AntTabs v-model="value_2" :tab-items="tabItems_2" expanded separators/>
         <AntTabs v-model="value_3" :tab-items="tabItems_3" expanded separators/>
       </div>
-      
+
       <div class="mt-8">Larger container:</div>
-      
+
       <div class="h-16 bg-primary">
         <AntTabs v-model="value_3" :tab-items="tabItems_3" expanded separators/>
       </div>

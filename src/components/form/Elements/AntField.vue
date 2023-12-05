@@ -6,14 +6,14 @@ export default {
 
 <script lang="ts" setup>
 import {onMounted, computed} from 'vue';
-import Size from '../../../enums/Size.enum'
-import AntInputLabel from "./AntInputLabel.vue";
-import AntInputDescription from "./AntInputDescription.vue";
-import {Validator} from "@antify/validate";
-import {handleEnumValidation} from "../../../handler";
-import AntInputLimiter from "./AntInputLimiter.vue";
-import {useVModel} from "@vueuse/core";
-import {InputColorType} from "../../../enums";
+import {Size} from '../../../enums/Size.enum'
+import AntInputLabel from './AntInputLabel.vue';
+import AntInputDescription from './AntInputDescription.vue';
+import {Validator} from '@antify/validate';
+import {handleEnumValidation} from '../../../handler';
+import AntInputLimiter from './AntInputLimiter.vue';
+import {useVModel} from '@vueuse/core';
+import {InputColorType} from '../../../enums';
 
 const emits = defineEmits(['update:skeleton', 'clickLabel']);
 const props = withDefaults(defineProps<{

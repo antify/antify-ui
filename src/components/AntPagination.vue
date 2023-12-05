@@ -5,34 +5,35 @@ export default {
 </script>
 
 <script lang="ts" setup>
+// @ts-nocheck
 /**
  * TODO:: test me in storybook through vue router
+ * TODO:: Fix ts errors
  */
-import {useRouter, useRoute} from "vue-router"
-import {computed} from "vue";
-import AntButton from "./form/AntButton.vue";
-import {faChevronRight, faChevronLeft} from "@fortawesome/free-solid-svg-icons";
-import Grouped from "../enums/Grouped.enum";
-import AntSkeleton from "./AntSkeleton.vue";
-import { useVModel } from "@vueuse/core";
-import {ColorType} from "../enums";
+import {useRouter, useRoute} from 'vue-router'
+import {computed} from 'vue';
+import AntButton from './form/AntButton.vue';
+import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import {Grouped} from '../enums/Grouped.enum';
+import AntSkeleton from './AntSkeleton.vue';
+import {useVModel} from '@vueuse/core';
+import {ColorType} from '../enums';
 
-const emit = defineEmits(["update:page"])
+const emit = defineEmits(['update:page'])
 const props = withDefaults(
-    defineProps<{
-      pages: number,
-      pageQuery?: string,
-      skeleton?: boolean
-    }>(),
-    {
-      pageQuery: "p",
-      skeleton: false
-    }
+  defineProps<{
+    pages: number,
+    pageQuery?: string,
+    skeleton?: boolean
+  }>(),
+  {
+    pageQuery: 'p',
+    skeleton: false
+  }
 )
 
 const router = useRouter()
 const route = useRoute()
-
 const _skeleton = useVModel(props, 'skeleton', emit);
 
 const page = computed({
@@ -71,7 +72,7 @@ const pagination = computed(() => {
     pagination.push(1)
 
     if (page.value > 3) {
-      pagination.push("...")
+      pagination.push('...')
     }
   }
 
@@ -101,7 +102,7 @@ const pagination = computed(() => {
 
   if (page.value < props.pages - 1 && props.pages > 3) {
     if (page.value < props.pages - 2) {
-      pagination.push("...")
+      pagination.push('...')
     }
     pagination.push(props.pages)
   }
@@ -115,35 +116,36 @@ const pagination = computed(() => {
     <AntSkeleton v-model="_skeleton" rounded absolute/>
 
     <div
-        class="inline-flex gap-px"
-        :class="{'invisible': _skeleton}"
+      class="inline-flex gap-px"
+      :class="{'invisible': _skeleton}"
     >
       <AntButton
-          :disabled="page === 1"
-          :icon-left="faChevronLeft"
-          :grouped="Grouped.left"
-          outlined
-          @click="() => page = page - 1"
+        :disabled="page === 1"
+        :icon-left="faChevronLeft"
+        :grouped="Grouped.left"
+        outlined
+        @click="() => page = page - 1"
       />
 
       <AntButton
-          v-for="pageObj in pagination"
-          :color-type="pageObj === page ? ColorType.primary : ColorType.base"
-          :class="{'text-primary': pageObj === page}"
-          :disabled="pageObj === '...'"
-          :grouped="Grouped.center"
-          :outlined="pageObj !== page"
-          @click="() => page = pageObj"
+        v-for="(pageObj, index) in pagination"
+        :color-type="pageObj === page ? ColorType.primary : ColorType.base"
+        :class="{'text-primary': pageObj === page}"
+        :disabled="pageObj === '...'"
+        :grouped="Grouped.center"
+        :outlined="pageObj !== page"
+        @click="() => page = pageObj"
+        v-bind:key="`pagination-button-${index}`"
       >
         {{ pageObj }}
       </AntButton>
 
       <AntButton
-          :icon-left="faChevronRight"
-          :grouped="Grouped.right"
-          :disabled="page === pages"
-          outlined
-          @click="() => page = page + 1"
+        :icon-left="faChevronRight"
+        :grouped="Grouped.right"
+        :disabled="page === pages"
+        outlined
+        @click="() => page = page + 1"
       />
     </div>
   </div>

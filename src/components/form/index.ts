@@ -4,7 +4,7 @@ export * from './AntForm.vue';
 export * from './AntInput.vue';
 export * from './AntNumberInput.vue';
 export * from './AntRangeSlider.vue';
-export * from './AntRichTextEditor.vue';
+// export * from './AntRichTextEditor.vue';
 export * from './AntSearch.vue';
 export * from './AntSearchField.vue';
 export * from './AntSearchSelect.vue';

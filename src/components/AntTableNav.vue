@@ -5,46 +5,48 @@ export default {
 </script>
 
 <script lang="ts" setup>
+// @ts-nocheck
 /**
  * TODO:: test me in storybook through vue router
+ * TODO:: fix ts errors
  */
-import {useRouter, useRoute} from "vue-router"
-import AntPagination from "./AntPagination.vue";
-import {computed, ref, watch} from "vue";
-import AntSelect from "./form/AntSelect.vue";
-import AntSkeleton from "./AntSkeleton.vue";
-import { useVModel } from "@vueuse/core";
+import {useRouter, useRoute} from 'vue-router'
+import AntPagination from './AntPagination.vue';
+import {computed, ref, watch} from 'vue';
+import AntSelect from './form/AntSelect.vue';
+import AntSkeleton from './AntSkeleton.vue';
+import {useVModel} from '@vueuse/core';
+import {SelectOption} from './form/__types';
 
-const emit = defineEmits(["update:page"])
+const emit = defineEmits(['update:page'])
 const props = withDefaults(
-    defineProps<{
-      page: number,
-      pages: number,
-      count: number | null,
-      pageQuery?: string,
-      itemsPerPageQuery?: string,
-      fullWidth?: boolean,
-      validItemsPerPage?: number[],
-      skeleton?: boolean
-    }>(),
-    {
-      pageQuery: "p",
-      itemsPerPageQuery: "ipp",
-      fullWidth: true,
-      validItemsPerPage: [20, 50, 100, 200]
-    }
+  defineProps<{
+    page: number,
+    pages: number,
+    count: number | null,
+    pageQuery?: string,
+    itemsPerPageQuery?: string,
+    fullWidth?: boolean,
+    validItemsPerPage?: number[],
+    skeleton?: boolean
+  }>(),
+  {
+    pageQuery: 'p',
+    itemsPerPageQuery: 'ipp',
+    fullWidth: true,
+    validItemsPerPage: () => [20, 50, 100, 200]
+  }
 )
 
 const route = useRoute()
 const router = useRouter()
-
 const _skeleton = useVModel(props, 'skeleton', emit);
 
 const itemsPerPageOptions = computed(() =>
-    props.validItemsPerPage.map(item => ({
-      label: item,
-      value: item
-    }))
+  props.validItemsPerPage.map(item => ({
+    label: `${item}`,
+    value: item
+  }) as SelectOption)
 )
 const page = computed(() => {
   const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1
@@ -58,12 +60,12 @@ const page = computed(() => {
 const itemsPerPage = computed({
   get() {
     return route.query[props.itemsPerPageQuery] ?
-        Number.parseInt(route.query[props.itemsPerPageQuery]) :
-        props.validItemsPerPage[0]
+      Number.parseInt(route.query[props.itemsPerPageQuery]) :
+      props.validItemsPerPage[0]
   },
   set(val) {
     const query = {...route.query}
-    query[props.itemsPerPageQuery] = val
+    query[props.itemsPerPageQuery] = `${val}`
     delete query[props.pageQuery]
 
     router.push({
@@ -89,26 +91,26 @@ watch(() => props.fullWidth, () => {
 
 <template>
   <div
-      class="flex w-full items-center px-2"
-      :class="{'justify-end': !_fullWidth, 'justify-between': _fullWidth}"
+    class="flex w-full items-center px-2"
+    :class="{'justify-end': !_fullWidth, 'justify-between': _fullWidth}"
   >
     <div
-        v-if="_fullWidth"
-        class="flex gap-2 items-center text-neutral-lightest-font text-sm">
+      v-if="_fullWidth"
+      class="flex gap-2 items-center text-neutral-lightest-font text-sm">
       <span class="relative">
-        <AntSkeleton v-model="_skeleton" rounded absolute />
+        <AntSkeleton v-model="_skeleton" rounded absolute/>
         Items per page
       </span>
 
       <AntSelect
-          v-model:value="itemsPerPage"
-          :options="itemsPerPageOptions"
-          :skeleton="_skeleton"
-          :expanded="false"
+        v-model="itemsPerPage"
+        :options="itemsPerPageOptions"
+        :skeleton="_skeleton"
+        :expanded="false"
       />
 
       <div v-if="count !== null" class="flex gap-1 relative">
-        <AntSkeleton v-model="_skeleton" rounded absolute />
+        <AntSkeleton v-model="_skeleton" rounded absolute/>
 
         <span class="font-medium">{{ fromItems }} - {{ itemsPerPage * page }}</span>
         <span>of</span>
@@ -117,9 +119,9 @@ watch(() => props.fullWidth, () => {
     </div>
 
     <AntPagination
-        :pages="pages"
-        :page-query="pageQuery"
-        :skeleton="_skeleton"
+      :pages="pages"
+      :page-query="pageQuery"
+      :skeleton="_skeleton"
     />
   </div>
 </template>

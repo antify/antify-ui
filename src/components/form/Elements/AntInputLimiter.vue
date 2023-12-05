@@ -6,11 +6,11 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import Size from '../../../enums/Size.enum'
-import AntSkeleton from "../../AntSkeleton.vue";
-import {handleEnumValidation} from "../../../handler";
-import {useVModel} from "@vueuse/core";
-import {InputColorType} from "../../../enums";
+import {Size} from '../../../enums/Size.enum'
+import AntSkeleton from '../../AntSkeleton.vue';
+import {handleEnumValidation} from '../../../handler';
+import {useVModel} from '@vueuse/core';
+import {InputColorType} from '../../../enums';
 
 const emits = defineEmits(['update:skeleton']);
 const props = withDefaults(defineProps<{

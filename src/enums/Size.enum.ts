@@ -1,6 +1,4 @@
-enum Size {
+export enum Size {
     sm = 'sm',
     md = 'md',
 }
-
-export default Size;

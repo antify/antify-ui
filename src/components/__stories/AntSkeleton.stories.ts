@@ -1,7 +1,7 @@
 import AntSkeleton from '../AntSkeleton.vue';
-import { Meta, StoryObj } from "@storybook/vue3";
-import _Grouped from "../../enums/Grouped.enum";
-import { ref } from "vue";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Grouped as _Grouped} from '../../enums/Grouped.enum';
+import {computed} from 'vue';
 
 const meta: Meta<typeof AntSkeleton> = {
   title: 'Components/Skeleton',
@@ -11,10 +11,10 @@ const meta: Meta<typeof AntSkeleton> = {
       description: 'Reactive value if the skeleton is currently visible.'
     },
     grouped: {
-      control: { type: 'select' },
+      control: {type: 'select'},
       options: Object.values(_Grouped),
       description: 'Where is this fields position in a group',
-      table: { defaultValue: { summary: _Grouped.none } },
+      table: {defaultValue: {summary: _Grouped.none}},
     },
   },
 };
@@ -25,13 +25,23 @@ type Story = StoryObj<typeof AntSkeleton>;
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntSkeleton },
+    components: {AntSkeleton},
     setup() {
-      const value = ref(true);
+      const modelValue = computed({
+        // @ts-ignore
+        get: () => args.modelValue,
+        // @ts-ignore
+        set: (val) => args.modelValue = val
+      });
 
-      return { args, value };
+      return {args, modelValue};
     },
-    template: '<div class="p-4"><AntSkeleton v-model="value" v-bind="args" class="h-5 w-full" /></div>',
+    template: `
+      <AntSkeleton
+        v-model="modelValue"
+        v-bind="args"
+        class="h-5 w-full"
+      />`,
   }),
   args: {},
 };
@@ -48,6 +58,6 @@ export const Grouped: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
-    grouped: 'left'
+    grouped: _Grouped.left
   },
 };

@@ -1,7 +1,7 @@
 import AntInputLimiter from '../AntInputLimiter.vue';
-import {Meta, StoryObj} from "@storybook/vue3";
-import Size from '../../../../enums/Size.enum';
-import {InputColorType} from "../../../../enums";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Size} from '../../../../enums/Size.enum';
+import {InputColorType} from '../../../../enums';
 
 const meta: Meta<typeof AntInputLimiter> = {
     title: 'Components/Forms/Elements/Ant Input Limiter',

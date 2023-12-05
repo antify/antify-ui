@@ -7,23 +7,23 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
-import Size from '../../enums/Size.enum'
-import AntSkeleton from "../AntSkeleton.vue";
-import AntIcon from "../AntIcon.vue";
-import Grouped from "../../enums/Grouped.enum";
+import {Size} from '../../enums/Size.enum'
+import AntSkeleton from '../AntSkeleton.vue';
+import AntIcon from '../AntIcon.vue';
+import {Grouped} from '../../enums/Grouped.enum';
 import {
   faExclamationTriangle,
   faExclamationCircle,
   faCircleCheck,
   faCircleInfo
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 import {Validator} from '@antify/validate'
-import {handleEnumValidation} from "../../handler";
-import {classesToObjectSyntax} from "../../utils";
-import AntField from "./Elements/AntField.vue";
-import { useVModel } from "@vueuse/core";
-import {InputColorType} from "../../enums";
-import {IconColorType, IconSize} from "../__types";
+import {handleEnumValidation} from '../../handler';
+import {classesToObjectSyntax} from '../../utils';
+import AntField from './Elements/AntField.vue';
+import { useVModel } from '@vueuse/core';
+import {InputColorType} from '../../enums';
+import {IconColorType, IconSize} from '../__types';
 
 const emit = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{

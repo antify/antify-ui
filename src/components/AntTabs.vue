@@ -5,11 +5,10 @@ export default {
 </script>
 
 <script setup lang="ts">
-
-import AntTabItem from "./AntTabItem.vue";
-import { TabItem } from "./__types/AntTabs.types";
-import { useVModel } from "@vueuse/core";
-import { computed } from "vue";
+import AntTabItem from './AntTabItem.vue';
+import {TabItem} from './__types/AntTabs.types';
+import {useVModel} from '@vueuse/core';
+import {computed} from 'vue';
 
 const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(defineProps<{
@@ -30,7 +29,7 @@ const containerClasses = computed(() => {
   };
 });
 
-function clickTab(tabItem) {
+function clickTab(tabItem: TabItem) {
   if (tabItem.clickHandler) {
     tabItem.clickHandler();
   }

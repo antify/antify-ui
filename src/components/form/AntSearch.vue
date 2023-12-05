@@ -7,13 +7,13 @@ export default {
 <script lang="ts" setup>
 import {computed, onMounted, ref} from 'vue';
 import AntBaseInput from './Elements/AntBaseInput.vue'
-import Size from '../../enums/Size.enum'
+import {Size} from '../../enums/Size.enum'
 import {Validator} from '@antify/validate'
-import {handleEnumValidation} from "../../handler";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import {useVModel} from "@vueuse/core";
-import {BaseInputType} from "./Elements/__types";
-import AntField from "./Elements/AntField.vue";
+import {handleEnumValidation} from '../../handler';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {useVModel} from '@vueuse/core';
+import {BaseInputType} from './Elements/__types';
+import AntField from './Elements/AntField.vue';
 
 const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<{
   skeleton: false,
   size: Size.md,
   inputTimeout: 300,
-  placeholder: "Search"
+  placeholder: 'Search'
 });
 
 const _skeleton = useVModel(props, 'skeleton', emits);

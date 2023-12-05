@@ -1,4 +1,4 @@
-import { RouteLocationRaw } from 'vue-router';
+import {RouteLocationRaw} from 'vue-router';
 
 export type TabsType = {
   name: string;

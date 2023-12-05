@@ -6,12 +6,12 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import Size from '../enums/Size.enum'
-import {TagColorType} from "../types/AntTag.type";
-import {handleEnumValidation} from "../handler";
-import {ColorType} from "../enums/ColorType.enum";
+import {Size} from '../enums/Size.enum'
+import {TagColorType} from '../types/AntTag.type';
+import {handleEnumValidation} from '../handler';
+import {ColorType} from '../enums/ColorType.enum';
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 
 const props = withDefaults(defineProps<{
   colorType?: TagColorType,
@@ -35,9 +35,9 @@ const classes = computed(() => {
   };
 
   return {
-    "rounded-md inline-flex items-center": true,
-    "px-1.5 py-1 text-sm gap-1.5": props.size === Size.md,
-    "px-1 py-0.5 text-xs  gap-1": props.size === Size.sm,
+    'rounded-md inline-flex items-center': true,
+    'px-1.5 py-1 text-sm gap-1.5': props.size === Size.md,
+    'px-1 py-0.5 text-xs  gap-1': props.size === Size.sm,
     [variants[props.colorType]]: true,
   };
 });

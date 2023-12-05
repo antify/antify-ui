@@ -19,20 +19,21 @@ export default {
  * Fix overflow bug (See Ellipsis Text story)
  * TODO:: if the dropdown is open and the user types something, the element with a matching value should be focused.
  */
-import AntField from "./Elements/AntField.vue";
+import AntField from './Elements/AntField.vue';
 import {SelectOption} from './__types/AntSelect.type';
-import {computed, onMounted, ref, watch, nextTick} from 'vue';
-import Size from "../../enums/Size.enum";
-import {Validator} from "@antify/validate";
-import {handleEnumValidation} from "../../handler";
-import Grouped from "../../enums/Grouped.enum";
-import AntIcon from "../AntIcon.vue";
-import {faChevronDown, faChevronUp, faMultiply} from "@fortawesome/free-solid-svg-icons";
-import AntSkeleton from "../AntSkeleton.vue";
+import {computed, onMounted, ref, watch, nextTick, Ref} from 'vue';
+import {Size} from '../../enums/Size.enum';
+import {Validator} from '@antify/validate';
+import {handleEnumValidation} from '../../handler';
+import {Grouped} from '../../enums/Grouped.enum';
+import AntIcon from '../AntIcon.vue';
+import {faChevronDown, faChevronUp, faMultiply} from '@fortawesome/free-solid-svg-icons';
+import AntSkeleton from '../AntSkeleton.vue';
 import {vOnClickOutside} from '@vueuse/components';
-import AntButton from "./AntButton.vue";
-import {useVModel} from "@vueuse/core";
-import {ColorType, InputColorType} from "../../enums";
+import AntButton from './AntButton.vue';
+import {useVModel} from '@vueuse/core';
+import {ColorType, InputColorType} from '../../enums';
+import {IconSize} from '../__types';
 
 const props = withDefaults(
     defineProps<{
@@ -320,7 +321,7 @@ function onClickSelectInput(e: MouseEvent) {
     return;
   }
 
-  if (isOpen) {
+  if (isOpen.value) {
     inputRef.value?.focus()
   }
 
@@ -406,14 +407,14 @@ function onClickRemoveButton() {
           <AntIcon
               v-if="isOpen"
               :icon="faChevronUp"
-              :size="size"
+              :size="size as unknown as IconSize"
               :class="arrowClasses"
           />
 
           <AntIcon
               v-else
               :icon="faChevronDown"
-              :size="size"
+              :size="size as unknown as IconSize"
               :class="arrowClasses"
           />
         </div>

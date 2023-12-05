@@ -5,6 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, ref } from 'vue';
 import { generateId } from '../../../utils/helper';
 import AntSkeleton from '../../AntSkeleton.vue';
@@ -88,7 +89,7 @@ const _checked = computed({
     </div>
 
     <AntSkeleton
-      :model-value="description || $slots['description']"
+        :model-value="description || $slots['description']"
       class="w-4/6 h-4 rounded-md mt-1"
     />
   </div>

@@ -6,16 +6,17 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted, useSlots} from 'vue';
-import {handleEnumValidation} from "../handler";
+import {handleEnumValidation} from '../handler';
 import {
   faCheckCircle,
   faExclamationCircle,
   faExclamationTriangle,
   faInfoCircle, faXmark
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
 import AntButton from './form/AntButton.vue';
-import {ColorType, InputColorType} from "../enums";
+import {ColorType, InputColorType} from '../enums';
+import {IconColorType} from './__types';
 
 const props = withDefaults(defineProps<{
   title: string,
@@ -63,9 +64,9 @@ onMounted(() => {
     <div class="inline-flex items-center justify-between w-content gap-2.5">
       <div class="inline-flex items-center gap-2.5">
         <AntIcon
-            v-if="icon"
-            :icon="_icon"
-            :color-type="props.colorType"
+          v-if="icon"
+          :icon="_icon"
+          :color-type="props.colorType as unknown as IconColorType"
         />
 
         <div :class="{'font-semibold': hasDefaultSlot}">
@@ -76,10 +77,10 @@ onMounted(() => {
       </div>
 
       <AntIcon
-          :icon="faXmark"
-          class="cursor-pointer"
-          :color-type="props.colorType"
-          @click="() => $emit('close')"
+        :icon="faXmark"
+        class="cursor-pointer"
+        :color-type="props.colorType as unknown as IconColorType"
+        @click="() => $emit('close')"
       />
     </div>
 
@@ -89,8 +90,8 @@ onMounted(() => {
 
     <div v-if="showUndo" class="flex justify-end">
       <AntButton
-          :color-type="props.colorType"
-          @click="() => $emit('undo')"
+        :color-type="props.colorType as unknown as ColorType"
+        @click="() => $emit('undo')"
       >
         undo
       </AntButton>

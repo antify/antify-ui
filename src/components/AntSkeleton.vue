@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import Grouped from '../enums/Grouped.enum';
+import {Grouped} from '../enums/Grouped.enum';
 import { computed, ref, watch } from 'vue';
 import { useVModel } from '@vueuse/core';
 

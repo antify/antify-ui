@@ -5,6 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { onBeforeUnmount, reactive, watch } from 'vue';
 
 const props =

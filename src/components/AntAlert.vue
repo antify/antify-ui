@@ -6,21 +6,22 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted, useSlots} from 'vue';
-import {handleEnumValidation} from "../handler";
+import {handleEnumValidation} from '../handler';
 import {
-  faCheckCircle, faCircleQuestion,
+  faCheckCircle,
+  faCircleQuestion,
   faExclamationCircle,
   faExclamationTriangle,
   faInfoCircle, faXmark
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
-import AntTooltip from "./AntTooltip.vue";
-import {Position} from "../enums/PositionType.enum";
-import AntSkeleton from "./AntSkeleton.vue";
-import { useVModel } from "@vueuse/core";
-import {InputColorType} from "../enums";
+import AntTooltip from './AntTooltip.vue';
+import AntSkeleton from './AntSkeleton.vue';
+import {useVModel} from '@vueuse/core';
+import {InputColorType, Position} from '../enums';
+import {IconColorType} from './__types';
 
-const emits = defineEmits(['update:skeleton']);
+const emit = defineEmits(['update:skeleton', 'close']);
 const props = withDefaults(defineProps<{
   title: string,
   colorType?: InputColorType,
@@ -35,8 +36,7 @@ const props = withDefaults(defineProps<{
   skeleton: false
 });
 
-const _skeleton = useVModel(props, 'skeleton', emits);
-
+const _skeleton = useVModel(props, 'skeleton', emit);
 const icons = {
   [InputColorType.base]: faInfoCircle,
   [InputColorType.info]: faInfoCircle,
@@ -74,14 +74,14 @@ onMounted(() => {
     <AntSkeleton v-model="_skeleton" absolute rounded/>
 
     <div
-        class="inline-flex items-center justify-between w-content gap-2.5"
-        :class="{'invisible': _skeleton}"
+      class="inline-flex items-center justify-between w-content gap-2.5"
+      :class="{'invisible': _skeleton}"
     >
       <div class="inline-flex items-center gap-2.5">
         <AntIcon
-            v-if="icon"
-            :icon="_icon"
-            :color-type="colorType"
+          v-if="icon"
+          :icon="_icon"
+          :color-type="colorType as unknown as IconColorType"
         />
 
         <div :class="{'font-semibold': hasDefaultSlot}">
@@ -96,8 +96,8 @@ onMounted(() => {
           <slot name="questionMarkText">
             <AntTooltip :position="Position.bottom">
               <AntIcon
-                  :icon="faCircleQuestion"
-                  :color-type="colorType"
+                :icon="faCircleQuestion"
+                :color-type="colorType as unknown as IconColorType"
               />
 
               <template #content>
@@ -108,10 +108,10 @@ onMounted(() => {
         </div>
 
         <AntIcon
-            :icon="faXmark"
-            class="cursor-pointer"
-            :color-type="colorType"
-            @click="() => $emit('close')"
+          :icon="faXmark"
+          class="cursor-pointer"
+          :color-type="colorType as unknown as IconColorType"
+          @click="() => $emit('close')"
         />
       </div>
     </div>

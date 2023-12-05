@@ -1,4 +1,3 @@
-
 <script lang="ts">
 export default {
   name: 'AntRangeSlider',
@@ -7,15 +6,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-
-import AntField from "./Elements/AntField.vue";
-import { Validator } from "@antify/validate";
-import { useVModel } from "@vueuse/core";
-import { computed } from "vue";
-import {InputColorType} from "../../enums";
-import {onMounted} from "vue/dist/vue";
-import {handleEnumValidation} from "../../handler";
-import Size from "../../enums/Size.enum";
+import AntField from './Elements/AntField.vue';
+import {Validator} from '@antify/validate';
+import {useVModel} from '@vueuse/core';
+import {computed, onMounted} from 'vue';
+import {InputColorType, Size} from '../../enums';
+import {handleEnumValidation} from '../../handler';
 
 const emits = defineEmits(['update:modelValue', 'update:skeleton'])
 const props = withDefaults(defineProps<{

@@ -10,13 +10,13 @@ import {onMounted} from 'vue';
 import AntButton from './AntButton.vue'
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
-import Size from '../../enums/Size.enum'
+import {Size} from '../../enums/Size.enum'
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {useVModel} from "@vueuse/core";
-import {ColorType, InputColorType} from "../../enums";
-import Grouped from "../../enums/Grouped.enum";
-import {BaseInputType} from "./Elements/__types";
-import {handleEnumValidation} from "../../handler";
+import {useVModel} from '@vueuse/core';
+import {ColorType, InputColorType} from '../../enums';
+import {Grouped} from '../../enums/Grouped.enum';
+import {BaseInputType} from './Elements/__types';
+import {handleEnumValidation} from '../../handler';
 
 // TODO:: implement missing validator
 const props = withDefaults(defineProps<{

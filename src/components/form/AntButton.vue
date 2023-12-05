@@ -15,12 +15,12 @@ import {computed, onMounted} from 'vue';
 import {LocationAsRelativeRaw} from 'vue-router';
 import AntSkeleton from '../AntSkeleton.vue';
 import AntSpinner from '../AntSpinner.vue';
-import Grouped from '../../enums/Grouped.enum';
-import Size from '../../enums/Size.enum';
-import {handleEnumValidation} from "../../handler";
-import {useVModel} from "@vueuse/core";
-import {ColorType} from "../../enums";
-import {ButtonType} from "./__types";
+import {Grouped} from '../../enums/Grouped.enum';
+import {Size} from '../../enums/Size.enum';
+import {handleEnumValidation} from '../../handler';
+import {useVModel} from '@vueuse/core';
+import {ColorType} from '../../enums';
+import {ButtonType} from './__types';
 
 const emits = defineEmits(['click', 'update:skeleton']);
 const props = withDefaults(defineProps<{

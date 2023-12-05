@@ -7,25 +7,25 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
-import Size from '../../../enums/Size.enum'
-import AntSkeleton from "../../AntSkeleton.vue";
-import AntIcon from "../../AntIcon.vue";
-import {BaseInputType} from "./__types/AntBaseInput.type";
-import Grouped from "../../../enums/Grouped.enum";
+import {Size} from '../../../enums/Size.enum'
+import AntSkeleton from '../../AntSkeleton.vue';
+import AntIcon from '../../AntIcon.vue';
+import {BaseInputType} from './__types/AntBaseInput.type';
+import {Grouped} from '../../../enums/Grouped.enum';
 import {
   faExclamationTriangle,
   faExclamationCircle,
   faCircleCheck,
   faCircleInfo,
   faXmark
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 import {Validator} from '@antify/validate'
-import {handleEnumValidation} from "../../../handler";
+import {handleEnumValidation} from '../../../handler';
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {classesToObjectSyntax} from "../../../utils";
-import {useVModel} from "@vueuse/core";
-import {InputColorType} from "../../../enums";
-import {IconSize} from "../../__types";
+import {classesToObjectSyntax} from '../../../utils';
+import {useVModel} from '@vueuse/core';
+import {InputColorType} from '../../../enums';
+import {IconSize} from '../../__types';
 
 const emit = defineEmits(['update:value', 'update:skeleton']);
 const props = withDefaults(defineProps<{

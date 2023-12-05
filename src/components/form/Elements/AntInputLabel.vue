@@ -6,10 +6,10 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import Size from '../../../enums/Size.enum'
-import AntSkeleton from "../../AntSkeleton.vue";
-import {handleEnumValidation} from "../../../handler";
-import { useVModel } from "@vueuse/core";
+import {Size} from '../../../enums/Size.enum'
+import AntSkeleton from '../../AntSkeleton.vue';
+import {handleEnumValidation} from '../../../handler';
+import { useVModel } from '@vueuse/core';
 
 const emits = defineEmits(['update:skeleton', 'clickContent']);
 const props = withDefaults(defineProps<{

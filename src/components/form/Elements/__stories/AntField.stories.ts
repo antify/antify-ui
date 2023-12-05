@@ -1,9 +1,9 @@
 import AntField from '../AntField.vue';
 import AntBaseInput from '../AntBaseInput.vue';
-import {Meta, StoryObj} from "@storybook/vue3";
-import Size from '../../../../enums/Size.enum';
-import {computed} from "vue";
-import {InputColorType} from "../../../../enums";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Size} from '../../../../enums/Size.enum';
+import {computed} from 'vue';
+import {InputColorType} from '../../../../enums';
 
 const meta: Meta<typeof AntField> = {
     title: 'Components/Forms/Elements/Field',

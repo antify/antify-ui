@@ -7,19 +7,23 @@ export default {
 
 <script lang="ts" setup>
 import AntIcon from './AntIcon.vue';
-import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import Size from "../enums/Size.enum";
+import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {IconSize} from './__types';
 
-const props = defineProps<{
+defineProps<{
   icon?: IconDefinition
 }>();
 </script>
 
 <template>
   <span
-      class="inline-block py-0.5 px-1.5 bg-neutral-light rounded-md text-sm min-w-[1.5rem] text-center text-neutral-font font-medium"
+    class="inline-block py-0.5 px-1.5 bg-neutral-light rounded-md text-sm min-w-[1.5rem] text-center text-neutral-font font-medium"
   >
-    <AntIcon v-if="icon" :icon="icon" :size="Size.sm"></AntIcon>
+    <AntIcon
+      v-if="icon"
+      :icon="icon"
+      :size="IconSize.sm"
+    />
 
     <slot v-else/>
   </span>

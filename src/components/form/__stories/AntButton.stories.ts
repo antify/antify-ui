@@ -1,9 +1,9 @@
 import AntButton from '../AntButton.vue';
 import {faCaretRight, faCaretLeft, faPlus} from '@fortawesome/free-solid-svg-icons';
-import {Meta, StoryObj} from "@storybook/vue3";
-import Size from '../../../enums/Size.enum';
-import _Grouped from '../../../enums/Grouped.enum';
-import {ColorType} from "../../../enums";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Size} from '../../../enums/Size.enum';
+import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
+import {ColorType} from '../../../enums';
 
 const meta: Meta<typeof AntButton> = {
     title: 'Components/Forms/Button',
@@ -111,7 +111,7 @@ export const Grouped: Story = {
     render: Docs.render,
     args: {
         ...Docs.args,
-        grouped: 'left'
+        grouped: _Grouped.left,
     },
 };
 

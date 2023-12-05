@@ -5,11 +5,12 @@ export default {
 </script>
 
 <script setup lang="ts">
+// @ts-nocheck
 import AntField from './Elements/AntField.vue';
 import { useVModel } from '@vueuse/core';
 import { computed } from 'vue';
 import { SwitcherColorType } from './__types/AntSwitcher.type';
-import Size from '../../enums/Size.enum';
+import {Size} from '../../enums/Size.enum';
 import { Validator } from '@antify/validate';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);

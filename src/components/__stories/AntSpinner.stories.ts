@@ -1,7 +1,7 @@
 import AntSpinner from '../AntSpinner.vue';
-import {Meta, StoryObj} from "@storybook/vue3";
-import Size from '../../enums/Size.enum';
-import {ColorType} from "../../enums/ColorType.enum";
+import {Meta, StoryObj} from '@storybook/vue3';
+import {Size} from '../../enums/Size.enum';
+import {ColorType} from '../../enums/ColorType.enum';
 
 const meta: Meta<typeof AntSpinner> = {
     title: 'Components/Spinner',
