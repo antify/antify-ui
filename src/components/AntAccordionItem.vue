@@ -1,14 +1,7 @@
-<script lang="ts">
-export default {
-  name: 'AntAccordionItem',
-};
-</script>
-
 <script lang="ts" setup>
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
-import AntIcon from "./AntIcon.vue";
-import {computed, ref, watch} from "vue";
-import AntTransitionCollapseHeight from "./transitions/AntTransitionCollapseHeight.vue";
+import AntIcon from './AntIcon.vue';
+import AntTransitionCollapseHeight from './transitions/AntTransitionCollapseHeight.vue';
 
 const props = withDefaults(defineProps<{
   isOpen: boolean;

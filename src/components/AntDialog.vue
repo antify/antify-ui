@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntDialog'
-}
-</script>
-
 <script setup lang="ts">
 // TODO:: remove ts ignore
 // @ts-nocheck

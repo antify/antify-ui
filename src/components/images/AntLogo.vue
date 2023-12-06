@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntLogo',
-};
-</script>
-
 <script lang="ts" setup>
 import { computed, onMounted } from 'vue';
 

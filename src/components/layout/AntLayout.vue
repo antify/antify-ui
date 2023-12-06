@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntLayout',
-};
-</script>
-
 <script lang="ts" setup>
 import type { RouteLocationRaw } from 'vue-router';
 import { ref } from 'vue';

@@ -1,15 +1,9 @@
-<script lang="ts">
-export default {
-  name: 'AntTabItem'
-}
-</script>
-
 <script setup lang="ts">
-import AntIcon from "./AntIcon.vue";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { computed, ref } from "vue";
-import { IconColorType } from "./__types/AntIcon.types";
-import { RouteLocationRaw } from "vue-router";
+import AntIcon from './AntIcon.vue';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { computed, ref } from 'vue';
+import { IconColorType } from './__types/AntIcon.types';
+import { RouteLocationRaw } from 'vue-router';
 
 const props = defineProps<{
   prependIcon?: IconDefinition;

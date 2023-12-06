@@ -1,6 +1,5 @@
 <script lang="ts">
 export default {
-  name: 'AntRadioWidget',
   inheritAttrs: false,
 };
 </script>

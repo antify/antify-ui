@@ -1,5 +1,13 @@
-export * from './AntBaseInput.vue';
-export * from './AntField.vue';
-export * from './AntInputDescription.vue';
-export * from './AntInputLabel.vue';
-export * from './AntInputLimiter.vue';
+import AntBaseInput from './AntBaseInput.vue';
+import AntField from './AntField.vue';
+import AntInputDescription from './AntInputDescription.vue';
+import AntInputLabel from './AntInputLabel.vue';
+import AntInputLimiter from './AntInputLimiter.vue';
+
+export {
+  AntBaseInput,
+  AntField,
+  AntInputDescription,
+  AntInputLabel,
+  AntInputLimiter
+}

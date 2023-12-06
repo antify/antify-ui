@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntContent',
-};
-</script>
-
 <template>
   <div class="h-screen max-h-screen flex flex-col">
     <div

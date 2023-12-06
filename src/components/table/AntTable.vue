@@ -1,13 +1,12 @@
 <script lang="ts">
 export default {
-  name: 'AntTable',
   inheritAttrs: false,
 };
 </script>
 
 <script lang="ts" setup>
 import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
-import AntSkeleton from "../../components/AntSkeleton.vue";
+import AntSkeleton from '../../components/AntSkeleton.vue';
 
 defineProps<{
   headers: TableHeader[];

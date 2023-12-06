@@ -128,4 +128,3 @@
 //   label: 'Loading test',
 //   loading: true,
 // };
-export default {}

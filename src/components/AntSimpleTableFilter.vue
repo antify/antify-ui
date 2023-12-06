@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSimpleTableFilter'
-};
-</script>
-
 <script lang="ts" setup>
 import AntSearch from './form/AntSearch.vue';
 import AntDropdown from './AntDropdown.vue';

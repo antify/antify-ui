@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntProfilePicture',
-};
-</script>
-
 <script lang="ts" setup>
 import { computed, onMounted } from 'vue';
 

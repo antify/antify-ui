@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSearch'
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted, ref} from 'vue';
 import AntBaseInput from './Elements/AntBaseInput.vue'

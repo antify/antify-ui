@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntTooltip',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted, ref} from 'vue';
 import {handleEnumValidation} from '../handler';

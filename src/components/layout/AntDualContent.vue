@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntDualContent',
-};
-</script>
-
 <template>
   <div class="h-screen max-h-screen flex overflow-hidden">
     <main

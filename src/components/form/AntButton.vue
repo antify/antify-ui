@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntButton',
-};
-</script>
-
 <script lang="ts" setup>
 /**
  * TODO:: - summary height with border is not correct

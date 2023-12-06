@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntDraggable',
-};
-</script>
-
 <script lang="ts" setup>
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { onMounted } from 'vue';

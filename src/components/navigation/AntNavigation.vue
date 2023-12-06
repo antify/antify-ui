@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntNavigation',
-};
-</script>
-
 <script lang="ts" setup>
 import type { RouteLocationRaw } from 'vue-router';
 import AntNavItem from './AntNavItem.vue';

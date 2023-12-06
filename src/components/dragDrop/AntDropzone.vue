@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntDropzone',
-};
-</script>
-
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue';
 

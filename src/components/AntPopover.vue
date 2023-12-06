@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntPopover',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import {handleEnumValidation} from '../handler';

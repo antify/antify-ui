@@ -1,17 +1,37 @@
-export * from './AntButton.vue';
-export * from './AntDatePicker.vue';
-export * from './AntForm.vue';
-export * from './AntInput.vue';
-export * from './AntNumberInput.vue';
-export * from './AntRangeSlider.vue';
-// export * from './AntRichTextEditor.vue';
-export * as AntSwitcher from './AntSwitcher.vue';
-export * from './AntSearch.vue';
-export * from './AntSearchField.vue';
-export * from './AntSearchSelect.vue';
-export * from './AntSelect.vue';
-export * from './AntTextarea.vue';
-export * from './AntTextInput.vue';
-export * from './AntToggle.vue';
-export * from './AntUnitInput.vue';
-export * from './AntUpload.vue';
+import AntButton from './AntButton.vue';
+import AntDatePicker from './AntDatePicker.vue';
+import AntForm from './AntForm.vue';
+import AntInput from './AntInput.vue';
+import AntNumberInput from './AntNumberInput.vue';
+import AntRangeSlider from './AntRangeSlider.vue';
+import AntSwitcher from './AntSwitcher.vue';
+import AntSearch from './AntSearch.vue';
+import AntSearchField from './AntSearchField.vue';
+import AntSearchSelect from './AntSearchSelect.vue';
+import AntSelect from './AntSelect.vue';
+import AntTextarea from './AntTextarea.vue';
+import AntTextInput from './AntTextInput.vue';
+import AntToggle from './AntToggle.vue';
+import AntUnitInput from './AntUnitInput.vue';
+import AntUpload from './AntUpload.vue';
+// import AntRichTextEditor from './AntRichTextEditor.vue';
+
+export {
+  AntButton,
+  AntDatePicker,
+  AntForm,
+  AntInput,
+  AntNumberInput,
+  AntRangeSlider,
+  AntSwitcher,
+  AntSearch,
+  AntSearchField,
+  AntSearchSelect,
+  AntSelect,
+  AntTextarea,
+  AntTextInput,
+  AntToggle,
+  AntUnitInput,
+  AntUpload,
+  // AntRichTextEditor
+}

@@ -1,6 +1,5 @@
 <script lang="ts">
 export default {
-  name: 'AntProgress',
   inheritAttrs: false,
 };
 </script>

@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntInputDescription',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import {Size} from '../../../enums/Size.enum'

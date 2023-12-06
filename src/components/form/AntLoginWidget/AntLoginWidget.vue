@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntLoginWidget',
-};
-</script>
-
 <script lang="ts" setup>
 import AntButton from '../AntButton.vue';
 

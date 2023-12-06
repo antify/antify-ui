@@ -1,14 +1,8 @@
-<script lang="ts">
-export default {
-  name: 'AntIcon',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {handleEnumValidation} from "../handler";
+import {handleEnumValidation} from '../handler';
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {IconColorType, IconSize} from "./__types/AntIcon.types";
+import {IconColorType, IconSize} from './__types/AntIcon.types';
 
 const props = withDefaults(defineProps<{
   icon: IconDefinition;

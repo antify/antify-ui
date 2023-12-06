@@ -1,15 +1,9 @@
-<script lang="ts">
-export default {
-  name: 'AntSearchSelect',
-};
-</script>
-
 <script lang="ts" setup>
 import {ref, computed, onMounted, onUnmounted} from 'vue';
 import {faArrowsUpDown, faCheck} from '@fortawesome/free-solid-svg-icons';
 import {generateId} from '../../utils/helper';
 import AntSkeleton from '../AntSkeleton.vue';
-import {SelectOption} from "./__types";
+import {SelectOption} from './__types';
 
 const emit = defineEmits(['update:value', 'selectOption']);
 const props =

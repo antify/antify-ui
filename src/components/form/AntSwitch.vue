@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSwitch',
-};
-</script>
-
 <script setup lang="ts">
 // @ts-nocheck
 import AntField from './Elements/AntField.vue';

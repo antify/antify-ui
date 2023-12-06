@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntCheckbox',
-};
-</script>
-
 <script lang="ts" setup>
 // @ts-nocheck
 import { computed, ref } from 'vue';

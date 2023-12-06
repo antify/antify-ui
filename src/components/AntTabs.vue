@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntTabs'
-}
-</script>
-
 <script setup lang="ts">
 import AntTabItem from './AntTabItem.vue';
 import {TabItem} from './__types/AntTabs.types';

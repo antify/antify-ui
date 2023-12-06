@@ -1,6 +1,5 @@
 <script lang="ts">
 export default {
-  name: 'AntHeader',
   inheritAttrs: false,
 };
 </script>

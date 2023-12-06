@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntCheckboxWidget',
-};
-</script>
-
 <script lang="ts" setup>
 import AntCheckbox from './AntCheckbox.vue';
 import { generateId } from '../../../utils/helper';

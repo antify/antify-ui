@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntDropdown',
-};
-</script>
-
 <script lang="ts" setup>
 /**
  * TODO:: Emit if there's enough space for the dropdown content. If not, reposition it automatically like the

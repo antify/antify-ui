@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntPasswordField',
-};
-</script>
-
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { faEye, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +32,7 @@ const _password = computed({
   },
 });
 
-const defaultType = ref<String>('password');
+const defaultType = ref<string>('password');
 
 const useType = computed({
   get(): string {

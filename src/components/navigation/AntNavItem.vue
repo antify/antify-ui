@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntNavItem',
-};
-</script>
-
 <script lang="ts" setup>
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
@@ -13,7 +7,7 @@ defineProps<{
   navItem: NavItem;
 }>();
 
-const showSubNavigation = ref<Boolean>(false);
+const showSubNavigation = ref<boolean>(false);
 
 const openSubItemMenu = () => {
   showSubNavigation.value = !showSubNavigation.value;

@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntModal',
-};
-</script>
-
 <script lang="ts" setup>
 import {ref, useSlots, watch} from 'vue';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';

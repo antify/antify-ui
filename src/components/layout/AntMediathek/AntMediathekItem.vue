@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntMediathekItem',
-};
-</script>
-
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import {

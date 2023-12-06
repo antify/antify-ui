@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntPagination'
-};
-</script>
-
 <script lang="ts" setup>
 // @ts-nocheck
 /**

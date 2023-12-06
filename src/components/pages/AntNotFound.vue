@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntNotFound',
-};
-</script>
-
 <script lang="ts" setup>
 import AntHeader from '../layout/AntHeader.vue';
 

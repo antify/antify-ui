@@ -1,12 +1,6 @@
-<script lang="ts">
-export default {
-  name: 'AntListGroup',
-};
-</script>
-
 <script lang="ts" setup>
-import AntSkeleton from "./AntSkeleton.vue";
-import { useVModel } from "@vueuse/core";
+import AntSkeleton from './AntSkeleton.vue';
+import { useVModel } from '@vueuse/core';
 
 const emits = defineEmits(['update:skeleton'])
 const props = withDefaults(

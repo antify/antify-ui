@@ -1,13 +1,7 @@
-<script lang="ts">
-export default {
-  name: 'AntToaster',
-};
-</script>
-
 <script lang="ts" setup>
-import { POSITION, Toaster, TOASTER_TYPE } from '../../types/Toaster.type';
-import { computed, ref } from 'vue';
-import { faX, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import {POSITION, Toaster, TOASTER_TYPE} from '../../types/Toaster.type';
+import {computed} from 'vue';
+import {faX, faTriangleExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:toasts']);
 const props =
@@ -75,18 +69,18 @@ function remove(toastId: string) {
           "
           class="mr-4"
         >
-          <slot name="notificationIcon"> </slot>
+          <slot name="notificationIcon"></slot>
         </div>
 
         <div v-if="toast.type === TOASTER_TYPE.WARNING" class="mr-4">
           <slot name="warningIcon">
-            <fa-icon :icon="faTriangleExclamation" />
+            <fa-icon :icon="faTriangleExclamation"/>
           </slot>
         </div>
 
         <div v-if="toast.type === TOASTER_TYPE.ERROR" class="mr-4">
           <slot name="errorIcon">
-            <fa-icon :icon="faTriangleExclamation" />
+            <fa-icon :icon="faTriangleExclamation"/>
           </slot>
         </div>
       </slot>
@@ -109,7 +103,7 @@ function remove(toastId: string) {
         @click="remove(toast.id)"
       >
         <slot name="closeIcon">
-          <fa-icon :icon="faX" />
+          <fa-icon :icon="faX"/>
         </slot>
       </div>
     </div>

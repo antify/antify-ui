@@ -1,15 +1,9 @@
-<script lang="ts">
-export default {
-  name: 'AntListGroupItem',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import {ListGroupItemColorType} from "../types/AntListGroupItem.type";
-import {handleEnumValidation} from "../handler";
-import {RouteLocationRaw} from "vue-router";
+import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {ListGroupItemColorType} from '../types/AntListGroupItem.type';
+import {handleEnumValidation} from '../handler';
+import {RouteLocationRaw} from 'vue-router';
 import AntIcon from './AntIcon.vue';
 
 const props = withDefaults(defineProps<{

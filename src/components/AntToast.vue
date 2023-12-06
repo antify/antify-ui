@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntToast',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted, useSlots} from 'vue';
 import {handleEnumValidation} from '../handler';

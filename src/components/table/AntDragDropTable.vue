@@ -1,6 +1,5 @@
 <script lang="ts">
 export default {
-  name: 'AntDragDropTable',
   inheritAttrs: false,
 };
 </script>
@@ -24,7 +23,7 @@ const props =
 
 const _grabberIcon = ref(props.grabberIcon || faEllipsisVertical);
 
-const isDragging = ref<Boolean>(false);
+const isDragging = ref<boolean>(false);
 const ghost = ref({});
 const onDraggingData = ref<any>([]);
 
@@ -32,7 +31,7 @@ const dragstartEvent = (event: DragEvent, elem: any, index: number) => {
   if (event && event.dataTransfer) {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData(`dragIndex`, index.toString());
+    event.dataTransfer.setData('dragIndex', index.toString());
   }
 
   onDraggingData.value = props.data;

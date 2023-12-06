@@ -1,6 +1,5 @@
 <script lang="ts">
 export default {
-  name: 'AntSidebar',
   inheritAttrs: false,
 };
 </script>

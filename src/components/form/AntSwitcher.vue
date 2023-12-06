@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSwitcher'
-}
-</script>
-
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
 import AntButton from './AntButton.vue';

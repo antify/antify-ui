@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSearchField',
-};
-</script>
-
 <script setup lang="ts">
 import { generateId } from '../../utils/helper';
 import { ref, computed } from 'vue';
@@ -23,7 +17,7 @@ const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const content = computed<string>({
   get: () => {
-    return props.value as string;
+    return props.value ;
   },
   set: (val: string) => {
     if (timeout.value) {

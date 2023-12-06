@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSkeleton'
-}
-</script>
-
 <script lang="ts" setup>
 import {Grouped} from '../enums/Grouped.enum';
 import { computed, ref, watch } from 'vue';

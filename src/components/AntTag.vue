@@ -1,15 +1,8 @@
-<script lang="ts">
-export default {
-  name: 'AntTag',
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import {Size} from '../enums/Size.enum'
 import {TagColorType} from '../types/AntTag.type';
 import {handleEnumValidation} from '../handler';
-import {ColorType} from '../enums/ColorType.enum';
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 

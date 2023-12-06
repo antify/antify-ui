@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntAccordion',
-};
-</script>
-
 <script lang="ts" setup>
 import AntAccordionItem from './AntAccordionItem.vue';
 import {onMounted, ref} from 'vue';

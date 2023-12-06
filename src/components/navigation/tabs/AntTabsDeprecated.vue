@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntTabs',
-};
-</script>
-
 <script lang="ts" setup>
 import type { TabsType } from '../../../types/Tabs.type';
 

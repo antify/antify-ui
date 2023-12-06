@@ -4,6 +4,7 @@
     "module": "ESNext",
     "rootDir": "./src",
     "baseUrl": "./src",
+    "outDir": "./dist/types",
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
@@ -12,14 +13,14 @@
     "declaration": true,
     "declarationMap": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
     "lib": ["esnext", "dom", "es5", "es6", "dom.iterable"],
     "skipLibCheck": true,
     "moduleResolution": "node",
     "types": [
       "vite/client",
+      "vue-router"
     ],
-    "jsx": "preserve"
+    "jsx": "preserve",
   },
   "include": [
     "src/**/*.ts",

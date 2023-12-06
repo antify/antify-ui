@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntField',
-};
-</script>
-
 <script lang="ts" setup>
 import {onMounted, computed} from 'vue';
 import {Size} from '../../../enums/Size.enum'
