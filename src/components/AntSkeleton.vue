@@ -6,14 +6,16 @@ import { useVModel } from '@vueuse/core';
 const emits = defineEmits([ 'update:modelValue' ]);
 const props = withDefaults(defineProps<{
   modelValue: boolean;
-  grouped?: Grouped,
-  rounded?: boolean,
-  absolute?: boolean
+  grouped?: Grouped;
+  rounded?: boolean;
+  roundedFull?: boolean;
+  absolute?: boolean;
   delayShowBy?: number;
   minShowTime?: number;
 }>(), {
   grouped: Grouped.none,
   rounded: false,
+  roundedFull: false,
   absolute: false,
   delayShowBy: 0,
   minShowTime: 1000
@@ -33,6 +35,7 @@ const classList = computed(() => ({
   'animate-skeleton min-h-[1px] min-w-[1px] inline-block': true,
   'absolute inset-0 w-full h-full z-40': props.absolute,
   'rounded-md': props.rounded && props.grouped === Grouped.none,
+  'rounded-xl': props.roundedFull && props.grouped === Grouped.none,
   ...groupedClassList.value
 }));
 

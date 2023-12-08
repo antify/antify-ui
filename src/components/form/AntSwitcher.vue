@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
 import AntButton from './AntButton.vue';
-import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import {useVModel} from '@vueuse/core';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useVModel } from '@vueuse/core';
 import AntSkeleton from '../AntSkeleton.vue';
-import {Validator} from '@antify/validate';
-import {SwitcherOption} from './__types/AntSwitcher.type';
-import {ColorType, InputColorType} from '../../enums';
-import {Grouped, Size} from '../../enums';
-import {computed, onMounted, watch } from 'vue';
+import { Validator } from '@antify/validate';
+import { SwitcherOption } from './__types/AntSwitcher.type';
+import { ColorType, InputColorType } from '../../enums';
+import { Grouped, Size } from '../../enums';
+import { computed, onMounted, watch } from 'vue';
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
+const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props = withDefaults(defineProps<{
   modelValue: string;
   options: string[] | SwitcherOption[];
@@ -53,17 +53,17 @@ onMounted(() => {
 });
 
 const containerClasses = computed(() => {
-  const classes: {[key: string]: boolean} = {
+  const classes: { [key: string]: boolean } = {
     'flex relative ring-primary/25 rounded-md outline-none': true,
     'focus-within:ring-2': (props.size as Size) === Size.sm && hasAction.value,
     'focus-within:ring-4': (props.size as Size) === Size.md && hasAction.value,
   };
   const colorVariant = {
-    [InputColorType.base]: 'focus-within:ring-primary-lightest',
-    [InputColorType.danger]: 'focus-within:ring-danger-lightest',
-    [InputColorType.info]: 'focus-within:ring-info-lightest',
-    [InputColorType.success]: 'focus-within:ring-success-lightest',
-    [InputColorType.warning]: 'focus-within:ring-warning-lightest',
+    [InputColorType.base]: 'focus-within:ring-primary-lighter',
+    [InputColorType.danger]: 'focus-within:ring-danger-lighter',
+    [InputColorType.info]: 'focus-within:ring-info-lighter',
+    [InputColorType.success]: 'focus-within:ring-success-lighter',
+    [InputColorType.warning]: 'focus-within:ring-warning-lighter',
   };
 
   classes[colorVariant[_colorType.value]] = true;
@@ -72,7 +72,7 @@ const containerClasses = computed(() => {
 });
 
 const itemClasses = computed(() => {
-  const classes: {[key: string]: boolean} = {
+  const classes: { [key: string]: boolean } = {
     'grow text-center': true,
     'p-2.5 text-sm ': (props.size as Size) === Size.md,
     'p-1.5 text-xs ': (props.size as Size) === Size.sm,
@@ -146,8 +146,8 @@ function nextOption() {
         :color-type="_colorType as unknown as ColorType"
         :size="size"
         :skeleton="_skeleton"
-          :readonly="readonly"
-          :disabled="disabled"
+        :readonly="readonly"
+        :disabled="disabled"
       />
 
       <div class="grow relative">
@@ -174,8 +174,8 @@ function nextOption() {
         :color-type="_colorType as unknown as ColorType"
         :size="size"
         :skeleton="_skeleton"
-          :readonly="readonly"
-          :disabled="disabled"
+        :readonly="readonly"
+        :disabled="disabled"
       />
     </div>
   </AntField>

@@ -9,6 +9,7 @@ import AntSearch from './AntSearch.vue';
 import AntSearchField from './AntSearchField.vue';
 import AntSearchSelect from './AntSearchSelect.vue';
 import AntSelect from './AntSelect.vue';
+import AntSwitch from './AntSwitch.vue';
 import AntTextarea from './AntTextarea.vue';
 import AntTextInput from './AntTextInput.vue';
 import AntToggle from './AntToggle.vue';
@@ -28,6 +29,7 @@ export {
   AntSearchField,
   AntSearchSelect,
   AntSelect,
+  AntSwitch,
   AntTextarea,
   AntTextInput,
   AntToggle,
