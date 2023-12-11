@@ -6,67 +6,79 @@ export default {
 
 <script lang="ts" setup>
 import AntRadio from './AntRadio.vue';
-import type { RadioButton } from '../../../types/RadioButton.type';
-import { computed } from 'vue';
+import { useVModel } from '@vueuse/core';
+import { AntField } from '../Elements';
+import { AntRadioType } from './__types/AntRadio.type';
+import { InputColorType, Size } from '../../../enums';
+import { Validator } from '@antify/validate';
+import { computed, Ref, watch } from 'vue';
 
-const emit = defineEmits(['update:value']);
-const props =
+const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
+const props = withDefaults(
   defineProps<{
-    value: string;
+    modelValue: string;
+    radioButtons: AntRadioType[];
+
     label?: string;
     description?: string;
-    legend?: string;
-    radioButtons: RadioButton[];
-    radioGroupName: string;
-    underneath?: boolean;
-    loading?: boolean;
-  }>();
+    direction?: 'COLUMN' | 'ROW';
+    colorType?: InputColorType;
+    size?: Size;
+    skeleton?: boolean;
+    disabled?: boolean;
+    readonly?: boolean;
+    validator?: Validator;
+  }>(), {
+    direction: 'COLUMN',
+    colorType: InputColorType.base,
+    size: Size.md,
+    skeleton: false,
+    disabled: false,
+    readonly: false
+  });
 
-const _value = computed({
-  get: () => {
-    return props.value;
-  },
-  set: (val) => {
-    emit('update:value', val);
-  },
+const _value = useVModel(props, 'modelValue', emits);
+const _skeleton = useVModel(props, 'skeleton', emits);
+
+// const _colorType: Ref<InputColorType> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+
+const containerClasses = computed(() => {
+  const classes = {
+    'flex gap-2.5': true,
+    'flex-row': props.direction === 'ROW',
+    'flex-col': props.direction === 'COLUMN',
+  };
+
+  return classes;
+})
+
+watch(_value, () => {
+  if (props.validator) {
+    props.validator.validate(_value.value);
+  }
 });
 </script>
 
 <template>
-  <div>
-    <label class="block text-sm font-medium text-gray-700">
-      <slot name="label">{{ label }} </slot>
-    </label>
-
-    <fieldset class="">
-      <slot name="legend">
-        <legend class="sr-only">{{ legend }}</legend>
-      </slot>
-
-      <div
-        class="space-y-4 sm:flex"
-        :class="{
-          'flex-col items-start justify-start space-y-2 w-full': underneath,
-          'sm:items-center sm:space-y-0  sm:space-x-10': !underneath,
-        }"
-        v-bind="$attrs"
-      >
-        <AntRadio
-          v-for="(radio, index) in radioButtons"
-          v-bind="radio"
-          v-model:group-value="_value"
-          :value="radio.value"
-          :key="`radio-button-${radio.id}-${index}`"
-          :id="radio.id"
-          :label="radio.label"
-          :name="radioGroupName"
-          :loading="loading"
-        />
-      </div>
-    </fieldset>
-
-    <slot name="description">
-      <p class="text-sm leading-5 text-gray-500">{{ description }}</p>
-    </slot>
-  </div>
+  <AntField
+    :label="label"
+    :description="description"
+    :skeleton="_skeleton"
+    :validator="validator"
+  >
+    <div
+      :class="containerClasses"
+    >
+      <AntRadio
+        v-model="_value"
+        v-for="(radio, index) in radioButtons"
+        :key="`radio-button-widget_${radio.value}-${index}`"
+        :value="radio"
+        :skeleton="_skeleton"
+        :disabled="disabled || radio.disabled"
+        :readonly="readonly || radio.readonly"
+        :color-type="radio.colorType || colorType"
+      />
+    </div>
+  </AntField>
 </template>

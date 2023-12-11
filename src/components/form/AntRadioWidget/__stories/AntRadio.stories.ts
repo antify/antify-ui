@@ -1,5 +1,7 @@
 import AntRadio from '../AntRadio.vue';
 import { ref } from 'vue';
+import { InputColorType, Size } from "../../../../enums";
+import { AntRadioType } from "../__types/AntRadio.type";
 
 export default {
   title: 'Components/Forms/Radio/Ant Radio',
@@ -10,61 +12,59 @@ export default {
       description:
         'Additional attributes will be forwarded to the radio-button. This way you can access the default input-field events.',
     },
-    groupValue: {
-      description: 'Reactive value for the radio group',
+    colorType: {
+      control: { type: 'select' },
+      options: Object.values(InputColorType),
     },
-    value: {
-      description: 'Value of the radio button, will be used by groupValue.',
+    size: {
+      control: { type: 'select' },
+      options: Object.values(Size),
     },
-    color: {
-      control: 'text',
-      table: { defaultValue: { summary: 'primary' } },
-      description: 'A tailwind css color definition',
+
+    // Events
+    'update:modelValue': {
+      control: 'none',
+      description: 'Event that is fired when the model value changes.'
     },
-    id: {
-      description: 'The ID for the radio and label combination',
-      table: {
-        defaultValue: { summary: 'UUID', detail: 'A randomly generated UUID' },
-      },
-    },
-    label: {
-      description: 'Main label for the radio button',
-    },
-    name: {
-      description: 'Name for the radio group',
-    },
+    'update:skeleton': {
+      control: 'none',
+      description: 'Event that is fired when the skeleton prop changes.'
+    }
   },
 };
 
 const Template = (args: any) => ({
   components: { AntRadio },
   setup() {
-    const groupValue = ref<string>('');
+    const groupValue = ref<string>('t3');
 
-    return { args, groupValue };
+    const radioValues = ref<AntRadioType[]>([
+      {
+        value: 't1',
+        label: 'Test 1'
+      }, {
+        value: 't2',
+        label: 'Test 2'
+      }, {
+        value: 't3',
+        label: 'Test 3'
+      }, {
+        value: 't4',
+        label: 'Test 4'
+      }, {
+        value: 't5',
+        label: 'Test 5'
+      }
+    ]);
+
+    return { args, groupValue, radioValues };
   },
   template: `
-  <div class="m-2">
-    <AntRadio v-bind="args" v-model:group-value="groupValue"/>
-  </div>`,
+    <div class="m-2 flex gap-2">
+      <AntRadio v-for="value in radioValues" v-bind="args" :value="value" v-model="groupValue"/>
+    </div>
+  `,
 });
-
-export const Checked = Template.bind({});
-// @ts-ignore
-Checked.args = {
-  label: 'Test',
-  name: 'radio-group',
-  value: 'test',
-  checked: true,
-};
-
-export const UnChecked = Template.bind({});
-// @ts-ignore
-UnChecked.args = {
-  label: 'Test',
-  name: 'radio-group',
-  value: 'test',
-};
 
 export const WithDescription = Template.bind({});
 // @ts-ignore
@@ -73,7 +73,6 @@ WithDescription.args = {
   description: 'This is a description, that describes this radio-button.',
   name: 'radio-group',
   value: 'test',
-  checked: true,
 };
 
 export const Disabled = Template.bind({});
@@ -82,7 +81,6 @@ Disabled.args = {
   label: 'Disabled',
   name: 'radio-group',
   value: 'disabled',
-  checked: true,
   disabled: true,
 };
 
@@ -92,19 +90,6 @@ Loading.args = {
   label: 'Loading',
   name: 'radio-group',
   value: 'loading',
-  checked: true,
-  disabeld: false,
-  loading: true,
-};
-
-export const LoadingWithDescription = Template.bind({});
-// @ts-ignore
-LoadingWithDescription.args = {
-  label: 'Loading',
-  description: 'Describe',
-  name: 'radio-group',
-  value: 'loading',
-  checked: true,
-  disabeld: false,
-  loading: true,
+  description: 'This is a description, that describes this radio-button.',
+  skeleton: true,
 };

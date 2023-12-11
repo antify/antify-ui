@@ -5,97 +5,161 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { generateId } from '../../../utils/helper';
+import { AntField } from '../Elements';
+import { InputColorType, Size } from '../../../enums';
+import { useVModel } from '@vueuse/core';
 import AntSkeleton from '../../AntSkeleton.vue';
+import { computed, Ref, watch } from 'vue';
+import { Validator } from '@antify/validate';
+import { AntRadioType } from './__types/AntRadio.type';
 
-const emit = defineEmits(['update:groupValue']);
-const props =
+const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
+const props = withDefaults(
   defineProps<{
-    id?: string;
+    modelValue: string;
+    value: AntRadioType;
+
     label?: string;
     description?: string;
-    name?: string;
-    color?: string;
-    groupValue: string;
-    value: string;
-    loading?: boolean;
-  }>();
+    skeleton?: boolean;
+    colorType?: InputColorType;
+    size?: Size
+    readonly?: boolean;
+    disabled?: boolean;
+  }>(), {
+    colorType: InputColorType.base,
+    size: Size.md,
+    readonly: false,
+    disabled: false,
+  }
+);
 
-const _id = ref(props.id ? props.id : generateId(40));
-const _color = ref(props.color ? props.color : 'primary');
+const _value = computed({
+  get(): string | AntRadioType {
+    return props.modelValue;
+  },
+  set(val: string | AntRadioType) {
+    emits('update:modelValue', typeof val === 'string' ? val : val.value);
+  }
+});
+const _skeleton = useVModel(props, 'skeleton', emits);
 
-const _groupValue = computed({
-  get: () => {
-    return props.groupValue;
-  },
-  set: (val) => {
-    console.log('', val);
-    emit('update:groupValue', val);
-  },
+const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
+const _colorType: Ref<InputColorType> = computed(() => props.value.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const isActive = computed(() => {
+  return _value.value === props.value.value
+});
+
+const inputClasses = computed(() => {
+  const classes: { [key: string]: boolean } = {
+    'relative inline-flex flex-shrink-0': true,
+    'outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
+    'focus:ring-offset-0': true,
+    'outline-neutral-light focus:outline-neutral-light': !isActive.value,
+    'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
+    'focus:ring-2': props.size === Size.sm && hasAction.value,
+    'focus:ring-4': props.size === Size.md && hasAction.value,
+    'h-5 w-5': props.size === Size.md,
+  };
+
+  const focusColorVariant = {
+    [InputColorType.base]: 'focus:ring-primary-lighter',
+    [InputColorType.danger]: 'focus:ring-danger-lighter',
+    [InputColorType.info]: 'focus:ring-info-lighter',
+    [InputColorType.success]: 'focus:ring-success-lighter',
+    [InputColorType.warning]: 'focus:ring-warning-lighter',
+  };
+
+  const activeColorVariant = {
+    [InputColorType.base]: 'text-primary outline-primary focus:outline-primary',
+    [InputColorType.danger]: 'text-danger outline-danger focus:outline-danger',
+    [InputColorType.info]: 'text-info outline-info focus:outline-info',
+    [InputColorType.success]: 'text-success outline-success focus:outline-success',
+    [InputColorType.warning]: 'text-warning outline-warning focus:outline-warning',
+  }
+
+  classes[focusColorVariant[_colorType.value]] = hasAction.value;
+  classes[activeColorVariant[_colorType.value]] = isActive.value;
+
+  return classes;
+});
+
+const valueClass= computed(() => {
+  const classes = {
+    'relative w-fit full-height': true,
+    'cursor-not-allowed opacity-50': props.disabled
+  }
+
+  return classes;
+});
+
+watch(_value, () => {
+  if (props.value.validator) {
+    props.value.validator.validate(_value.value);
+  }
 });
 </script>
 
 <template>
-  <div v-if="!loading" class="w-full">
-    <div class="flex items-center space-x-3">
-      <input
-        v-model="_groupValue"
-        v-bind="$attrs"
-        :value="value"
-        :id="_id"
-        :name="name"
-        :described-by="`${_id}-description`"
-        class="
-          h-4
-          w-4
-          border-gray-300
-          transition-all
-          duration-500
-          disabled:opacity-50
-          disabled:cursor-not-allowed
-        "
-        :class="`focus:ring-${_color} text-${_color}`"
-        type="radio"
-      />
+  <AntField
+    :label="label"
+    :description="description"
+    :color-type="colorType"
+    class="cursor-pointer"
+    :skeleton="_skeleton"
+    :validator="value.validator"
+  >
+    <div class="flex items-center gap-1.5">
+      <div class="relative full-height flex items-center">
+        <input
+          v-model="_value"
+          :value="value.value"
+          :class="inputClasses"
+          type="radio"
+          :aria-checked="isActive"
+          :disabled="disabled"
+        />
 
-      <div class="ml-3 relative w-full">
-        <label :for="_id" class="block text-sm font-medium">
-          <slot name="label">{{ label }}</slot>
-        </label>
+        <AntSkeleton
+          v-model="_skeleton"
+          absolute
+          rounded-full
+        />
+      </div>
 
-        <div
-          v-if="description || $slots['description']"
-          class="absolute mt-1 text-sm text-gray-500"
-          :id="`${_id}-description`"
-        >
-          <slot name="description">
-            {{ description }}
-          </slot>
-        </div>
+      <div :class="valueClass">
+        {{ value.label }}
+
+        <AntSkeleton
+          v-model="_skeleton"
+          absolute
+          rounded
+        />
       </div>
     </div>
-  </div>
-
-  <div v-else class="w-full">
-    <slot name="skeleton">
-      <div class="flex justify-start w-full mb-1">
-        <AntSkeleton :model-value="loading" class="w-4 h-4 rounded-full" />
-
-        <div class="w-full ml-3">
-          <AntSkeleton
-            :model-value="loading"
-            v-if="label || $slots['label']"
-            class="w-2/6 h-4 rounded-md"
-          />
-
-          <AntSkeleton
-            :model-value="loading"
-            v-if="description || $slots['description']"
-            class="w-4/6 h-4 rounded-md mt-1"
-          />
-        </div>
-      </div>
-    </slot>
-  </div>
+  </AntField>
 </template>
+
+<style scoped>
+input[type="radio"] {
+  appearance: none;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  transform: scale(0);
+  transition: 120ms transform;
+  background: currentColor;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+</style>

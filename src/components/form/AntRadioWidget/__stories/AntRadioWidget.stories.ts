@@ -1,5 +1,6 @@
 import AntRadioWidget from '../AntRadioWidget.vue';
 import { ref } from 'vue';
+import { InputColorType, Size } from "../../../../enums";
 
 export default {
   title: 'Components/Forms/Radio/Ant Radio Widget',
@@ -11,39 +12,61 @@ export default {
       description:
         'Additional attributes will be forwarded to all radio-buttons. This way you can access the default input-field events.',
     },
-    default: {
-      description: 'Override for label and description',
-      table: { type: { summary: 'HTML' } },
-    },
     label: {
-      description: 'Place for main label, can be a prop or a slot',
-      table: { type: { summary: 'HTML|string' } },
+      description: 'The label for the radio widget',
     },
     description: {
-      description: 'Place for description, can be a prop or a slot',
-      table: { type: { summary: 'HTML|string' } },
-    },
-    legend: {
-      description: 'Place for sr-only legend, can be a prop or a slot',
-      table: { type: { summary: 'HTML|string' } },
+      description: 'Description for the radio widget',
     },
     radioButtons: {
       description: 'Array of RadioButton',
       table: {
         type: {
-          summary: 'RadioButton[]',
-          detail:
-            'type RadioButton = { id: string; label: string; value: string; }',
+          summary: 'AntRadioType[]',
+          detail: `
+{
+  value: string;
+  label?: string;
+  disabled?: boolean;
+  colorType?: InputColorType;
+  validator?: Validator;
+}
+`
         },
       },
     },
-    radioGroupName: {
-      description: 'Name for the radio group',
-    },
-    value: {
+    modelValue: {
       description:
         'Reactive value, contains the currently selected radio-button value',
     },
+    direction: {
+      control: 'select',
+      options: ['COLUMN', 'ROW'],
+      description: 'The direction for the radio-button widget',
+      table: {
+        type: {
+          summary: 'COLUMN | ROW'
+        }
+      }
+    },
+    colorType: {
+      control: { type: 'select' },
+      options: Object.values(InputColorType),
+    },
+    size: {
+      control: { type: 'select' },
+      options: Object.values(Size),
+    },
+
+    // Events:
+    'update:modelValue': {
+      control: 'none',
+      description: 'Event that is fired when the model value changes.'
+    },
+    'update:skeleton': {
+      control: 'none',
+      description: 'Event that is fired when the skeleton prop changes.'
+    }
   },
 };
 
@@ -72,7 +95,7 @@ const Template = (args: any) => ({
     return { args, value };
   },
   template: `
-  <AntRadioWidget v-bind="args" v-model:value="value"/>
+  <AntRadioWidget v-bind="args" v-model="value"/>
   <span class="text-xs text-gray-500">Reactive value: {{value}}</span>
   `,
 });
@@ -85,12 +108,13 @@ Simple.args = {
   radioGroupName: 'radio-group',
 };
 
-export const Underneath = (args: any) => ({
+export const WithDisabledRadioButton = (args: any) => ({
   components: { AntRadioWidget },
   setup() {
     const value = ref<string>('radio-1');
 
     args.label = 'Different style';
+    args.description = 'Message';
     args.radioButtons = [
       ...simpleButtons,
       {
@@ -101,13 +125,11 @@ export const Underneath = (args: any) => ({
         disabled: true,
       },
     ];
-    args.radioGroupName = 'radio-group';
-    args.underneath = true;
 
     return { args, value };
   },
   template: `
-  <AntRadioWidget v-bind="args" v-model:value="value" />
+  <AntRadioWidget v-bind="args" v-model="value" />
   `,
 });
 
@@ -129,13 +151,11 @@ export const Loading = (args: any) => ({
         disabled: true,
       },
     ];
-    args.radioGroupName = 'radio-group';
-    args.underneath = true;
-    args.loading = true;
+    args.skeleton = true;
 
     return { args, value };
   },
   template: `
-  <AntRadioWidget v-bind="args" v-model:value="value" />
+  <AntRadioWidget v-bind="args" v-model="value" />
   `,
 });
