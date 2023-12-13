@@ -1,90 +1,162 @@
 <script lang="ts" setup>
-// @ts-nocheck
-import { computed, ref } from 'vue';
-import { generateId } from '../../../utils/helper';
+import { useVModel } from '@vueuse/core';
+import { AntField } from '../Elements';
+import { InputColorType, Size } from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
+import { computed, onMounted } from 'vue';
+import { handleEnumValidation } from '../../../handler';
 
-const emit = defineEmits(['update:checked']);
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import AntIcon from '../../AntIcon.vue';
+import { IconSize } from '../../__types';
 
+const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props =
-  defineProps<{
-    checked: boolean | any[];
-    value?: string;
-    id?: string;
-    label?: string;
-    description?: string;
-    legend?: string;
-    color?: string;
-    loading?: boolean;
-  }>();
+  withDefaults(
+    defineProps<{
+      modelValue: boolean;
+      valueLabel?: string;
+      label?: string;
+      description?: string;
+      colorType?: InputColorType;
+      size?: Size,
+      skeleton?: boolean;
+      disabled?: boolean;
+      readonly?: boolean;
+    }>(), {
+      colorType: InputColorType.base,
+      size: Size.md,
+      skeleton: false,
+      disabled: false,
+      readonly: false,
+    });
 
-const _id = ref(props.id ? props.id : generateId(40));
-const _color = ref(props.color ? props.color : 'primary');
+const _value = useVModel(props, 'modelValue', emits);
+const _skeleton = useVModel(props, 'skeleton', emits);
 
-const _checked = computed({
-  get: () => {
-    return props.checked;
-  },
-  set: (val) => {
-    emit('update:checked', val);
-  },
+const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
+
+const inputClasses = computed(() => {
+  const classes: { [key: string]: boolean } = {
+    'relative inline-flex flex-shrink-0 bg-neutral-lighter border-0': true,
+    'outline outline-1 outline-offset-[-1px] outline-neutral-light rounded': true,
+    'focus:ring-offset-0': true,
+    'invisible': _skeleton.value,
+    'cursor-pointer': hasAction.value,
+    'focus:ring-2': props.size === Size.sm && hasAction.value,
+    'focus:ring-4': props.size === Size.md && hasAction.value,
+    'h-5 w-5': props.size === Size.md,
+    'h-4 w-4': props.size === Size.sm,
+    'cursor-not-allowed opacity-50': props.disabled
+  };
+
+  const focusColorVariant = {
+    [InputColorType.base]: 'focus:ring-primary-lighter',
+    [InputColorType.danger]: 'focus:ring-danger-lighter',
+    [InputColorType.info]: 'focus:ring-info-lighter',
+    [InputColorType.success]: 'focus:ring-success-lighter',
+    [InputColorType.warning]: 'focus:ring-warning-lighter',
+  };
+
+  const activeColorVariant = {
+    [InputColorType.base]: 'text-primary outline-primary focus:outline-primary',
+    [InputColorType.danger]: 'text-danger outline-danger focus:outline-danger',
+    [InputColorType.info]: 'text-info outline-info focus:outline-info',
+    [InputColorType.success]: 'text-success outline-success focus:outline-success',
+    [InputColorType.warning]: 'text-warning outline-warning focus:outline-warning',
+  }
+
+  classes[focusColorVariant[props.colorType]] = hasAction.value;
+  classes[activeColorVariant[props.colorType]] = _value.value;
+
+  return classes;
 });
+
+const valueClass = computed(() => {
+  const classes = {};
+
+  return classes;
+});
+
+const iconClass = computed(() => {
+  const classes = {
+    'absolute': true,
+    'text-neutral-lightest': _value.value,
+    'text-neutral-lighter': !_value.value,
+  };
+
+  return classes;
+});
+
+onMounted(() => {
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+});
+
 </script>
 
 <template>
-  <fieldset v-if="!loading">
-    <slot name="legend">
-      <legend class="sr-only">{{ legend }}</legend>
-    </slot>
-
-    <div class="relative flex items-start">
-      <div class="flex items-center h-5">
+  <AntField
+    :label="label"
+    :description="description"
+    :skeleton="_skeleton"
+  >
+    <div class="flex items-center gap-1.5">
+      <div class="relative full-height flex items-center">
         <input
+          v-model="_value"
+          :class="inputClasses"
           type="checkbox"
-          v-bind="$attrs"
-          :id="_id"
-          :aria-describedby="`${_id}-description`"
-          v-model="_checked"
-          :value="value"
-          :class="`focus:ring-${_color} h-4 w-4 text-${_color} border-gray-300 rounded transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed`"
+          :aria-checked="_value"
+          :disabled="disabled"
+        />
+
+        <AntIcon v-if="_value" :icon="faCheck" :class="iconClass" :size="size as unknown as IconSize"/>
+
+        <AntSkeleton
+          v-model="_skeleton"
+          absolute
+          rounded
         />
       </div>
 
-      <slot v-bind="{ id: _id }">
-        <div class="ml-3 text-sm">
-          <slot name="label" v-bind="{ id: _id }">
-            <label class="font-medium text-gray-700 select-none" :for="_id">
-              {{ label }}
-            </label>
-          </slot>
+      <div class="relative">
+        <span :class="valueClass">
+          {{ valueLabel }}
+        </span>
 
-          <slot name="description" v-bind="{ id: `${_id}-description` }">
-            <p
-              v-if="description"
-              :id="`${_id}-description`"
-              class="text-gray-500"
-            >
-              {{ description }}
-            </p>
-          </slot>
-        </div>
-      </slot>
+        <AntSkeleton
+          v-model="_skeleton"
+          absolute
+          rounded
+        />
+      </div>
     </div>
-  </fieldset>
+  </AntField>
 
-  <div v-else>
-    <div class="flex justify-start w-full mb-1">
-      <AntSkeleton :model-value="loading" class="w-4 h-4 rounded-md" />
-
-      <AntSkeleton
-        :model-value="label || $slots['label']"
-        class="w-2/6 h-4 rounded-md ml-4"
-      />
-    </div>
-
-    <AntSkeleton
-        :model-value="description || $slots['description']"
-      class="w-4/6 h-4 rounded-md mt-1"
-    />
-  </div>
 </template>
+
+<style scoped>
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+
+  position: relative;
+}
+input[type="checkbox"]::before {
+  content: "";
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background: currentColor;
+  border-radius: inherit;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+</style>

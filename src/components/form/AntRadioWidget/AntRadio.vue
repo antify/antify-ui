@@ -9,7 +9,7 @@ import { AntField } from '../Elements';
 import { InputColorType, Size } from '../../../enums';
 import { useVModel } from '@vueuse/core';
 import AntSkeleton from '../../AntSkeleton.vue';
-import { computed, onMounted, Ref, watch } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AntRadioType } from './__types/AntRadio.type';
 import { handleEnumValidation } from '../../../handler';
 
@@ -34,11 +34,11 @@ const props = withDefaults(
 );
 
 const _value = computed({
-  get(): string | AntRadioType {
+  get(): string | null | AntRadioType {
     return props.modelValue;
   },
-  set(val: string | AntRadioType) {
-    emits('update:modelValue', typeof val === 'string' ? val : val.value);
+  set(val: string | null | AntRadioType) {
+    emits('update:modelValue',  val ? typeof val === 'string' ? val : val.value : null);
   }
 });
 const _skeleton = useVModel(props, 'skeleton', emits);
