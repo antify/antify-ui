@@ -123,5 +123,6 @@ module.exports = {
       }
     }
   },
+  // TODO:: Check if we really need this, currently it makes problems with radio-buttons
   // plugins: [require('@tailwindcss/forms')],
 };

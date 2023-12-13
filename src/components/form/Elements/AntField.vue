@@ -74,7 +74,13 @@ const errors = computed(() => props.validator?.getErrors() || [])
 
           <template v-else-if="errors.length > 1">
             <ul class="list-disc list-outside pl-4">
-              <li v-for="error of errors" class="marker:m-none marker:p-none">{{ error }}</li>
+              <li
+                v-for="(error, index) of errors"
+                :key="`field-error-${index}`"
+                class="marker:m-none marker:p-none"
+              >
+                {{ error }}
+              </li>
             </ul>
           </template>
 

@@ -16,7 +16,7 @@ import { computed, Ref, watch } from 'vue';
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
+    modelValue: string | null;
     radioButtons: AntRadioType[];
 
     label?: string;
@@ -40,11 +40,11 @@ const props = withDefaults(
 const _value = useVModel(props, 'modelValue', emits);
 const _skeleton = useVModel(props, 'skeleton', emits);
 
-// const _colorType: Ref<InputColorType> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _colorType: Ref<InputColorType | undefined> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : undefined);
 
 const containerClasses = computed(() => {
   const classes = {
-    'flex gap-2.5': true,
+    'flex gap-2.5 justify-start': true,
     'flex-row': props.direction === 'ROW',
     'flex-col': props.direction === 'COLUMN',
   };
@@ -53,9 +53,9 @@ const containerClasses = computed(() => {
 })
 
 watch(_value, () => {
-  if (props.validator) {
-    props.validator.validate(_value.value);
-  }
+  props.validator?.validate(_value.value);
+}, {
+  deep: true
 });
 </script>
 
@@ -63,6 +63,7 @@ watch(_value, () => {
   <AntField
     :label="label"
     :description="description"
+    :color-type="colorType"
     :skeleton="_skeleton"
     :validator="validator"
   >
@@ -77,7 +78,7 @@ watch(_value, () => {
         :skeleton="_skeleton"
         :disabled="disabled || radio.disabled"
         :readonly="readonly || radio.readonly"
-        :color-type="radio.colorType || colorType"
+        :color-type="_colorType || radio.colorType || colorType"
       />
     </div>
   </AntField>

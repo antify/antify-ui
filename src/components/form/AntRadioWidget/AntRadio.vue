@@ -9,17 +9,16 @@ import { AntField } from '../Elements';
 import { InputColorType, Size } from '../../../enums';
 import { useVModel } from '@vueuse/core';
 import AntSkeleton from '../../AntSkeleton.vue';
-import { computed, Ref, watch } from 'vue';
-import { Validator } from '@antify/validate';
+import { computed, onMounted, Ref, watch } from 'vue';
 import { AntRadioType } from './__types/AntRadio.type';
+import { handleEnumValidation } from '../../../handler';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
+    modelValue: string | null;
     value: AntRadioType;
 
-    label?: string;
     description?: string;
     skeleton?: boolean;
     colorType?: InputColorType;
@@ -45,7 +44,6 @@ const _value = computed({
 const _skeleton = useVModel(props, 'skeleton', emits);
 
 const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
-const _colorType: Ref<InputColorType> = computed(() => props.value.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 const isActive = computed(() => {
   return _value.value === props.value.value
 });
@@ -53,12 +51,13 @@ const isActive = computed(() => {
 const inputClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'relative inline-flex flex-shrink-0': true,
-    'outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
-    'focus:ring-offset-0': true,
+    'focus:ring-offset-0 outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
+    'cursor-pointer': hasAction.value,
     'outline-neutral-light focus:outline-neutral-light': !isActive.value,
     'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
     'focus:ring-2': props.size === Size.sm && hasAction.value,
     'focus:ring-4': props.size === Size.md && hasAction.value,
+    'h-4 w-4 small': props.size === Size.sm,
     'h-5 w-5': props.size === Size.md,
   };
 
@@ -78,36 +77,35 @@ const inputClasses = computed(() => {
     [InputColorType.warning]: 'text-warning outline-warning focus:outline-warning',
   }
 
-  classes[focusColorVariant[_colorType.value]] = hasAction.value;
-  classes[activeColorVariant[_colorType.value]] = isActive.value;
+  classes[focusColorVariant[props.colorType]] = hasAction.value;
+  classes[activeColorVariant[props.colorType]] = isActive.value;
 
   return classes;
 });
 
-const valueClass= computed(() => {
+const valueClass = computed(() => {
   const classes = {
     'relative w-fit full-height': true,
+    'cursor-pointer': hasAction.value,
     'cursor-not-allowed opacity-50': props.disabled
   }
 
   return classes;
 });
 
-watch(_value, () => {
-  if (props.value.validator) {
-    props.value.validator.validate(_value.value);
-  }
+onMounted(() => {
+  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 </script>
 
 <template>
   <AntField
-    :label="label"
     :description="description"
     :color-type="colorType"
     class="cursor-pointer"
     :skeleton="_skeleton"
-    :validator="value.validator"
+    :expanded="false"
   >
     <div class="flex items-center gap-1.5">
       <div class="relative full-height flex items-center">
@@ -127,8 +125,10 @@ watch(_value, () => {
         />
       </div>
 
-      <div :class="valueClass">
-        {{ value.label }}
+      <div class="relative">
+        <span :class="valueClass">
+          {{ value.label }}
+        </span>
 
         <AntSkeleton
           v-model="_skeleton"
@@ -157,6 +157,11 @@ input[type="radio"]::before {
   transform: scale(0);
   transition: 120ms transform;
   background: currentColor;
+}
+
+input[type="radio"].small::before {
+  width: 8px;
+  height: 8px;
 }
 
 input[type="radio"]:checked::before {
