@@ -3,9 +3,10 @@ import { ref } from 'vue';
 import { InputColorType, Size } from "../../../../enums";
 import { Meta, StoryObj } from "@storybook/vue3";
 import { useValidator } from "@antify/validate";
+import { Direction } from "../../../../enums/Direction.enum";
 
 const meta: Meta<typeof AntRadioGroup> = {
-  title: 'Components/Forms/Radio/Ant Radio Group',
+  title: 'Components/Forms/Radio/Radio Group',
   component: AntRadioGroup,
   decorators: [ () => ({ template: '<div class="m-2"><story/></div>' }) ],
   parameters: { controls: { sort: 'requiredFirst' } },
@@ -43,14 +44,8 @@ const meta: Meta<typeof AntRadioGroup> = {
       }
     },
     direction: {
-      control: 'select',
-      options: [ 'COLUMN', 'ROW' ],
-      description: 'The direction for the radio-button widget',
-      table: {
-        type: {
-          summary: 'COLUMN | ROW'
-        }
-      }
+      control: { type: 'select' },
+      options: Object.values(Direction)
     },
     colorType: {
       control: { type: 'select' },

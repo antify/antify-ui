@@ -3,12 +3,13 @@ import { useVModel } from '@vueuse/core';
 import { AntField } from '../Elements';
 import { InputColorType, Size } from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { handleEnumValidation } from '../../../handler';
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from '../../AntIcon.vue';
 import { IconSize } from '../../__types';
+import { Validator } from '@antify/validate';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props =
@@ -23,6 +24,7 @@ const props =
       skeleton?: boolean;
       disabled?: boolean;
       readonly?: boolean;
+      validator?: Validator;
     }>(), {
       colorType: InputColorType.base,
       size: Size.md,
@@ -34,7 +36,7 @@ const props =
 const _value = useVModel(props, 'modelValue', emits);
 const _skeleton = useVModel(props, 'skeleton', emits);
 
-const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled));
 
 const inputClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
@@ -73,26 +75,22 @@ const inputClasses = computed(() => {
 });
 
 const valueClass = computed(() => {
-  const classes = {};
+  const classes = {
+    'text-sm': true,
+    'cursor-not-allowed opacity-50': props.disabled,
+  };
 
   return classes;
 });
 
-const iconClass = computed(() => {
-  const classes = {
-    'absolute': true,
-    'text-neutral-lightest': _value.value,
-    'text-neutral-lighter': !_value.value,
-  };
-
-  return classes;
+watch(_value, () => {
+  props.validator?.validate(_value.value);
 });
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
-
 </script>
 
 <template>
@@ -100,6 +98,10 @@ onMounted(() => {
     :label="label"
     :description="description"
     :skeleton="_skeleton"
+    :color-type="colorType"
+    :validator="validator"
+    :size="size"
+    :expanded="false"
   >
     <div class="flex items-center gap-1.5">
       <div class="relative full-height flex items-center">
@@ -108,10 +110,15 @@ onMounted(() => {
           :class="inputClasses"
           type="checkbox"
           :aria-checked="_value"
-          :disabled="disabled"
+          :disabled="disabled || readonly"
         />
 
-        <AntIcon v-if="_value" :icon="faCheck" :class="iconClass" :size="size as unknown as IconSize"/>
+        <AntIcon
+          v-if="_value"
+          :icon="faCheck"
+          class="absolute !text-neutral-lightest pointer-events-none"
+          :size="size as unknown as IconSize"
+        />
 
         <AntSkeleton
           v-model="_skeleton"
@@ -143,6 +150,7 @@ input[type="checkbox"] {
 
   position: relative;
 }
+
 input[type="checkbox"]::before {
   content: "";
 
@@ -151,7 +159,7 @@ input[type="checkbox"]::before {
   width: 100%;
   height: 100%;
   transform: scale(0);
-  transition: 120ms transform ease-in-out;
+  transition: 120ms transform;
   background: currentColor;
   border-radius: inherit;
 }

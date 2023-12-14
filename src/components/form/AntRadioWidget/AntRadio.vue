@@ -105,6 +105,7 @@ onMounted(() => {
     :color-type="colorType"
     class="cursor-pointer"
     :skeleton="_skeleton"
+    :size="size"
     :expanded="false"
   >
     <div class="flex items-center gap-1.5">

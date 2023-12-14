@@ -5,7 +5,7 @@ import { AntRadioType } from "../__types/AntRadio.type";
 import { Meta, StoryObj } from "@storybook/vue3";
 
 const meta: Meta<typeof AntRadio> = {
-  title: 'Components/Forms/Radio/Ant Radio',
+  title: 'Components/Forms/Radio/Radio',
   component: AntRadio,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {

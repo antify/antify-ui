@@ -12,6 +12,7 @@ import { AntRadioType } from './__types/AntRadio.type';
 import { InputColorType, Size } from '../../../enums';
 import { Validator } from '@antify/validate';
 import { computed, Ref, watch } from 'vue';
+import { Direction } from '../../../enums/Direction.enum';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props = withDefaults(
@@ -21,7 +22,7 @@ const props = withDefaults(
 
     label?: string;
     description?: string;
-    direction?: 'COLUMN' | 'ROW';
+    direction?: Direction;
     colorType?: InputColorType;
     size?: Size;
     skeleton?: boolean;
@@ -29,7 +30,7 @@ const props = withDefaults(
     readonly?: boolean;
     validator?: Validator;
   }>(), {
-    direction: 'COLUMN',
+    direction: Direction.column,
     colorType: InputColorType.base,
     size: Size.md,
     skeleton: false,
@@ -45,8 +46,8 @@ const _colorType: Ref<InputColorType | undefined> = computed(() => props.validat
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5 justify-start': true,
-    'flex-row': props.direction === 'ROW',
-    'flex-col': props.direction === 'COLUMN',
+    'flex-row': props.direction === Direction.row,
+    'flex-col': props.direction === Direction.column,
   };
 
   return classes;
@@ -66,6 +67,8 @@ watch(_value, () => {
     :color-type="colorType"
     :skeleton="_skeleton"
     :validator="validator"
+    :size="size"
+    label-for="noop"
   >
     <div
       :class="containerClasses"
